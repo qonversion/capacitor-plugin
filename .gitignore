@@ -1,0 +1,48 @@
+# Node modules
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build output
+www/
+dist/
+build/
+out/
+lib/
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Capacitor specific
+android/capacitor-plugins.json
+ios/Podfile.lock
+ios/Pods/
+ios/*.xcuserdata/
+ios/*.xcworkspace/
+
+# Configuration files
+*.env
+*.local
+.env.local
+*.pid
+
+# Miscellaneous
+*.bak
+*.orig
+*.swp
+*.swo
