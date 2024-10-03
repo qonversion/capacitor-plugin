@@ -1,9 +1,9 @@
-import {Platform} from "react-native";
+import {Capacitor} from "@capacitor/core";
 
 export const isIos = (): boolean => {
-    return Platform.OS === "ios"
+    return Capacitor.getPlatform() === "ios"
 };
 
 export const isAndroid = (): boolean => {
-    return Platform.OS === "android"
+    return Capacitor.getPlatform() === "android"
 };
