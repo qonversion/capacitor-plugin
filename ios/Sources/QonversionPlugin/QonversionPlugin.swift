@@ -7,29 +7,29 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
   public let identifier = "QonversionPlugin"
   public let jsName = "Qonversion"
   public let pluginMethods: [CAPPluginMethod] = [
-    CAPPluginMethod(name: "initialize", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "identify", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "products", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "purchase", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "promoPurchase", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "checkEntitlements", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "remoteConfig", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "remoteConfigList", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "userInfo", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "userProperties", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "restore", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "offerings", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "setDefinedUserProperty", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "setCustomUserProperty", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "checkTrialIntroEligibility", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "attachUserToExperiment", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "detachUserFromExperiment", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "attachUserToRemoteConfiguration", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "detachUserFromRemoteConfiguration", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "storeSdkInfo", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "addAttributionData", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "collectAppleSearchAdsAttribution", returnType: CAPPluginReturnPromise)
-    CAPPluginMethod(name: "isFallbackFileAccessible", returnType: CAPPluginReturnPromise)
+    CAPPluginMethod(name: "initialize", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "identify", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "products", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "purchase", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "promoPurchase", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "checkEntitlements", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "remoteConfig", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "remoteConfigList", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "userInfo", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "userProperties", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "restore", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "offerings", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "setDefinedUserProperty", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "setCustomUserProperty", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "checkTrialIntroEligibility", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "attachUserToExperiment", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "detachUserFromExperiment", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "attachUserToRemoteConfiguration", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "detachUserFromRemoteConfiguration", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "storeSdkInfo", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "addAttributionData", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "collectAppleSearchAdsAttribution", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "isFallbackFileAccessible", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "presentCodeRedemptionSheet", returnType: CAPPluginReturnPromise)
   ]
   
@@ -76,7 +76,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
       return call.noNecessaryDataError()
     }
     let quantity = call.getInt("quantity") ?? 1
-    let contextKeys = call.getArray("contextKeys").capacitor.replacingNullValues() as? [String?] ?? []
+      let contextKeys = call.getArray("contextKeys")?.capacitor.replacingNullValues().compactMap({$0}) as? [String] ?? []
     
     qonversionSandwich?.purchase(productId, quantity:quantity, contextKeys:contextKeys, completion: getDefaultCompletion(call))
   }
@@ -98,8 +98,9 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
   }
   
   @objc func remoteConfigList(_ call: CAPPluginCall) {
-    guard let contextKeys = call.getArray("contextKeys").capacitor.replacingNullValues() as? [String?] else {
-      return qonversionSandwich?.remoteConfigList(getDefaultCompletion(call))
+      guard let contextKeys = call.getArray("contextKeys")?.capacitor.replacingNullValues().compactMap({$0}) as? [String] else {
+      qonversionSandwich?.remoteConfigList(getDefaultCompletion(call))
+        return
     }
     
     guard let includeEmptyContextKey = call.getBool("includeEmptyContextKey") else {
@@ -146,7 +147,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
   }
   
   @objc func checkTrialIntroEligibility(_ call: CAPPluginCall) {
-    guard let ids = args["ids"] as? [String] else {
+      guard let ids = call.getArray("ids")?.capacitor.replacingNullValues().compactMap({$0}) as? [String] else {
       return call.noNecessaryDataError()
     }
     
@@ -197,7 +198,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
   }
   
   @objc func addAttributionData(_ call: CAPPluginCall) {
-    guard let data = call.getString("data"),
+      guard let data = call.getObject("data"),
           let provider = call.getString("provider") else {
       return call.noNecessaryDataError()
     }
@@ -228,7 +229,9 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
         return call.sandwichError(error)
       }
       
-      call.resolve(data)
+        guard let data else { return call.resolve() }
+        
+        call.resolve(data)
     }
   }
 }

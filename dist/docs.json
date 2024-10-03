@@ -6,26 +6,2204 @@
     "tags": [],
     "methods": [
       {
-        "name": "echo",
-        "signature": "(options: { value: string; }) => Promise<{ value: string; }>",
+        "name": "syncHistoricalData",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "Call this function to sync the subscriber data with the first launch when Qonversion is implemented.",
+        "complexTypes": [],
+        "slug": "synchistoricaldata"
+      },
+      {
+        "name": "syncStoreKit2Purchases",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "iOS only\nContact us before you start using this function\nCall this function to sync purchases if you are using StoreKit2 and our SDK in Analytics mode.",
+        "complexTypes": [],
+        "slug": "syncstorekit2purchases"
+      },
+      {
+        "name": "purchaseProduct",
+        "signature": "(product: Product, options: PurchaseOptions) => Promise<Map<string, Entitlement>>",
         "parameters": [
           {
+            "name": "product",
+            "docs": "product to purchase",
+            "type": "Product"
+          },
+          {
             "name": "options",
-            "docs": "",
-            "type": "{ value: string; }"
+            "docs": "additional options for the purchase process.",
+            "type": "PurchaseOptions"
           }
         ],
-        "returns": "Promise<{ value: string; }>",
-        "tags": [],
-        "docs": "",
+        "returns": "Promise<Map<string, Entitlement>>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "product product to purchase"
+          },
+          {
+            "name": "param",
+            "text": "options additional options for the purchase process."
+          },
+          {
+            "name": "returns",
+            "text": "the promise with the user entitlements including the ones obtained by the purchase"
+          },
+          {
+            "name": "see",
+            "text": " [Making Purchases](https://documentation.qonversion.io/docs/making-purchases)"
+          }
+        ],
+        "docs": "Make a purchase and validate it through server-to-server using Qonversion's Backend",
+        "complexTypes": [
+          "Map",
+          "Entitlement",
+          "Product",
+          "PurchaseOptions"
+        ],
+        "slug": "purchaseproduct"
+      },
+      {
+        "name": "purchase",
+        "signature": "(purchaseModel: PurchaseModel) => Promise<Map<string, Entitlement>>",
+        "parameters": [
+          {
+            "name": "purchaseModel",
+            "docs": "necessary information for purchase",
+            "type": "PurchaseModel"
+          }
+        ],
+        "returns": "Promise<Map<string, Entitlement>>",
+        "tags": [
+          {
+            "name": "deprecated",
+            "text": "Use {@link purchaseProduct} function instead."
+          },
+          {
+            "name": "param",
+            "text": "purchaseModel necessary information for purchase"
+          },
+          {
+            "name": "returns",
+            "text": "the promise with the user entitlements including the ones obtained by the purchase"
+          },
+          {
+            "name": "see",
+            "text": " [Making Purchases](https://documentation.qonversion.io/docs/making-purchases)"
+          }
+        ],
+        "docs": "Make a purchase and validate it through server-to-server using Qonversion's Backend.",
+        "complexTypes": [
+          "Map",
+          "Entitlement",
+          "PurchaseModel"
+        ],
+        "slug": "purchase"
+      },
+      {
+        "name": "updatePurchase",
+        "signature": "(purchaseUpdateModel: PurchaseUpdateModel) => Promise<Map<string, Entitlement> | null>",
+        "parameters": [
+          {
+            "name": "purchaseUpdateModel",
+            "docs": "necessary information for purchase update",
+            "type": "PurchaseUpdateModel"
+          }
+        ],
+        "returns": "Promise<Map<string, Entitlement> | null>",
+        "tags": [
+          {
+            "name": "deprecated",
+            "text": "Use {@link purchaseProduct} function instead."
+          },
+          {
+            "name": "param",
+            "text": "purchaseUpdateModel necessary information for purchase update"
+          },
+          {
+            "name": "returns",
+            "text": "the promise with the user entitlements including updated ones."
+          },
+          {
+            "name": "see",
+            "text": " [Update policy](https://developer.android.com/google/play/billing/subscriptions#replacement-modes)"
+          },
+          {
+            "name": "see",
+            "text": " [Making Purchases](https://documentation.qonversion.io/docs/making-purchases)"
+          }
+        ],
+        "docs": "Android only. Returns `null` if called on iOS.\n\nUpdate (upgrade/downgrade) subscription on Google Play Store and validate it through server-to-server using Qonversion's Backend.",
+        "complexTypes": [
+          "Map",
+          "Entitlement",
+          "PurchaseUpdateModel"
+        ],
+        "slug": "updatepurchase"
+      },
+      {
+        "name": "products",
+        "signature": "() => Promise<Map<string, Product>>",
+        "parameters": [],
+        "returns": "Promise<Map<string, Product>>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with Qonversion products"
+          }
+        ],
+        "docs": "Returns Qonversion products in association with Apple and Google Play Store Products.",
+        "complexTypes": [
+          "Map",
+          "Product"
+        ],
+        "slug": "products"
+      },
+      {
+        "name": "offerings",
+        "signature": "() => Promise<Offerings | null>",
+        "parameters": [],
+        "returns": "Promise<Offerings | null>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with Qonversion offerings"
+          },
+          {
+            "name": "see",
+            "text": " [Offerings](https://qonversion.io/docs/offerings) for more details"
+          }
+        ],
+        "docs": "Return Qonversion Offerings Object.\n\nAn offering is a group of products that you can offer to a user on a given paywall based on your business logic.\nFor example, you can offer one set of products on a paywall immediately after onboarding and another\nset of products with discounts later on if a user has not converted.\nOfferings allow changing the products offered remotely without releasing app updates.",
+        "complexTypes": [
+          "Offerings"
+        ],
+        "slug": "offerings"
+      },
+      {
+        "name": "checkTrialIntroEligibility",
+        "signature": "(ids: string[]) => Promise<Map<string, IntroEligibility>>",
+        "parameters": [
+          {
+            "name": "ids",
+            "docs": "products identifiers that must be checked",
+            "type": "string[]"
+          }
+        ],
+        "returns": "Promise<Map<string, IntroEligibility>>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "ids products identifiers that must be checked"
+          },
+          {
+            "name": "returns",
+            "text": "the promise with eligibility map"
+          }
+        ],
+        "docs": "You can check if a user is eligible for an introductory offer, including a free trial.\nYou can show only a regular price for users who are not eligible for an introductory offer.",
+        "complexTypes": [
+          "Map",
+          "IntroEligibility"
+        ],
+        "slug": "checktrialintroeligibility"
+      },
+      {
+        "name": "checkEntitlements",
+        "signature": "() => Promise<Map<string, Entitlement>>",
+        "parameters": [],
+        "returns": "Promise<Map<string, Entitlement>>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with the entitlements\n\nIf Apple or Google servers are not responding at the time of the request, Qonversion provides the latest\nentitlements' data from its database."
+          }
+        ],
+        "docs": "You need to call the checkEntitlements method to check if a user has the required entitlement.\n\nThis method will check the user receipt and will return the current entitlements.",
+        "complexTypes": [
+          "Map",
+          "Entitlement"
+        ],
+        "slug": "checkentitlements"
+      },
+      {
+        "name": "restore",
+        "signature": "() => Promise<Map<string, Entitlement>>",
+        "parameters": [],
+        "returns": "Promise<Map<string, Entitlement>>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with the user entitlements"
+          }
+        ],
+        "docs": "Restores users purchases in your app, to maintain access to purchased content.\nUsers sometimes need to restore purchased content, such as when they upgrade to a new phone.",
+        "complexTypes": [
+          "Map",
+          "Entitlement"
+        ],
+        "slug": "restore"
+      },
+      {
+        "name": "syncPurchases",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [
+          {
+            "name": "see",
+            "text": " [Observer mode for Android SDK](https://documentation.qonversion.io/docs/observer-mode#android-sdk)"
+          }
+        ],
+        "docs": "Android only. Does nothing if called on iOS.\n\nThis method will send all purchases to the Qonversion backend. Call this every time when purchase is handled\nby your own implementation.\n\n**Warning!**\n\nThis method works for Android only.\nIt should only be called if you're using Qonversion SDK in observer mode.",
         "complexTypes": [],
-        "slug": "echo"
+        "slug": "syncpurchases"
+      },
+      {
+        "name": "identify",
+        "signature": "(userID: string) => Promise<User>",
+        "parameters": [
+          {
+            "name": "userID",
+            "docs": "unique user ID in your system",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<User>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "userID unique user ID in your system"
+          },
+          {
+            "name": "returns",
+            "text": "the promise with the information about the identified user."
+          }
+        ],
+        "docs": "Call this function to link a user to his unique ID in your system and share purchase data.",
+        "complexTypes": [
+          "User"
+        ],
+        "slug": "identify"
+      },
+      {
+        "name": "logout",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "Call this function to unlink a user from his unique ID in your system and his purchase data.",
+        "complexTypes": [],
+        "slug": "logout"
+      },
+      {
+        "name": "userInfo",
+        "signature": "() => Promise<User>",
+        "parameters": [],
+        "returns": "Promise<User>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with the information about the user."
+          }
+        ],
+        "docs": "This method returns information about the current Qonversion user.",
+        "complexTypes": [
+          "User"
+        ],
+        "slug": "userinfo"
+      },
+      {
+        "name": "remoteConfig",
+        "signature": "(contextKey: string | undefined) => Promise<RemoteConfig>",
+        "parameters": [
+          {
+            "name": "contextKey",
+            "docs": "",
+            "type": "string | undefined"
+          }
+        ],
+        "returns": "Promise<RemoteConfig>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with the remote config."
+          }
+        ],
+        "docs": "Returns Qonversion remote config object by {@link contextKey} or default one if the key is not specified.\nUse this function to get the remote config with specific payload and experiment info.",
+        "complexTypes": [
+          "RemoteConfig"
+        ],
+        "slug": "remoteconfig"
+      },
+      {
+        "name": "remoteConfigList",
+        "signature": "() => Promise<RemoteConfigList>",
+        "parameters": [],
+        "returns": "Promise<RemoteConfigList>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with the remote config list."
+          }
+        ],
+        "docs": "Returns Qonversion remote config objects for all existing context key (including empty one).\nUse this function to get the remote config with specific payload and experiment info.",
+        "complexTypes": [
+          "RemoteConfigList"
+        ],
+        "slug": "remoteconfiglist"
+      },
+      {
+        "name": "remoteConfigListForContextKeys",
+        "signature": "(contextKeys: Array<string>, includeEmptyContextKey: boolean) => Promise<RemoteConfigList>",
+        "parameters": [
+          {
+            "name": "contextKeys",
+            "docs": "list of context keys to load remote configs for",
+            "type": "string[]"
+          },
+          {
+            "name": "includeEmptyContextKey",
+            "docs": "set to true if you want to include remote config with empty context key to the result",
+            "type": "boolean"
+          }
+        ],
+        "returns": "Promise<RemoteConfigList>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "contextKeys list of context keys to load remote configs for"
+          },
+          {
+            "name": "param",
+            "text": "includeEmptyContextKey set to true if you want to include remote config with empty context key to the result"
+          },
+          {
+            "name": "returns",
+            "text": "the promise with the remote config list."
+          }
+        ],
+        "docs": "Returns Qonversion remote config objects by a list of {@link contextKeys}.\nUse this function to get the remote config with specific payload and experiment info.",
+        "complexTypes": [
+          "RemoteConfigList",
+          "Array"
+        ],
+        "slug": "remoteconfiglistforcontextkeys"
+      },
+      {
+        "name": "attachUserToExperiment",
+        "signature": "(experimentId: string, groupId: string) => Promise<void>",
+        "parameters": [
+          {
+            "name": "experimentId",
+            "docs": "identifier of the experiment",
+            "type": "string"
+          },
+          {
+            "name": "groupId",
+            "docs": "identifier of the experiment group",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "experimentId identifier of the experiment"
+          },
+          {
+            "name": "param",
+            "text": "groupId identifier of the experiment group"
+          },
+          {
+            "name": "returns",
+            "text": "the promise for success result or throws an error otherwise."
+          }
+        ],
+        "docs": "This function should be used for the test purposes only. Do not forget to delete the usage of this function before the release.\nUse this function to attach the user to the experiment.",
+        "complexTypes": [],
+        "slug": "attachusertoexperiment"
+      },
+      {
+        "name": "detachUserFromExperiment",
+        "signature": "(experimentId: string) => Promise<void>",
+        "parameters": [
+          {
+            "name": "experimentId",
+            "docs": "identifier of the experiment",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "experimentId identifier of the experiment"
+          },
+          {
+            "name": "returns",
+            "text": "the promise for success result or throws an error otherwise."
+          }
+        ],
+        "docs": "This function should be used for the test purposes only. Do not forget to delete the usage of this function before the release.\nUse this function to detach the user from the experiment.",
+        "complexTypes": [],
+        "slug": "detachuserfromexperiment"
+      },
+      {
+        "name": "attachUserToRemoteConfiguration",
+        "signature": "(remoteConfigurationId: string) => Promise<void>",
+        "parameters": [
+          {
+            "name": "remoteConfigurationId",
+            "docs": "identifier of the remote configuration",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "remoteConfigurationId identifier of the remote configuration"
+          },
+          {
+            "name": "returns",
+            "text": "the promise for success result or throws an error otherwise."
+          }
+        ],
+        "docs": "This function should be used for the test purposes only. Do not forget to delete the usage of this function before the release.\nUse this function to attach the user to the remote configuration.",
+        "complexTypes": [],
+        "slug": "attachusertoremoteconfiguration"
+      },
+      {
+        "name": "detachUserFromRemoteConfiguration",
+        "signature": "(remoteConfigurationId: string) => Promise<void>",
+        "parameters": [
+          {
+            "name": "remoteConfigurationId",
+            "docs": "identifier of the remote configuration",
+            "type": "string"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "remoteConfigurationId identifier of the remote configuration"
+          },
+          {
+            "name": "returns",
+            "text": "the promise for success result or throws an error otherwise."
+          }
+        ],
+        "docs": "This function should be used for the test purposes only. Do not forget to delete the usage of this function before the release.\nUse this function to detach the user from the remote configuration.",
+        "complexTypes": [],
+        "slug": "detachuserfromremoteconfiguration"
+      },
+      {
+        "name": "isFallbackFileAccessible",
+        "signature": "() => Promise<Boolean>",
+        "parameters": [],
+        "returns": "Promise<Boolean>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with the flag that indicates whether Qonversion was able to read data from the fallback file or not."
+          }
+        ],
+        "docs": "Call this function to check if the fallback file is accessible.",
+        "complexTypes": [
+          "Boolean"
+        ],
+        "slug": "isfallbackfileaccessible"
+      },
+      {
+        "name": "attribution",
+        "signature": "(data: Object, provider: AttributionProvider) => void",
+        "parameters": [
+          {
+            "name": "data",
+            "docs": "an object containing your attribution data",
+            "type": "Object"
+          },
+          {
+            "name": "provider",
+            "docs": "the provider to which the data will be sent",
+            "type": "AttributionProvider"
+          }
+        ],
+        "returns": "void",
+        "tags": [
+          {
+            "name": "param",
+            "text": "data an object containing your attribution data"
+          },
+          {
+            "name": "param",
+            "text": "provider the provider to which the data will be sent"
+          }
+        ],
+        "docs": "Sends your attribution {@link data} to the {@link provider}.",
+        "complexTypes": [
+          "Object",
+          "AttributionProvider"
+        ],
+        "slug": "attribution"
+      },
+      {
+        "name": "setUserProperty",
+        "signature": "(key: UserPropertyKey, value: string) => void",
+        "parameters": [
+          {
+            "name": "key",
+            "docs": "defined enum key that will be transformed to string.",
+            "type": "UserPropertyKey"
+          },
+          {
+            "name": "value",
+            "docs": "property value.",
+            "type": "string"
+          }
+        ],
+        "returns": "void",
+        "tags": [
+          {
+            "name": "param",
+            "text": "key defined enum key that will be transformed to string."
+          },
+          {
+            "name": "param",
+            "text": "value property value."
+          },
+          {
+            "name": "see",
+            "text": " [documentation](https://documentation.qonversion.io/docs/user-properties)"
+          }
+        ],
+        "docs": "Sets Qonversion reserved user properties, like email or user id\n\nUser properties are attributes you can set on a user level.\nYou can send user properties to third party platforms as well as use them in Qonversion for customer segmentation\nand analytics.\n\nNote that using {@link UserPropertyKey.CUSTOM} here will do nothing.\nTo set custom user property, use {@link setCustomUserProperty} method instead.",
+        "complexTypes": [
+          "UserPropertyKey"
+        ],
+        "slug": "setuserproperty"
+      },
+      {
+        "name": "setCustomUserProperty",
+        "signature": "(key: string, value: string) => void",
+        "parameters": [
+          {
+            "name": "key",
+            "docs": "custom user property key.",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "docs": "property value.",
+            "type": "string"
+          }
+        ],
+        "returns": "void",
+        "tags": [
+          {
+            "name": "param",
+            "text": "key custom user property key."
+          },
+          {
+            "name": "param",
+            "text": "value property value."
+          },
+          {
+            "name": "see",
+            "text": " [documentation](https://documentation.qonversion.io/docs/user-properties)"
+          }
+        ],
+        "docs": "Adds custom user property.\n\nUser properties are attributes you can set on a user level.\nYou can send user properties to third party platforms as well as use them in Qonversion for customer segmentation\nand analytics.",
+        "complexTypes": [],
+        "slug": "setcustomuserproperty"
+      },
+      {
+        "name": "userProperties",
+        "signature": "() => Promise<UserProperties>",
+        "parameters": [],
+        "returns": "Promise<UserProperties>",
+        "tags": [
+          {
+            "name": "returns",
+            "text": "the promise with the user properties"
+          }
+        ],
+        "docs": "This method returns all the properties, set for the current Qonversion user.\nAll set properties are sent to the server with delay, so if you call\nthis function right after setting some property, it may not be included\nin the result.",
+        "complexTypes": [
+          "UserProperties"
+        ],
+        "slug": "userproperties"
+      },
+      {
+        "name": "setEntitlementsUpdateListener",
+        "signature": "(listener: EntitlementsUpdateListener) => void",
+        "parameters": [
+          {
+            "name": "listener",
+            "docs": "listener to be called when entitlements update",
+            "type": "EntitlementsUpdateListener"
+          }
+        ],
+        "returns": "void",
+        "tags": [
+          {
+            "name": "param",
+            "text": "listener listener to be called when entitlements update"
+          }
+        ],
+        "docs": "Provide a listener to be notified about asynchronous user entitlements updates.\n\nMake sure you provide this listener for being up-to-date with the user entitlements.\nElse you can lose some important updates. Also, please, consider that this listener\nshould live for the whole lifetime of the application.\n\nYou may set entitlements listener both *after* Qonversion SDK initializing\nwith {@link QonversionApi.setEntitlementsUpdateListener} and *while* Qonversion initializing\nwith {@link Qonversion.initialize}.",
+        "complexTypes": [
+          "EntitlementsUpdateListener"
+        ],
+        "slug": "setentitlementsupdatelistener"
+      },
+      {
+        "name": "collectAdvertisingId",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "iOS only. Does nothing if called on Android.\n\nOn iOS 14.5+, after requesting the app tracking permission using ATT, you need to notify Qonversion if tracking\nis allowed and IDFA is available.",
+        "complexTypes": [],
+        "slug": "collectadvertisingid"
+      },
+      {
+        "name": "collectAppleSearchAdsAttribution",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "iOS only. Does nothing if called on Android.\n\nEnable attribution collection from Apple Search Ads.",
+        "complexTypes": [],
+        "slug": "collectapplesearchadsattribution"
+      },
+      {
+        "name": "setPromoPurchasesDelegate",
+        "signature": "(delegate: PromoPurchasesListener) => void",
+        "parameters": [
+          {
+            "name": "delegate",
+            "docs": "delegate to be called when event happens.",
+            "type": "PromoPurchasesListener"
+          }
+        ],
+        "returns": "void",
+        "tags": [
+          {
+            "name": "param",
+            "text": "delegate delegate to be called when event happens."
+          }
+        ],
+        "docs": "iOS only. Does nothing if called on Android.\n\nSet the delegate to handle promo purchases.\nThe delegate is called when a promo purchase from the App Store happens.",
+        "complexTypes": [
+          "PromoPurchasesListener"
+        ],
+        "slug": "setpromopurchasesdelegate"
+      },
+      {
+        "name": "presentCodeRedemptionSheet",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "iOS only. Does nothing if called on Android.\n\nOn iOS 14.0+ shows up a sheet for users to redeem App Store offer codes.",
+        "complexTypes": [],
+        "slug": "presentcoderedemptionsheet"
       }
     ],
     "properties": []
   },
-  "interfaces": [],
-  "enums": [],
-  "typeAliases": [],
+  "interfaces": [
+    {
+      "name": "Map",
+      "slug": "map",
+      "docs": "",
+      "tags": [],
+      "methods": [
+        {
+          "name": "clear",
+          "signature": "() => void",
+          "parameters": [],
+          "returns": "void",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "slug": "clear"
+        },
+        {
+          "name": "delete",
+          "signature": "(key: K) => boolean",
+          "parameters": [
+            {
+              "name": "key",
+              "docs": "",
+              "type": "K"
+            }
+          ],
+          "returns": "boolean",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "K"
+          ],
+          "slug": "delete"
+        },
+        {
+          "name": "forEach",
+          "signature": "(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any) => void",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "",
+              "type": "(value: V, key: K, map: Map<K, V>) => void"
+            },
+            {
+              "name": "thisArg",
+              "docs": "",
+              "type": "any"
+            }
+          ],
+          "returns": "void",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "V",
+            "K",
+            "Map"
+          ],
+          "slug": "foreach"
+        },
+        {
+          "name": "get",
+          "signature": "(key: K) => V | undefined",
+          "parameters": [
+            {
+              "name": "key",
+              "docs": "",
+              "type": "K"
+            }
+          ],
+          "returns": "V | undefined",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "V",
+            "K"
+          ],
+          "slug": "get"
+        },
+        {
+          "name": "has",
+          "signature": "(key: K) => boolean",
+          "parameters": [
+            {
+              "name": "key",
+              "docs": "",
+              "type": "K"
+            }
+          ],
+          "returns": "boolean",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "K"
+          ],
+          "slug": "has"
+        },
+        {
+          "name": "set",
+          "signature": "(key: K, value: V) => this",
+          "parameters": [
+            {
+              "name": "key",
+              "docs": "",
+              "type": "K"
+            },
+            {
+              "name": "value",
+              "docs": "",
+              "type": "V"
+            }
+          ],
+          "returns": "this",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "K",
+            "V"
+          ],
+          "slug": "set"
+        }
+      ],
+      "properties": [
+        {
+          "name": "size",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "Array",
+      "slug": "array",
+      "docs": "",
+      "tags": [],
+      "methods": [
+        {
+          "name": "toString",
+          "signature": "() => string",
+          "parameters": [],
+          "returns": "string",
+          "tags": [],
+          "docs": "Returns a string representation of an array.",
+          "complexTypes": [],
+          "slug": "tostring"
+        },
+        {
+          "name": "toLocaleString",
+          "signature": "() => string",
+          "parameters": [],
+          "returns": "string",
+          "tags": [],
+          "docs": "Returns a string representation of an array. The elements are converted to string using their toLocalString methods.",
+          "complexTypes": [],
+          "slug": "tolocalestring"
+        },
+        {
+          "name": "pop",
+          "signature": "() => T | undefined",
+          "parameters": [],
+          "returns": "T | undefined",
+          "tags": [],
+          "docs": "Removes the last element from an array and returns it.\r\nIf the array is empty, undefined is returned and the array is not modified.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "pop"
+        },
+        {
+          "name": "push",
+          "signature": "(...items: T[]) => number",
+          "parameters": [
+            {
+              "name": "items",
+              "docs": "New elements to add to the array.",
+              "type": "T[]"
+            }
+          ],
+          "returns": "number",
+          "tags": [
+            {
+              "name": "param",
+              "text": "items New elements to add to the array."
+            }
+          ],
+          "docs": "Appends new elements to the end of an array, and returns the new length of the array.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "push"
+        },
+        {
+          "name": "concat",
+          "signature": "(...items: ConcatArray<T>[]) => T[]",
+          "parameters": [
+            {
+              "name": "items",
+              "docs": "Additional arrays and/or items to add to the end of the array.",
+              "type": "ConcatArray<T>[]"
+            }
+          ],
+          "returns": "T[]",
+          "tags": [
+            {
+              "name": "param",
+              "text": "items Additional arrays and/or items to add to the end of the array."
+            }
+          ],
+          "docs": "Combines two or more arrays.\r\nThis method returns a new array without modifying any existing arrays.",
+          "complexTypes": [
+            "T",
+            "ConcatArray"
+          ],
+          "slug": "concat"
+        },
+        {
+          "name": "concat",
+          "signature": "(...items: (T | ConcatArray<T>)[]) => T[]",
+          "parameters": [
+            {
+              "name": "items",
+              "docs": "Additional arrays and/or items to add to the end of the array.",
+              "type": "(T | ConcatArray<T>)[]"
+            }
+          ],
+          "returns": "T[]",
+          "tags": [
+            {
+              "name": "param",
+              "text": "items Additional arrays and/or items to add to the end of the array."
+            }
+          ],
+          "docs": "Combines two or more arrays.\r\nThis method returns a new array without modifying any existing arrays.",
+          "complexTypes": [
+            "T",
+            "ConcatArray"
+          ],
+          "slug": "concat"
+        },
+        {
+          "name": "join",
+          "signature": "(separator?: string | undefined) => string",
+          "parameters": [
+            {
+              "name": "separator",
+              "docs": "A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma.",
+              "type": "string | undefined"
+            }
+          ],
+          "returns": "string",
+          "tags": [
+            {
+              "name": "param",
+              "text": "separator A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma."
+            }
+          ],
+          "docs": "Adds all the elements of an array into a string, separated by the specified separator string.",
+          "complexTypes": [],
+          "slug": "join"
+        },
+        {
+          "name": "reverse",
+          "signature": "() => T[]",
+          "parameters": [],
+          "returns": "T[]",
+          "tags": [],
+          "docs": "Reverses the elements in an array in place.\r\nThis method mutates the array and returns a reference to the same array.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "reverse"
+        },
+        {
+          "name": "shift",
+          "signature": "() => T | undefined",
+          "parameters": [],
+          "returns": "T | undefined",
+          "tags": [],
+          "docs": "Removes the first element from an array and returns it.\r\nIf the array is empty, undefined is returned and the array is not modified.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "shift"
+        },
+        {
+          "name": "slice",
+          "signature": "(start?: number | undefined, end?: number | undefined) => T[]",
+          "parameters": [
+            {
+              "name": "start",
+              "docs": "The beginning index of the specified portion of the array.\r\nIf start is undefined, then the slice begins at index 0.",
+              "type": "number | undefined"
+            },
+            {
+              "name": "end",
+              "docs": "The end index of the specified portion of the array. This is exclusive of the element at the index 'end'.\r\nIf end is undefined, then the slice extends to the end of the array.",
+              "type": "number | undefined"
+            }
+          ],
+          "returns": "T[]",
+          "tags": [
+            {
+              "name": "param",
+              "text": "start The beginning index of the specified portion of the array.\r\nIf start is undefined, then the slice begins at index 0."
+            },
+            {
+              "name": "param",
+              "text": "end The end index of the specified portion of the array. This is exclusive of the element at the index 'end'.\r\nIf end is undefined, then the slice extends to the end of the array."
+            }
+          ],
+          "docs": "Returns a copy of a section of an array.\r\nFor both start and end, a negative index can be used to indicate an offset from the end of the array.\r\nFor example, -2 refers to the second to last element of the array.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "slice"
+        },
+        {
+          "name": "sort",
+          "signature": "(compareFn?: ((a: T, b: T) => number) | undefined) => this",
+          "parameters": [
+            {
+              "name": "compareFn",
+              "docs": "Function used to determine the order of the elements. It is expected to return\r\na negative value if first argument is less than second argument, zero if they're equal and a positive\r\nvalue otherwise. If omitted, the elements are sorted in ascending, ASCII character order.\r\n```ts\r\n[11,2,22,1].sort((a, b) => a - b)\r\n```",
+              "type": "((a: T, b: T) => number) | undefined"
+            }
+          ],
+          "returns": "this",
+          "tags": [
+            {
+              "name": "param",
+              "text": "compareFn Function used to determine the order of the elements. It is expected to return\r\na negative value if first argument is less than second argument, zero if they're equal and a positive\r\nvalue otherwise. If omitted, the elements are sorted in ascending, ASCII character order.\r\n```ts\r\n[11,2,22,1].sort((a, b) => a - b)\r\n```"
+            }
+          ],
+          "docs": "Sorts an array in place.\r\nThis method mutates the array and returns a reference to the same array.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "sort"
+        },
+        {
+          "name": "splice",
+          "signature": "(start: number, deleteCount?: number | undefined) => T[]",
+          "parameters": [
+            {
+              "name": "start",
+              "docs": "The zero-based location in the array from which to start removing elements.",
+              "type": "number"
+            },
+            {
+              "name": "deleteCount",
+              "docs": "The number of elements to remove.",
+              "type": "number | undefined"
+            }
+          ],
+          "returns": "T[]",
+          "tags": [
+            {
+              "name": "param",
+              "text": "start The zero-based location in the array from which to start removing elements."
+            },
+            {
+              "name": "param",
+              "text": "deleteCount The number of elements to remove."
+            },
+            {
+              "name": "returns",
+              "text": "An array containing the elements that were deleted."
+            }
+          ],
+          "docs": "Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "splice"
+        },
+        {
+          "name": "splice",
+          "signature": "(start: number, deleteCount: number, ...items: T[]) => T[]",
+          "parameters": [
+            {
+              "name": "start",
+              "docs": "The zero-based location in the array from which to start removing elements.",
+              "type": "number"
+            },
+            {
+              "name": "deleteCount",
+              "docs": "The number of elements to remove.",
+              "type": "number"
+            },
+            {
+              "name": "items",
+              "docs": "Elements to insert into the array in place of the deleted elements.",
+              "type": "T[]"
+            }
+          ],
+          "returns": "T[]",
+          "tags": [
+            {
+              "name": "param",
+              "text": "start The zero-based location in the array from which to start removing elements."
+            },
+            {
+              "name": "param",
+              "text": "deleteCount The number of elements to remove."
+            },
+            {
+              "name": "param",
+              "text": "items Elements to insert into the array in place of the deleted elements."
+            },
+            {
+              "name": "returns",
+              "text": "An array containing the elements that were deleted."
+            }
+          ],
+          "docs": "Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "splice"
+        },
+        {
+          "name": "unshift",
+          "signature": "(...items: T[]) => number",
+          "parameters": [
+            {
+              "name": "items",
+              "docs": "Elements to insert at the start of the array.",
+              "type": "T[]"
+            }
+          ],
+          "returns": "number",
+          "tags": [
+            {
+              "name": "param",
+              "text": "items Elements to insert at the start of the array."
+            }
+          ],
+          "docs": "Inserts new elements at the start of an array, and returns the new length of the array.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "unshift"
+        },
+        {
+          "name": "indexOf",
+          "signature": "(searchElement: T, fromIndex?: number | undefined) => number",
+          "parameters": [
+            {
+              "name": "searchElement",
+              "docs": "The value to locate in the array.",
+              "type": "T"
+            },
+            {
+              "name": "fromIndex",
+              "docs": "The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0.",
+              "type": "number | undefined"
+            }
+          ],
+          "returns": "number",
+          "tags": [
+            {
+              "name": "param",
+              "text": "searchElement The value to locate in the array."
+            },
+            {
+              "name": "param",
+              "text": "fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0."
+            }
+          ],
+          "docs": "Returns the index of the first occurrence of a value in an array, or -1 if it is not present.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "indexof"
+        },
+        {
+          "name": "lastIndexOf",
+          "signature": "(searchElement: T, fromIndex?: number | undefined) => number",
+          "parameters": [
+            {
+              "name": "searchElement",
+              "docs": "The value to locate in the array.",
+              "type": "T"
+            },
+            {
+              "name": "fromIndex",
+              "docs": "The array index at which to begin searching backward. If fromIndex is omitted, the search starts at the last index in the array.",
+              "type": "number | undefined"
+            }
+          ],
+          "returns": "number",
+          "tags": [
+            {
+              "name": "param",
+              "text": "searchElement The value to locate in the array."
+            },
+            {
+              "name": "param",
+              "text": "fromIndex The array index at which to begin searching backward. If fromIndex is omitted, the search starts at the last index in the array."
+            }
+          ],
+          "docs": "Returns the index of the last occurrence of a specified value in an array, or -1 if it is not present.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "lastindexof"
+        },
+        {
+          "name": "every",
+          "signature": "<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any) => this is S[]",
+          "parameters": [
+            {
+              "name": "predicate",
+              "docs": "A function that accepts up to three arguments. The every method calls\r\nthe predicate function for each element in the array until the predicate returns a value\r\nwhich is coercible to the Boolean value false, or until the end of the array.",
+              "type": "(value: T, index: number, array: T[]) => value is S"
+            },
+            {
+              "name": "thisArg",
+              "docs": "An object to which the this keyword can refer in the predicate function.\r\nIf thisArg is omitted, undefined is used as the this value.",
+              "type": "any"
+            }
+          ],
+          "returns": "boolean",
+          "tags": [
+            {
+              "name": "param",
+              "text": "predicate A function that accepts up to three arguments. The every method calls\r\nthe predicate function for each element in the array until the predicate returns a value\r\nwhich is coercible to the Boolean value false, or until the end of the array."
+            },
+            {
+              "name": "param",
+              "text": "thisArg An object to which the this keyword can refer in the predicate function.\r\nIf thisArg is omitted, undefined is used as the this value."
+            }
+          ],
+          "docs": "Determines whether all the members of an array satisfy the specified test.",
+          "complexTypes": [
+            "T",
+            "S"
+          ],
+          "slug": "every"
+        },
+        {
+          "name": "every",
+          "signature": "(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any) => boolean",
+          "parameters": [
+            {
+              "name": "predicate",
+              "docs": "A function that accepts up to three arguments. The every method calls\r\nthe predicate function for each element in the array until the predicate returns a value\r\nwhich is coercible to the Boolean value false, or until the end of the array.",
+              "type": "(value: T, index: number, array: T[]) => unknown"
+            },
+            {
+              "name": "thisArg",
+              "docs": "An object to which the this keyword can refer in the predicate function.\r\nIf thisArg is omitted, undefined is used as the this value.",
+              "type": "any"
+            }
+          ],
+          "returns": "boolean",
+          "tags": [
+            {
+              "name": "param",
+              "text": "predicate A function that accepts up to three arguments. The every method calls\r\nthe predicate function for each element in the array until the predicate returns a value\r\nwhich is coercible to the Boolean value false, or until the end of the array."
+            },
+            {
+              "name": "param",
+              "text": "thisArg An object to which the this keyword can refer in the predicate function.\r\nIf thisArg is omitted, undefined is used as the this value."
+            }
+          ],
+          "docs": "Determines whether all the members of an array satisfy the specified test.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "every"
+        },
+        {
+          "name": "some",
+          "signature": "(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any) => boolean",
+          "parameters": [
+            {
+              "name": "predicate",
+              "docs": "A function that accepts up to three arguments. The some method calls\r\nthe predicate function for each element in the array until the predicate returns a value\r\nwhich is coercible to the Boolean value true, or until the end of the array.",
+              "type": "(value: T, index: number, array: T[]) => unknown"
+            },
+            {
+              "name": "thisArg",
+              "docs": "An object to which the this keyword can refer in the predicate function.\r\nIf thisArg is omitted, undefined is used as the this value.",
+              "type": "any"
+            }
+          ],
+          "returns": "boolean",
+          "tags": [
+            {
+              "name": "param",
+              "text": "predicate A function that accepts up to three arguments. The some method calls\r\nthe predicate function for each element in the array until the predicate returns a value\r\nwhich is coercible to the Boolean value true, or until the end of the array."
+            },
+            {
+              "name": "param",
+              "text": "thisArg An object to which the this keyword can refer in the predicate function.\r\nIf thisArg is omitted, undefined is used as the this value."
+            }
+          ],
+          "docs": "Determines whether the specified callback function returns true for any element of an array.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "some"
+        },
+        {
+          "name": "forEach",
+          "signature": "(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any) => void",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.",
+              "type": "(value: T, index: number, array: T[]) => void"
+            },
+            {
+              "name": "thisArg",
+              "docs": "An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.",
+              "type": "any"
+            }
+          ],
+          "returns": "void",
+          "tags": [
+            {
+              "name": "param",
+              "text": "callbackfn A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array."
+            },
+            {
+              "name": "param",
+              "text": "thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value."
+            }
+          ],
+          "docs": "Performs the specified action for each element in an array.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "foreach"
+        },
+        {
+          "name": "map",
+          "signature": "<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.",
+              "type": "(value: T, index: number, array: T[]) => U"
+            },
+            {
+              "name": "thisArg",
+              "docs": "An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.",
+              "type": "any"
+            }
+          ],
+          "returns": "U[]",
+          "tags": [
+            {
+              "name": "param",
+              "text": "callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array."
+            },
+            {
+              "name": "param",
+              "text": "thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value."
+            }
+          ],
+          "docs": "Calls a defined callback function on each element of an array, and returns an array that contains the results.",
+          "complexTypes": [
+            "U",
+            "T"
+          ],
+          "slug": "map"
+        },
+        {
+          "name": "filter",
+          "signature": "<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any) => S[]",
+          "parameters": [
+            {
+              "name": "predicate",
+              "docs": "A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.",
+              "type": "(value: T, index: number, array: T[]) => value is S"
+            },
+            {
+              "name": "thisArg",
+              "docs": "An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.",
+              "type": "any"
+            }
+          ],
+          "returns": "S[]",
+          "tags": [
+            {
+              "name": "param",
+              "text": "predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array."
+            },
+            {
+              "name": "param",
+              "text": "thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value."
+            }
+          ],
+          "docs": "Returns the elements of an array that meet the condition specified in a callback function.",
+          "complexTypes": [
+            "S",
+            "T"
+          ],
+          "slug": "filter"
+        },
+        {
+          "name": "filter",
+          "signature": "(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any) => T[]",
+          "parameters": [
+            {
+              "name": "predicate",
+              "docs": "A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.",
+              "type": "(value: T, index: number, array: T[]) => unknown"
+            },
+            {
+              "name": "thisArg",
+              "docs": "An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.",
+              "type": "any"
+            }
+          ],
+          "returns": "T[]",
+          "tags": [
+            {
+              "name": "param",
+              "text": "predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array."
+            },
+            {
+              "name": "param",
+              "text": "thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value."
+            }
+          ],
+          "docs": "Returns the elements of an array that meet the condition specified in a callback function.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "filter"
+        },
+        {
+          "name": "reduce",
+          "signature": "(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T) => T",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.",
+              "type": "(previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T"
+            }
+          ],
+          "returns": "T",
+          "tags": [
+            {
+              "name": "param",
+              "text": "callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array."
+            },
+            {
+              "name": "param",
+              "text": "initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value."
+            }
+          ],
+          "docs": "Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "reduce"
+        },
+        {
+          "name": "reduce",
+          "signature": "(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T) => T",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "",
+              "type": "(previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T"
+            },
+            {
+              "name": "initialValue",
+              "docs": "",
+              "type": "T"
+            }
+          ],
+          "returns": "T",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "reduce"
+        },
+        {
+          "name": "reduce",
+          "signature": "<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U) => U",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.",
+              "type": "(previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U"
+            },
+            {
+              "name": "initialValue",
+              "docs": "If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.",
+              "type": "U"
+            }
+          ],
+          "returns": "U",
+          "tags": [
+            {
+              "name": "param",
+              "text": "callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array."
+            },
+            {
+              "name": "param",
+              "text": "initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value."
+            }
+          ],
+          "docs": "Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.",
+          "complexTypes": [
+            "U",
+            "T"
+          ],
+          "slug": "reduce"
+        },
+        {
+          "name": "reduceRight",
+          "signature": "(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T) => T",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.",
+              "type": "(previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T"
+            }
+          ],
+          "returns": "T",
+          "tags": [
+            {
+              "name": "param",
+              "text": "callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array."
+            },
+            {
+              "name": "param",
+              "text": "initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value."
+            }
+          ],
+          "docs": "Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "reduceright"
+        },
+        {
+          "name": "reduceRight",
+          "signature": "(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T) => T",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "",
+              "type": "(previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T"
+            },
+            {
+              "name": "initialValue",
+              "docs": "",
+              "type": "T"
+            }
+          ],
+          "returns": "T",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "reduceright"
+        },
+        {
+          "name": "reduceRight",
+          "signature": "<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U) => U",
+          "parameters": [
+            {
+              "name": "callbackfn",
+              "docs": "A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.",
+              "type": "(previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U"
+            },
+            {
+              "name": "initialValue",
+              "docs": "If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.",
+              "type": "U"
+            }
+          ],
+          "returns": "U",
+          "tags": [
+            {
+              "name": "param",
+              "text": "callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array."
+            },
+            {
+              "name": "param",
+              "text": "initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value."
+            }
+          ],
+          "docs": "Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.",
+          "complexTypes": [
+            "U",
+            "T"
+          ],
+          "slug": "reduceright"
+        }
+      ],
+      "properties": [
+        {
+          "name": "length",
+          "tags": [],
+          "docs": "Gets or sets the length of the array. This is a number one higher than the highest index in the array.",
+          "complexTypes": [],
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "ConcatArray",
+      "slug": "concatarray",
+      "docs": "",
+      "tags": [],
+      "methods": [
+        {
+          "name": "join",
+          "signature": "(separator?: string | undefined) => string",
+          "parameters": [
+            {
+              "name": "separator",
+              "docs": "",
+              "type": "string | undefined"
+            }
+          ],
+          "returns": "string",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "slug": "join"
+        },
+        {
+          "name": "slice",
+          "signature": "(start?: number | undefined, end?: number | undefined) => T[]",
+          "parameters": [
+            {
+              "name": "start",
+              "docs": "",
+              "type": "number | undefined"
+            },
+            {
+              "name": "end",
+              "docs": "",
+              "type": "number | undefined"
+            }
+          ],
+          "returns": "T[]",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "T"
+          ],
+          "slug": "slice"
+        }
+      ],
+      "properties": [
+        {
+          "name": "length",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "Boolean",
+      "slug": "boolean",
+      "docs": "",
+      "tags": [],
+      "methods": [
+        {
+          "name": "valueOf",
+          "signature": "() => boolean",
+          "parameters": [],
+          "returns": "boolean",
+          "tags": [],
+          "docs": "Returns the primitive value of the specified object.",
+          "complexTypes": [],
+          "slug": "valueof"
+        }
+      ],
+      "properties": []
+    },
+    {
+      "name": "Object",
+      "slug": "object",
+      "docs": "Provides functionality common to all JavaScript objects.",
+      "tags": [],
+      "methods": [
+        {
+          "name": "toString",
+          "signature": "() => string",
+          "parameters": [],
+          "returns": "string",
+          "tags": [],
+          "docs": "Returns a string representation of an object.",
+          "complexTypes": [],
+          "slug": "tostring"
+        },
+        {
+          "name": "toLocaleString",
+          "signature": "() => string",
+          "parameters": [],
+          "returns": "string",
+          "tags": [],
+          "docs": "Returns a date converted to a string using the current locale.",
+          "complexTypes": [],
+          "slug": "tolocalestring"
+        },
+        {
+          "name": "valueOf",
+          "signature": "() => Object",
+          "parameters": [],
+          "returns": "Object",
+          "tags": [],
+          "docs": "Returns the primitive value of the specified object.",
+          "complexTypes": [
+            "Object"
+          ],
+          "slug": "valueof"
+        },
+        {
+          "name": "hasOwnProperty",
+          "signature": "(v: PropertyKey) => boolean",
+          "parameters": [
+            {
+              "name": "v",
+              "docs": "A property name.",
+              "type": "PropertyKey"
+            }
+          ],
+          "returns": "boolean",
+          "tags": [
+            {
+              "name": "param",
+              "text": "v A property name."
+            }
+          ],
+          "docs": "Determines whether an object has a property with the specified name.",
+          "complexTypes": [
+            "PropertyKey"
+          ],
+          "slug": "hasownproperty"
+        },
+        {
+          "name": "isPrototypeOf",
+          "signature": "(v: Object) => boolean",
+          "parameters": [
+            {
+              "name": "v",
+              "docs": "Another object whose prototype chain is to be checked.",
+              "type": "Object"
+            }
+          ],
+          "returns": "boolean",
+          "tags": [
+            {
+              "name": "param",
+              "text": "v Another object whose prototype chain is to be checked."
+            }
+          ],
+          "docs": "Determines whether an object exists in another object's prototype chain.",
+          "complexTypes": [
+            "Object"
+          ],
+          "slug": "isprototypeof"
+        },
+        {
+          "name": "propertyIsEnumerable",
+          "signature": "(v: PropertyKey) => boolean",
+          "parameters": [
+            {
+              "name": "v",
+              "docs": "A property name.",
+              "type": "PropertyKey"
+            }
+          ],
+          "returns": "boolean",
+          "tags": [
+            {
+              "name": "param",
+              "text": "v A property name."
+            }
+          ],
+          "docs": "Determines whether a specified property is enumerable.",
+          "complexTypes": [
+            "PropertyKey"
+          ],
+          "slug": "propertyisenumerable"
+        }
+      ],
+      "properties": [
+        {
+          "name": "constructor",
+          "tags": [],
+          "docs": "The initial value of Object.prototype.constructor is the standard built-in Object constructor.",
+          "complexTypes": [
+            "Function"
+          ],
+          "type": "Function"
+        }
+      ]
+    },
+    {
+      "name": "Function",
+      "slug": "function",
+      "docs": "Creates a new function.",
+      "tags": [],
+      "methods": [
+        {
+          "name": "apply",
+          "signature": "(this: Function, thisArg: any, argArray?: any) => any",
+          "parameters": [
+            {
+              "name": "thisArg",
+              "docs": "The object to be used as the this object.",
+              "type": "any"
+            },
+            {
+              "name": "argArray",
+              "docs": "A set of arguments to be passed to the function.",
+              "type": "any"
+            }
+          ],
+          "returns": "any",
+          "tags": [
+            {
+              "name": "param",
+              "text": "thisArg The object to be used as the this object."
+            },
+            {
+              "name": "param",
+              "text": "argArray A set of arguments to be passed to the function."
+            }
+          ],
+          "docs": "Calls the function, substituting the specified object for the this value of the function, and the specified array for the arguments of the function.",
+          "complexTypes": [
+            "Function"
+          ],
+          "slug": "apply"
+        },
+        {
+          "name": "call",
+          "signature": "(this: Function, thisArg: any, ...argArray: any[]) => any",
+          "parameters": [
+            {
+              "name": "thisArg",
+              "docs": "The object to be used as the current object.",
+              "type": "any"
+            },
+            {
+              "name": "argArray",
+              "docs": "A list of arguments to be passed to the method.",
+              "type": "any[]"
+            }
+          ],
+          "returns": "any",
+          "tags": [
+            {
+              "name": "param",
+              "text": "thisArg The object to be used as the current object."
+            },
+            {
+              "name": "param",
+              "text": "argArray A list of arguments to be passed to the method."
+            }
+          ],
+          "docs": "Calls a method of an object, substituting another object for the current object.",
+          "complexTypes": [
+            "Function"
+          ],
+          "slug": "call"
+        },
+        {
+          "name": "bind",
+          "signature": "(this: Function, thisArg: any, ...argArray: any[]) => any",
+          "parameters": [
+            {
+              "name": "thisArg",
+              "docs": "An object to which the this keyword can refer inside the new function.",
+              "type": "any"
+            },
+            {
+              "name": "argArray",
+              "docs": "A list of arguments to be passed to the new function.",
+              "type": "any[]"
+            }
+          ],
+          "returns": "any",
+          "tags": [
+            {
+              "name": "param",
+              "text": "thisArg An object to which the this keyword can refer inside the new function."
+            },
+            {
+              "name": "param",
+              "text": "argArray A list of arguments to be passed to the new function."
+            }
+          ],
+          "docs": "For a given function, creates a bound function that has the same body as the original function.\r\nThe this object of the bound function is associated with the specified object, and has the specified initial parameters.",
+          "complexTypes": [
+            "Function"
+          ],
+          "slug": "bind"
+        },
+        {
+          "name": "toString",
+          "signature": "() => string",
+          "parameters": [],
+          "returns": "string",
+          "tags": [],
+          "docs": "Returns a string representation of a function.",
+          "complexTypes": [],
+          "slug": "tostring"
+        }
+      ],
+      "properties": [
+        {
+          "name": "prototype",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "any"
+        },
+        {
+          "name": "length",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "number"
+        },
+        {
+          "name": "arguments",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "any"
+        },
+        {
+          "name": "caller",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "Function"
+          ],
+          "type": "Function"
+        }
+      ]
+    },
+    {
+      "name": "EntitlementsUpdateListener",
+      "slug": "entitlementsupdatelistener",
+      "docs": "",
+      "tags": [],
+      "methods": [
+        {
+          "name": "onEntitlementsUpdated",
+          "signature": "(entitlements: Map<string, Entitlement>) => void",
+          "parameters": [
+            {
+              "name": "entitlements",
+              "docs": "all the client's entitlements after update.",
+              "type": "Map<string, Entitlement>"
+            }
+          ],
+          "returns": "void",
+          "tags": [
+            {
+              "name": "param",
+              "text": "entitlements all the client's entitlements after update."
+            }
+          ],
+          "docs": "Called when entitlements update.\nFor example, when pending purchases like SCA, Ask to buy, etc., happen.",
+          "complexTypes": [
+            "Map",
+            "Entitlement"
+          ],
+          "slug": "onentitlementsupdated"
+        }
+      ],
+      "properties": []
+    },
+    {
+      "name": "PromoPurchasesListener",
+      "slug": "promopurchaseslistener",
+      "docs": "",
+      "tags": [],
+      "methods": [
+        {
+          "name": "onPromoPurchaseReceived",
+          "signature": "(productId: string, promoPurchaseExecutor: () => Promise<Map<string, Entitlement>>) => void",
+          "parameters": [
+            {
+              "name": "productId",
+              "docs": "StoreKit product identifier.",
+              "type": "string"
+            },
+            {
+              "name": "promoPurchaseExecutor",
+              "docs": "a function that will start a promo purchase flow.",
+              "type": "() => Promise<Map<string, Entitlement>>"
+            }
+          ],
+          "returns": "void",
+          "tags": [
+            {
+              "name": "param",
+              "text": "productId StoreKit product identifier."
+            },
+            {
+              "name": "param",
+              "text": "promoPurchaseExecutor a function that will start a promo purchase flow."
+            }
+          ],
+          "docs": "Fired each time a promo purchase from the App Store happens.\nCall {@param promoPurchaseExecutor} in case of your app is ready to start promo purchase.\nOr cache that executor and call later when you need.",
+          "complexTypes": [
+            "Map",
+            "Entitlement"
+          ],
+          "slug": "onpromopurchasereceived"
+        }
+      ],
+      "properties": []
+    }
+  ],
+  "enums": [
+    {
+      "name": "AttributionProvider",
+      "slug": "attributionprovider",
+      "members": [
+        {
+          "name": "APPSFLYER",
+          "value": "\"AppsFlyer\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "BRANCH",
+          "value": "\"Branch\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "ADJUST",
+          "value": "\"Adjust\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "APPLE_SEARCH_ADS",
+          "value": "\"AppleSearchAds\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "APPLE_AD_SERVICES",
+          "value": "\"AppleAdServices\"",
+          "tags": [],
+          "docs": ""
+        }
+      ]
+    },
+    {
+      "name": "UserPropertyKey",
+      "slug": "userpropertykey",
+      "members": [
+        {
+          "name": "EMAIL",
+          "value": "\"Email\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "NAME",
+          "value": "\"Name\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "KOCHAVA_DEVICE_ID",
+          "value": "\"KochavaDeviceId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "APPS_FLYER_USER_ID",
+          "value": "\"AppsFlyerUserId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "ADJUST_AD_ID",
+          "value": "\"AdjustAdId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "CUSTOM_USER_ID",
+          "value": "\"CustomUserId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "FACEBOOK_ATTRIBUTION",
+          "value": "\"FacebookAttribution\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "FIREBASE_APP_INSTANCE_ID",
+          "value": "\"FirebaseAppInstanceId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "APP_SET_ID",
+          "value": "\"AppSetId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "ADVERTISING_ID",
+          "value": "\"AdvertisingId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "APP_METRICA_DEVICE_ID",
+          "value": "\"AppMetricaDeviceId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "APP_METRICA_USER_PROFILE_ID",
+          "value": "\"AppMetricaUserProfileId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "PUSH_WOOSH_HW_ID",
+          "value": "\"PushWooshHwId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "PUSH_WOOSH_USER_ID",
+          "value": "\"PushWooshUserId\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "CUSTOM",
+          "value": "\"Custom\"",
+          "tags": [],
+          "docs": ""
+        }
+      ]
+    }
+  ],
+  "typeAliases": [
+    {
+      "name": "PropertyKey",
+      "slug": "propertykey",
+      "docs": "",
+      "types": [
+        {
+          "text": "string",
+          "complexTypes": []
+        },
+        {
+          "text": "number",
+          "complexTypes": []
+        },
+        {
+          "text": "symbol",
+          "complexTypes": []
+        }
+      ]
+    }
+  ],
   "pluginConfigs": []
 }

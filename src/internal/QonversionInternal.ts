@@ -23,8 +23,8 @@ import { Plugins } from '@capacitor/core';
 const { QonversionNative } = Plugins;
 const sdkVersion = "0.0.1";
 
-const EVENT_ENTITLEMENTS_UPDATED = "entitlements_updated";
-const EVENT_PROMO_PURCHASE_RECEIVED = "promo_purchase_received";
+// const EVENT_ENTITLEMENTS_UPDATED = "entitlements_updated";
+// const EVENT_PROMO_PURCHASE_RECEIVED = "promo_purchase_received";
 
 // const QonversionNative = registerPlugin<QonversionPlugin>('Qonversion');
 
