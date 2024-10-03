@@ -10,7 +10,10 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync": "npx cap sync",
+    "runIos": "npx cap run ios",
+    "runAndroid": "npx cap run android"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",
