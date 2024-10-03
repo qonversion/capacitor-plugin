@@ -1,6 +1,6 @@
 import {QonversionErrorCode} from './enums';
 
-class QonversionError {
+export class QonversionError {
   code: QonversionErrorCode;
   domain?: string;
   description: string;
@@ -18,5 +18,3 @@ class QonversionError {
     this.additionalMessage = additionalMessage;
   }
 }
-
-export default QonversionError;

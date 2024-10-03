@@ -1,11 +1,11 @@
-import ProductPricingPhase from "./ProductPricingPhase";
-import ProductInstallmentPlanDetails from './ProductInstallmentPlanDetails';
+import {ProductPricingPhase} from "./ProductPricingPhase";
+import {ProductInstallmentPlanDetails} from './ProductInstallmentPlanDetails';
 
 /**
  * This class contains all the information about the Google subscription offer details.
  * It might be either a plain base plan details or a base plan with the concrete offer details.
  */
-class ProductOfferDetails {
+export class ProductOfferDetails {
   /**
    * The identifier of the current base plan.
    */
@@ -98,5 +98,3 @@ class ProductOfferDetails {
     this.hasTrialOrIntro = hasTrialOrIntro;
   }
 }
-
-export default ProductOfferDetails;

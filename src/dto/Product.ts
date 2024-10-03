@@ -1,13 +1,13 @@
 import {ProductType, PurchaseUpdatePolicy} from "./enums";
-import SKProduct from "./storeProducts/SKProduct";
-import SkuDetails from "./storeProducts/SkuDetails";
-import ProductStoreDetails from "./storeProducts/ProductStoreDetails";
-import ProductOfferDetails from './storeProducts/ProductOfferDetails';
-import PurchaseModel from './PurchaseModel';
-import PurchaseUpdateModel from './PurchaseUpdateModel';
-import SubscriptionPeriod from './SubscriptionPeriod';
+import {SKProduct} from "./storeProducts/SKProduct";
+import {SkuDetails} from "./storeProducts/SkuDetails";
+import {ProductStoreDetails} from "./storeProducts/ProductStoreDetails";
+import {ProductOfferDetails} from './storeProducts/ProductOfferDetails';
+import {PurchaseModel} from './PurchaseModel';
+import {PurchaseUpdateModel} from './PurchaseUpdateModel';
+import {SubscriptionPeriod} from './SubscriptionPeriod';
 
-class Product {
+export class Product {
   qonversionID: string;
   storeID: string | null;
 
@@ -155,5 +155,3 @@ class Product {
     return new PurchaseUpdateModel(this.qonversionID, oldProductId, updatePolicy);
   }
 }
-
-export default Product;

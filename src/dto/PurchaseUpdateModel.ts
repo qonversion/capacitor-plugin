@@ -13,7 +13,7 @@ import {PurchaseUpdatePolicy} from './enums';
  * If you want to remove any intro/trial offer from the purchase on Android (use only a bare base plan),
  * call the {@link removeOffer} method.
  */
-class PurchaseUpdateModel {
+export class PurchaseUpdateModel {
 
   public readonly productId: string;
   public readonly oldProductId: string;
@@ -39,5 +39,3 @@ class PurchaseUpdateModel {
     return this;
   }
 }
-
-export default PurchaseUpdateModel;

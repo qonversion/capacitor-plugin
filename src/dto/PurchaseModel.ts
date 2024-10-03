@@ -8,7 +8,7 @@
  * If you want to remove any intro/trial offer from the purchase on Android (use only a bare base plan),
  * call the {@link removeOffer} method.
  */
-class PurchaseModel {
+export class PurchaseModel {
 
   public readonly productId: string;
   public offerId: string | null = null;
@@ -25,5 +25,3 @@ class PurchaseModel {
     return this;
   }
 }
-
-export default PurchaseModel;

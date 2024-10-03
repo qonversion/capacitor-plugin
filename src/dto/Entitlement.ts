@@ -1,7 +1,7 @@
-import {EntitlementSource, EntitlementRenewState, EntitlementGrantType} from "./enums";
-import Transaction from "./Transaction";
+import {EntitlementSource, EntitlementRenewState, EntitlementGrantType} from './enums';
+import {Transaction} from './Transaction';
 
-class Entitlement {
+export class Entitlement {
   id: string;
   productId: string;
   isActive: boolean;
@@ -53,5 +53,3 @@ class Entitlement {
     this.lastActivatedOfferCode = lastActivatedOfferCode;
   }
 }
-
-export default Entitlement;

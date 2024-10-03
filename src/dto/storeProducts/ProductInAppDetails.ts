@@ -1,9 +1,9 @@
-import ProductPrice from "./ProductPrice";
+import {ProductPrice} from "./ProductPrice";
 
 /**
  * This class contains all the information about the Google in-app product details.
  */
-class ProductInAppDetails {
+export class ProductInAppDetails {
   /**
    * The price of the in-app product.
    */
@@ -13,5 +13,3 @@ class ProductInAppDetails {
     this.price = price;
   }
 }
-
-export default ProductInAppDetails;

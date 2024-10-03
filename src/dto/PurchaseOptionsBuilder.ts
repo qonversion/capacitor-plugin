@@ -1,9 +1,9 @@
-import Product from "./Product";
-import {PurchaseUpdatePolicy} from "./enums";
-import ProductOfferDetails from "./storeProducts/ProductOfferDetails";
-import PurchaseOptions from "./PurchaseOptions";
+import {Product} from './Product';
+import {PurchaseUpdatePolicy} from './enums';
+import {ProductOfferDetails} from './storeProducts/ProductOfferDetails';
+import {PurchaseOptions} from './PurchaseOptions';
 
-class PurchaseOptionsBuilder {
+export class PurchaseOptionsBuilder {
     private offerId: string | null = null;
     private applyOffer: boolean = true;
     private oldProduct: Product | null = null;
@@ -103,5 +103,3 @@ class PurchaseOptionsBuilder {
         return new PurchaseOptions(this.offerId, this.applyOffer, this.oldProduct, this.updatePolicy, this.contextKeys, this.quantity);
     }
 }
-
-export default PurchaseOptionsBuilder;

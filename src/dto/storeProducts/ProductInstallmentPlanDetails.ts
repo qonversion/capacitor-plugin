@@ -1,7 +1,7 @@
 /**
  * This class represents the details about the installment plan for a subscription product.
  */
-class ProductInstallmentPlanDetails {
+export class ProductInstallmentPlanDetails {
   /**
    * Committed payments count after a user signs up for this subscription plan.
    */
@@ -24,5 +24,3 @@ class ProductInstallmentPlanDetails {
     this.subsequentCommitmentPaymentsCount = subsequentCommitmentPaymentsCount;
   }
 }
-
-export default ProductInstallmentPlanDetails;

@@ -1,11 +1,11 @@
-import SubscriptionPeriod from "../SubscriptionPeriod";
-import ProductPrice from "./ProductPrice";
-import {PricingPhaseRecurrenceMode, PricingPhaseType} from "../enums";
+import {SubscriptionPeriod} from '../SubscriptionPeriod';
+import {ProductPrice} from './ProductPrice';
+import {PricingPhaseRecurrenceMode, PricingPhaseType} from '../enums';
 
 /**
  * This class represents a pricing phase, describing how a user pays at a point in time.
  */
-class ProductPricingPhase {
+export class ProductPricingPhase {
   /**
    * Price for the current phase.
    */
@@ -67,5 +67,3 @@ class ProductPricingPhase {
     this.isBasePlan = isBasePlan;
   }
 }
-
-export default ProductPricingPhase;

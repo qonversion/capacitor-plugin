@@ -268,49 +268,6 @@ export enum ActionResultType {
   CLOSE = "close",
 }
 
-export enum AutomationsEventType {
-  UNKNOWN = "unknown",
-  TRIAL_STARTED = "trial_started",
-  TRIAL_CONVERTED = "trial_converted",
-  TRIAL_CANCELED = "trial_canceled",
-  TRIAL_BILLING_RETRY = "trial_billing_retry_entered",
-  SUBSCRIPTION_STARTED = "subscription_started",
-  SUBSCRIPTION_RENEWED = "subscription_renewed",
-  SUBSCRIPTION_REFUNDED = "subscription_refunded",
-  SUBSCRIPTION_CANCELED = "subscription_canceled",
-  SUBSCRIPTION_BILLING_RETRY = "subscription_billing_retry_entered",
-  IN_APP_PURCHASE = "in_app_purchase",
-  SUBSCRIPTION_UPGRADED = "subscription_upgraded",
-  TRIAL_STILL_ACTIVE = "trial_still_active",
-  TRIAL_EXPIRED = "trial_expired",
-  SUBSCRIPTION_EXPIRED = "subscription_expired",
-  SUBSCRIPTION_DOWNGRADED = "subscription_downgraded",
-  SUBSCRIPTION_PRODUCT_CHANGED = "subscription_product_changed",
-}
-
-export enum ScreenPresentationStyle {
-  /**
-   * on Android - default screen transaction animation will be used.
-   * on iOS - not a modal presentation. This style pushes a controller to a current navigation stack.
-   * For iOS NavigationController on the top of the stack is required.
-   */
-  PUSH = 'Push',
-  /**
-   * on Android - screen will move from bottom to top.
-   * on iOS - UIModalPresentationFullScreen analog.
-   */
-  FULL_SCREEN = 'FullScreen',
-  /**
-   * iOS only - UIModalPresentationPopover analog
-   */
-  POPOVER = 'Popover',
-  /**
-   * Android only - screen will appear/disappear without any animation.
-   * For iOS consider providing the {@link ScreenPresentationConfig.animated} flag.
-   */
-  NO_ANIMATION = 'NoAnimation',
-}
-
 export enum QonversionErrorCode {
   UNKNOWN = "Unknown", // Unknown error
   API_RATE_LIMIT_EXCEEDED = "ApiRateLimitExceeded", // API requests rate limit exceeded

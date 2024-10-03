@@ -1,7 +1,7 @@
 import {RemoteConfigurationAssignmentType, RemoteConfigurationSourceType} from "./enums";
 
 
-class RemoteConfigurationSource {
+export class RemoteConfigurationSource {
     id: string;
     name: string;
     type: RemoteConfigurationSourceType;
@@ -22,5 +22,3 @@ class RemoteConfigurationSource {
         this.contextKey = contextKey;
     }
 }
-
-export default RemoteConfigurationSource;

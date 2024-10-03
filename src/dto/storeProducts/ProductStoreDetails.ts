@@ -1,12 +1,12 @@
 import {ProductType} from "../enums";
-import ProductOfferDetails from "./ProductOfferDetails";
-import ProductInAppDetails from "./ProductInAppDetails";
+import {ProductOfferDetails} from "./ProductOfferDetails";
+import {ProductInAppDetails} from "./ProductInAppDetails";
 
 /**
  * This class contains all the information about the concrete Google product,
  * either subscription or in-app. In case of a subscription also determines concrete base plan.
  */
-class ProductStoreDetails {
+export class ProductStoreDetails {
   /**
    * Identifier of the base plan to which these details relate.
    * Null for in-app products.
@@ -147,5 +147,3 @@ class ProductStoreDetails {
     this.isInstallment = isInstallment;
   }
 }
-
-export default ProductStoreDetails;

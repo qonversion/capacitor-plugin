@@ -1,6 +1,6 @@
-import {TransactionEnvironment, TransactionOwnershipType, TransactionType} from "./enums";
+import {TransactionEnvironment, TransactionOwnershipType, TransactionType} from './enums';
 
-class Transaction {
+export class Transaction {
     originalTransactionId: string;
     transactionId: string;
     transactionDate: Date;
@@ -33,5 +33,3 @@ class Transaction {
         this.offerCode = offerCode;
     }
 }
-
-export default Transaction;

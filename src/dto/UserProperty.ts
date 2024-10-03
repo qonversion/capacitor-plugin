@@ -1,7 +1,7 @@
 import {UserPropertyKey} from './enums';
 import mapper from '../internal/Mapper';
 
-class UserProperty {
+export class UserProperty {
   key: string;
   value: string;
 
@@ -17,5 +17,3 @@ class UserProperty {
     this.definedKey = mapper.convertDefinedUserPropertyKey(key);
   }
 }
-
-export default UserProperty;

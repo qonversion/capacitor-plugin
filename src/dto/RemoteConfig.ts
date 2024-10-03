@@ -1,7 +1,7 @@
-import Experiment from "./Experiment";
-import RemoteConfigurationSource from "./RemoteConfigurationSource";
+import {Experiment} from './Experiment';
+import {RemoteConfigurationSource} from './RemoteConfigurationSource';
 
-class RemoteConfig {
+export class RemoteConfig {
     payload: Map<string, Object>;
     experiment?: Experiment | null;
     source: RemoteConfigurationSource;
@@ -12,5 +12,3 @@ class RemoteConfig {
         this.source = source;
     }
 }
-
-export default RemoteConfig;

@@ -1,8 +1,8 @@
 import {EntitlementsCacheLifetime, Environment, LaunchMode} from './dto/enums';
 import {EntitlementsUpdateListener} from './dto/EntitlementsUpdateListener';
-import QonversionConfig from './QonversionConfig';
+import {QonversionConfig} from './QonversionConfig';
 
-class QonversionConfigBuilder {
+export class QonversionConfigBuilder {
   private readonly projectKey: string;
   private readonly launchMode: LaunchMode;
 
@@ -98,5 +98,3 @@ class QonversionConfigBuilder {
     )
   }
 }
-
-export default QonversionConfigBuilder;

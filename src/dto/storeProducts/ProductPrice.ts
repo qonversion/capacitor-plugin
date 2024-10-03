@@ -1,7 +1,7 @@
 /**
  * Information about the Google product's price.
  */
-class ProductPrice {
+export class ProductPrice {
   /**
    * Total amount of money in micro-units,
    * where 1,000,000 micro-units equal one unit of the currency.
@@ -42,5 +42,3 @@ class ProductPrice {
     this.currencySymbol = currencySymbol;
   }
 }
-
-export default ProductPrice;

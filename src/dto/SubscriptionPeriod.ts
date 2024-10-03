@@ -3,7 +3,7 @@ import {SubscriptionPeriodUnit} from "./enums";
 /**
  * A class describing a subscription period
  */
-class SubscriptionPeriod {
+export class SubscriptionPeriod {
   /**
    * A count of subsequent intervals.
    */
@@ -29,5 +29,3 @@ class SubscriptionPeriod {
     this.iso = iso;
   }
 }
-
-export default SubscriptionPeriod;

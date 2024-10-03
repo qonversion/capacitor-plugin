@@ -1,5 +1,4 @@
 import {
-  AutomationsEventType,
   EntitlementGrantType,
   EntitlementRenewState,
   EntitlementSource,
@@ -21,35 +20,33 @@ import {
   TransactionType,
   UserPropertyKey,
 } from "../dto/enums";
-import IntroEligibility from "../dto/IntroEligibility";
-import Offering from "../dto/Offering";
-import Offerings from "../dto/Offerings";
-import Entitlement from "../dto/Entitlement";
-import Product from "../dto/Product";
-import SKProduct from "../dto/storeProducts/SKProduct";
-import SKProductDiscount from "../dto/storeProducts/SKProductDiscount";
-import SKSubscriptionPeriod from "../dto/storeProducts/SKSubscriptionPeriod";
-import SkuDetails from "../dto/storeProducts/SkuDetails";
-import ActionResult from "../dto/ActionResult";
-import QonversionError from "../dto/QonversionError";
-import AutomationsEvent from "../dto/AutomationsEvent";
-import User from '../dto/User';
-import {ScreenPresentationConfig} from '../dto/ScreenPresentationConfig';
-import Experiment from "../dto/Experiment";
-import ExperimentGroup from "../dto/ExperimentGroup";
-import SubscriptionPeriod from "../dto/SubscriptionPeriod";
-import RemoteConfig from "../dto/RemoteConfig";
-import RemoteConfigList from '../dto/RemoteConfigList';
-import UserProperties from '../dto/UserProperties';
-import UserProperty from '../dto/UserProperty';
-import RemoteConfigurationSource from "../dto/RemoteConfigurationSource";
-import Transaction from "../dto/Transaction";
-import ProductStoreDetails from "../dto/storeProducts/ProductStoreDetails";
-import ProductOfferDetails from "../dto/storeProducts/ProductOfferDetails";
-import ProductInAppDetails from "../dto/storeProducts/ProductInAppDetails";
-import ProductPrice from "../dto/storeProducts/ProductPrice";
-import ProductPricingPhase from "../dto/storeProducts/ProductPricingPhase";
-import ProductInstallmentPlanDetails from '../dto/storeProducts/ProductInstallmentPlanDetails';
+import {IntroEligibility} from "../dto/IntroEligibility";
+import {Offering} from "../dto/Offering";
+import {Offerings} from "../dto/Offerings";
+import {Entitlement} from "../dto/Entitlement";
+import {Product} from "../dto/Product";
+import {SKProduct} from "../dto/storeProducts/SKProduct";
+import {SKProductDiscount} from "../dto/storeProducts/SKProductDiscount";
+import {SKSubscriptionPeriod} from "../dto/storeProducts/SKSubscriptionPeriod";
+import {SkuDetails} from "../dto/storeProducts/SkuDetails";
+import {ActionResult} from "../dto/ActionResult";
+import {QonversionError} from "../dto/QonversionError";
+import {User} from '../dto/User';
+import {Experiment} from "../dto/Experiment";
+import {ExperimentGroup} from "../dto/ExperimentGroup";
+import {SubscriptionPeriod} from "../dto/SubscriptionPeriod";
+import {RemoteConfig} from "../dto/RemoteConfig";
+import {RemoteConfigList} from '../dto/RemoteConfigList';
+import {UserProperties} from '../dto/UserProperties';
+import {UserProperty} from '../dto/UserProperty';
+import {RemoteConfigurationSource} from "../dto/RemoteConfigurationSource";
+import {Transaction} from "../dto/Transaction";
+import {ProductStoreDetails} from "../dto/storeProducts/ProductStoreDetails";
+import {ProductOfferDetails} from "../dto/storeProducts/ProductOfferDetails";
+import {ProductInAppDetails} from "../dto/storeProducts/ProductInAppDetails";
+import {ProductPrice} from "../dto/storeProducts/ProductPrice";
+import {ProductPricingPhase} from "../dto/storeProducts/ProductPricingPhase";
+import {ProductInstallmentPlanDetails} from '../dto/storeProducts/ProductInstallmentPlanDetails';
 
 type QProduct = {
   id: string;
@@ -233,11 +230,6 @@ type QOffering = {
   id: string;
   tag: keyof typeof OfferingTag;
   products: Array<QProduct>;
-};
-
-type QAutomationsEvent = {
-  type: AutomationsEventType;
-  timestamp: number;
 };
 
 type QUser = {
@@ -995,15 +987,6 @@ class Mapper {
     );
   }
 
-  static convertAutomationsEvent(
-    automationsEvent: QAutomationsEvent
-  ): AutomationsEvent {
-    return new AutomationsEvent(
-      automationsEvent.type,
-      automationsEvent.timestamp
-    );
-  }
-
   static convertUserInfo(user: QUser): User {
     return new User(user.qonversionId, user.identityId);
   }
@@ -1068,13 +1051,6 @@ class Mapper {
       default:
         return ExperimentGroupType.UNKNOWN;
     }
-  }
-
-  static convertScreenPresentationConfig(config: ScreenPresentationConfig): Object {
-    return {
-      presentationStyle: config.presentationStyle,
-      animated: config.animated ? '1' : '0',
-    };
   }
 
   static convertErrorCode(code: string): QonversionErrorCode {

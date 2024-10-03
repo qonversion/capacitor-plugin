@@ -1,7 +1,7 @@
-import Product from "./Product";
+import {Product} from "./Product";
 import {PurchaseUpdatePolicy} from "./enums";
 
-class PurchaseOptions {
+export class PurchaseOptions {
     public readonly offerId: string | null;
     public readonly applyOffer: boolean;
     public readonly oldProduct: Product | null;
@@ -25,5 +25,3 @@ class PurchaseOptions {
         this.quantity = quantity;
     }
 }
-
-export default PurchaseOptions;

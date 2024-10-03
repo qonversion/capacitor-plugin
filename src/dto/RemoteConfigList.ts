@@ -1,6 +1,6 @@
-import RemoteConfig from './RemoteConfig';
+import {RemoteConfig} from './RemoteConfig';
 
-class RemoteConfigList {
+export class RemoteConfigList {
     remoteConfigs: Array<RemoteConfig>;
 
     constructor(remoteConfigs: Array<RemoteConfig>) {
@@ -19,5 +19,3 @@ class RemoteConfigList {
         return this.remoteConfigs.find(config => config.source.contextKey == contextKey);
     }
 }
-
-export default RemoteConfigList;
