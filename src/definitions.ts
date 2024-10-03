@@ -1,3 +1,18 @@
+import Product from "./dto/Product";
+import PurchaseOptions from "./dto/PurchaseOptions";
+import Entitlement from "./dto/Entitlement";
+import PurchaseModel from "./dto/PurchaseModel";
+import PurchaseUpdateModel from "./dto/PurchaseUpdateModel";
+import Offerings from "./dto/Offerings";
+import IntroEligibility from "./dto/IntroEligibility";
+import User from "./dto/User";
+import RemoteConfig from "./dto/RemoteConfig";
+import RemoteConfigList from "./dto/RemoteConfigList";
+import {AttributionProvider, UserPropertyKey} from "./dto/enums";
+import UserProperties from "./dto/UserProperties";
+import {EntitlementsUpdateListener} from "./dto/EntitlementsUpdateListener";
+import {PromoPurchasesListener} from "./dto/PromoPurchasesListener";
+
 export interface QonversionPlugin {
   /**
    * Call this function to sync the subscriber data with the first launch when Qonversion is implemented.
