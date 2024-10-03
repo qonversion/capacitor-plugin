@@ -1577,10 +1577,6 @@ class QonversionWeb extends core.WebPlugin {
     userProperties() {
         throw this.unimplemented("not implemented yet");
     }
-    async echo(options) {
-        console.log('ECHO', options);
-        return options;
-    }
 }
 
 var web = /*#__PURE__*/Object.freeze({

@@ -1,8 +1,8 @@
-import QonversionConfig from './QonversionConfig';
+import {QonversionConfig} from './QonversionConfig';
 import QonversionInternal from './internal/QonversionInternal';
 import {QonversionPlugin} from "./definitions";
 
-export default class Qonversion {
+export default class QonversionPPP {
   private constructor() {}
 
   private static backingInstance: QonversionPlugin | undefined;

@@ -81,9 +81,5 @@ export class QonversionWeb extends WebPlugin {
     userProperties() {
         throw this.unimplemented("not implemented yet");
     }
-    async echo(options) {
-        console.log('ECHO', options);
-        return options;
-    }
 }
 //# sourceMappingURL=web.js.map

@@ -7,4 +7,5 @@ const Qonversion = registerPlugin<QonversionPlugin>('Qonversion', {
 });
 
 export * from './definitions';
-export { Qonversion };
+// export {default as Qonversion} from './Qonversion';
+export {Qonversion};

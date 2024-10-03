@@ -128,8 +128,4 @@ export class QonversionWeb extends WebPlugin implements QonversionPlugin {
     userProperties (): Promise<UserProperties> {
         throw this.unimplemented("not implemented yet");
     }
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
-  }
 }

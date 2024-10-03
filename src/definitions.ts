@@ -15,6 +15,11 @@ import {PurchaseOptions} from './dto/PurchaseOptions';
 import {Entitlement} from './dto/Entitlement';
 import {EntitlementsUpdateListener} from './dto/EntitlementsUpdateListener';
 import {PromoPurchasesListener} from './dto/PromoPurchasesListener';
+import {QEntitlement} from './internal/Mapper';
+
+export interface QonNative {
+  checkEntitlements(): Promise<Record<string, QEntitlement> | null | undefined>
+}
 
 export interface QonversionPlugin {
   /**

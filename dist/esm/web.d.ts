@@ -46,9 +46,4 @@ export declare class QonversionWeb extends WebPlugin implements QonversionPlugin
     updatePurchase(purchaseUpdateModel: PurchaseUpdateModel): Promise<Map<string, Entitlement> | null>;
     userInfo(): Promise<User>;
     userProperties(): Promise<UserProperties>;
-    echo(options: {
-        value: string;
-    }): Promise<{
-        value: string;
-    }>;
 }
