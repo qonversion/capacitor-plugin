@@ -1,27 +1,27 @@
 import {WebPlugin} from '@capacitor/core';
 import {AttributionProvider, QonversionErrorCode, UserPropertyKey} from "../dto/enums";
-import IntroEligibility from "../dto/IntroEligibility";
+import {IntroEligibility} from "../dto/IntroEligibility";
 import Mapper, {QEntitlement} from "./Mapper";
-import Offerings from "../dto/Offerings";
-import Entitlement from "../dto/Entitlement";
-import Product from "../dto/Product";
+import {Offerings} from "../dto/Offerings";
+import {Entitlement} from "../dto/Entitlement";
+import {Product} from "../dto/Product";
 import {isAndroid, isIos} from "./utils";
 import {EntitlementsUpdateListener} from '../dto/EntitlementsUpdateListener';
 import {PromoPurchasesListener} from '../dto/PromoPurchasesListener';
-import User from '../dto/User';
-import PurchaseOptions from '../dto/PurchaseOptions'
-import QonversionConfig from '../QonversionConfig';
-import RemoteConfig from "../dto/RemoteConfig";
-import UserProperties from '../dto/UserProperties';
-import PurchaseModel from '../dto/PurchaseModel';
-import PurchaseUpdateModel from '../dto/PurchaseUpdateModel';
-import RemoteConfigList from '../dto/RemoteConfigList';
+import {User} from '../dto/User';
+import {PurchaseOptions} from '../dto/PurchaseOptions'
+import {QonversionConfig} from '../QonversionConfig';
+import {RemoteConfig} from "../dto/RemoteConfig";
+import {UserProperties} from '../dto/UserProperties';
+import {PurchaseModel} from '../dto/PurchaseModel';
+import {PurchaseUpdateModel} from '../dto/PurchaseUpdateModel';
+import {RemoteConfigList} from '../dto/RemoteConfigList';
 import { QonversionPlugin } from '../definitions';
 // import { Qonversion } from 'qonversion-capacitor';
 import { Plugins } from '@capacitor/core';
 
 const { QonversionNative } = Plugins;
-const sdkVersion = "0.0.1";
+// const sdkVersion = "0.0.1";
 
 // const EVENT_ENTITLEMENTS_UPDATED = "entitlements_updated";
 // const EVENT_PROMO_PURCHASE_RECEIVED = "promo_purchase_received";
@@ -39,7 +39,7 @@ export default class QonversionInternal extends WebPlugin implements QonversionP
     }
   }
 
-  syncHistoricalData () {
+  syncHistoricalData() {
     QonversionNative.syncHistoricalData();
   }
 
