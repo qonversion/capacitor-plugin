@@ -15,7 +15,8 @@ window.testEcho = () => {
       .setEnvironment(Environment.SANDBOX)
       .build();
     Qonversion.initialize(c);
-    Qonversion.getSharedInstance().checkEntitlements().then(console.log).catch(console.error);
+    console.log('test test');
+    Qonversion.getSharedInstance().checkEntitlements().then(res => console.log('test azaza', res)).catch(err => console.error('test azazaza', err));
     // Qonversion.checkEntitlements().then(res =>
     //   console.log('RES!', res)
     // ).catch(e => console.log('ERR!', e));

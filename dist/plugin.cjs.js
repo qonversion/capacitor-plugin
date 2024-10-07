@@ -1635,6 +1635,7 @@ class QonversionInternal {
     // }
     async checkEntitlements() {
         const entitlements = await QonversionNative.checkEntitlements();
+        console.log('Entitlements from native', entitlements, JSON.stringify(entitlements));
         const mappedPermissions = Mapper.convertEntitlements(entitlements);
         return mappedPermissions;
     }

@@ -48,7 +48,7 @@ import {ProductPrice} from "../dto/storeProducts/ProductPrice";
 import {ProductPricingPhase} from "../dto/storeProducts/ProductPricingPhase";
 import {ProductInstallmentPlanDetails} from '../dto/storeProducts/ProductInstallmentPlanDetails';
 
-type QProduct = {
+export type QProduct = {
   id: string;
   storeId: string;
   basePlanId?: string | null;
@@ -191,6 +191,13 @@ type QLocale = {
   localeIdentifier: string;
 };
 
+export type QTrialIntroEligibility = Record<string, {
+  status:
+    | "non_intro_or_trial_product"
+    | "intro_or_trial_eligible"
+    | "intro_or_trial_ineligible";
+}>;
+
 export type QEntitlement = {
   id: string;
   productId: string;
@@ -221,7 +228,7 @@ type QTransaction = {
   type: string;
 }
 
-type QOfferings = {
+export type QOfferings = {
   availableOfferings?: Array<QOffering>;
   main: QOffering;
 };
@@ -232,18 +239,18 @@ type QOffering = {
   products: Array<QProduct>;
 };
 
-type QUser = {
+export type QUser = {
   qonversionId: string;
   identityId?: string | null;
 };
 
-type QRemoteConfig = {
+export type QRemoteConfig = {
   payload: Map<string, Object>;
   experiment?: QExperiment | null;
   source: QRemoteConfigurationSource;
 };
 
-type QRemoteConfigList = {
+export type QRemoteConfigList = {
   remoteConfigs: Array<QRemoteConfig>;
 }
 
@@ -272,7 +279,7 @@ type QUserProperty = {
   value: string;
 };
 
-type QUserProperties = {
+export type QUserProperties = {
   properties: QUserProperty[];
 };
 
@@ -926,14 +933,7 @@ class Mapper {
     return mappedDiscounts;
   }
 
-  static convertEligibility(
-    eligibilityMap: Record<string, {
-      status:
-        | "non_intro_or_trial_product"
-        | "intro_or_trial_eligible"
-        | "intro_or_trial_ineligible";
-    }> | null | undefined
-  ): Map<string, IntroEligibility> {
+  static convertEligibility(eligibilityMap: QTrialIntroEligibility | null | undefined): Map<string, IntroEligibility> {
     let mappedEligibility = new Map<string, IntroEligibility>();
 
     if (!eligibilityMap) {

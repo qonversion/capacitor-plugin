@@ -29,6 +29,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
     CAPPluginMethod(name: "storeSdkInfo", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "addAttributionData", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "collectAppleSearchAdsAttribution", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "collectAdvertisingId", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "isFallbackFileAccessible", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "presentCodeRedemptionSheet", returnType: CAPPluginReturnPromise)
   ]
@@ -81,7 +82,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
     qonversionSandwich?.purchase(productId, quantity:quantity, contextKeys:contextKeys, completion: getDefaultCompletion(call))
   }
   
-  @objc func promoPurchase(_ productId: String?, _ call: CAPPluginCall) {
+  @objc func promoPurchase(_ call: CAPPluginCall) {
     guard let productId = call.getString("productId") else {
       return call.noNecessaryDataError()
     }
@@ -209,6 +210,11 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
   
   @objc func collectAppleSearchAdsAttribution(_ call: CAPPluginCall) {
     qonversionSandwich?.collectAppleSearchAdsAttribution()
+    call.resolve()
+  }
+  
+  @objc func collectAdvertisingId(_ call: CAPPluginCall) {
+    qonversionSandwich?.collectAdvertisingId()
     call.resolve()
   }
   
