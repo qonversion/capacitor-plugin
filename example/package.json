@@ -13,7 +13,9 @@
     "preview": "vite preview",
     "sync": "npx cap sync",
     "runIos": "npx cap run ios",
-    "runAndroid": "npx cap run android"
+    "runAndroid": "npx cap run android",
+    "clean": "rm -rf node_modules && yarn && yarn sync && yarn build",
+    "refresh": "cd .. && yarn build && cd example && yarn clean"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",

@@ -1491,9 +1491,186 @@ class PurchaseOptionsBuilder {
     }
 }
 
-const Qonversion = core.registerPlugin('Qonversion', {
+const isIos = () => {
+    return core.Capacitor.getPlatform() === "ios";
+};
+
+const sdkVersion = "0.1.0";
+const QonversionNative = core.registerPlugin('Qonversion', {
     web: () => Promise.resolve().then(function () { return web; }).then(m => new m.QonversionWeb()),
 });
+class QonversionInternal {
+    constructor(qonversionConfig) {
+        QonversionNative.storeSdkInfo({ source: "capacitor", version: sdkVersion });
+        QonversionNative.initialize({
+            projectKey: qonversionConfig.projectKey,
+            launchMode: qonversionConfig.launchMode,
+            environment: qonversionConfig.environment,
+            entitlementsCacheLifetime: qonversionConfig.entitlementsCacheLifetime,
+            proxyUrl: qonversionConfig.proxyUrl,
+            kidsMode: qonversionConfig.kidsMode
+        });
+        // if (qonversionConfig.entitlementsUpdateListener) {
+        //   this.setEntitlementsUpdateListener(qonversionConfig.entitlementsUpdateListener);
+        // }
+    }
+    syncHistoricalData() {
+        QonversionNative.syncHistoricalData();
+    }
+    syncStoreKit2Purchases() {
+        if (isIos()) {
+            QonversionNative.syncStoreKit2Purchases();
+        }
+    }
+    async isFallbackFileAccessible() {
+        const isAccessibleResult = await QonversionNative.isFallbackFileAccessible();
+        return isAccessibleResult.success;
+    }
+    //
+    // async purchaseProduct(product: Product, options: PurchaseOptions): Promise<Map<string, Entitlement>> {
+    //   try {
+    //     let purchasePromise: Promise<Record<string, QEntitlement> | null | undefined>;
+    //     if (isIos()) {
+    //       purchasePromise = QonversionNative.purchase(product.qonversionID, options.quantity, options.contextKeys);
+    //     } else {
+    //       purchasePromise = QonversionNative.purchase(
+    //           product.qonversionID,
+    //           options.offerId,
+    //           options.applyOffer,
+    //           options.oldProduct?.qonversionID,
+    //           options.updatePolicy,
+    //           options.contextKeys
+    //       );
+    //     }
+    //     const entitlements = await purchasePromise;
+    //
+    //     // noinspection UnnecessaryLocalVariableJS
+    //     const mappedPermissions = Mapper.convertEntitlements(entitlements);
+    //
+    //     return mappedPermissions;
+    //   } catch (e) {
+    //     e.userCanceled = e.code === QonversionErrorCode.PURCHASE_CANCELED;
+    //     throw e;
+    //   }
+    // }
+    //
+    // async purchase(purchaseModel: PurchaseModel): Promise<Map<string, Entitlement>> {
+    //   try {
+    //     let purchasePromise: Promise<Record<string, QEntitlement> | null | undefined>;
+    //     if (isIos()) {
+    //       purchasePromise = QonversionNative.purchase(purchaseModel.productId, 1, null);
+    //     } else {
+    //       purchasePromise = QonversionNative.purchase(
+    //         purchaseModel.productId,
+    //         purchaseModel.offerId,
+    //         purchaseModel.applyOffer,
+    //         null,
+    //         null,
+    //         null
+    //       );
+    //     }
+    //     const entitlements = await purchasePromise;
+    //
+    //     // noinspection UnnecessaryLocalVariableJS
+    //     const mappedPermissions = Mapper.convertEntitlements(entitlements);
+    //
+    //     return mappedPermissions;
+    //   } catch (e) {
+    //     e.userCanceled = e.code === QonversionErrorCode.PURCHASE_CANCELED;
+    //     throw e;
+    //   }
+    // }
+    // async updatePurchase(purchaseUpdateModel: PurchaseUpdateModel): Promise<Map<string, Entitlement> | null> {
+    //   if (!isAndroid()) {
+    //     return null;
+    //   }
+    //
+    //   try {
+    //     const entitlements = await QonversionNative.updatePurchase(
+    //       purchaseUpdateModel.productId,
+    //       purchaseUpdateModel.offerId,
+    //       purchaseUpdateModel.applyOffer,
+    //       purchaseUpdateModel.oldProductId,
+    //       purchaseUpdateModel.updatePolicy,
+    //       null
+    //     );
+    //
+    //     // noinspection UnnecessaryLocalVariableJS
+    //     const mappedPermissions: Map<string, Entitlement> = Mapper.convertEntitlements(entitlements);
+    //
+    //     return mappedPermissions;
+    //   } catch (e) {
+    //     e.userCanceled = e.code === QonversionErrorCode.PURCHASE_CANCELED;
+    //     throw e;
+    //   }
+    // }
+    //
+    // async products(): Promise<Map<string, Product>> {
+    //   let products = await QonversionNative.products();
+    //   const mappedProducts: Map<string, Product> = Mapper.convertProducts(
+    //     products
+    //   );
+    //
+    //   return mappedProducts;
+    // }
+    //
+    // async offerings(): Promise<Offerings | null> {
+    //   let offerings = await QonversionNative.offerings();
+    //   const mappedOfferings = Mapper.convertOfferings(offerings);
+    //
+    //   return mappedOfferings;
+    // }
+    //
+    // async checkTrialIntroEligibility(
+    //   ids: string[]
+    // ): Promise<Map<string, IntroEligibility>> {
+    //   const eligibilityInfo = await QonversionNative.checkTrialIntroEligibilityForProductIds(ids);
+    //
+    //   const mappedEligibility: Map<
+    //     string,
+    //     IntroEligibility
+    //   > = Mapper.convertEligibility(eligibilityInfo);
+    //
+    //   return mappedEligibility;
+    // }
+    async checkEntitlements() {
+        const entitlements = await QonversionNative.checkEntitlements();
+        const mappedPermissions = Mapper.convertEntitlements(entitlements);
+        return mappedPermissions;
+    }
+}
+
+class Qonversion {
+    constructor() { }
+    /**
+     * Use this variable to get a current initialized instance of the Qonversion SDK.
+     * Please, use the property only after calling {@link Qonversion.initialize}.
+     * Otherwise, trying to access the variable will cause an exception.
+     *
+     * @return Current initialized instance of the Qonversion SDK.
+     * @throws error if the instance has not been initialized
+     */
+    static getSharedInstance() {
+        if (!this.backingInstance) {
+            throw "Qonversion has not been initialized. You should call " +
+                "the initialize method before accessing the shared instance of Qonversion.";
+        }
+        return this.backingInstance;
+    }
+    /**
+     * An entry point to use Qonversion SDK. Call to initialize Qonversion SDK with required and extra configs.
+     * The function is the best way to set additional configs you need to use Qonversion SDK.
+     * You still have an option to set a part of additional configs later via calling separate setters.
+     *
+     * @param config a config that contains key SDK settings.
+     *        Call {@link QonversionConfigBuilder.build} to configure and create a QonversionConfig instance.
+     * @return Initialized instance of the Qonversion SDK.
+     */
+    static initialize(config) {
+        this.backingInstance = new QonversionInternal(config);
+        return this.backingInstance;
+    }
+}
 
 class QonversionWeb extends core.WebPlugin {
     attachUserToExperiment(experimentId, groupId) {

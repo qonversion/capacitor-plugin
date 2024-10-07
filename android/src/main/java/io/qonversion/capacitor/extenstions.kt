@@ -24,8 +24,8 @@ internal fun PluginCall.toResultListener(): ResultListener {
     }
 }
 
-fun PluginCall.noNecessaryDataError() {
-    reject("Could not find necessary arguments. Make sure you pass correct call arguments", "NoNecessaryDataError")
+fun PluginCall.noNecessaryDataError(argument: String) {
+    reject("Could not find necessary arguments. Make sure you pass correct value for the argument \"$argument\"", "NoNecessaryDataError")
 }
 
 fun PluginCall.sandwichError(error: SandwichError) {

@@ -37,11 +37,11 @@ class QonversionPlugin : Plugin() {
 
     @PluginMethod
     fun initialize(call: PluginCall) {
-        val context = context?.applicationContext ?: return call.noNecessaryDataError()
-        val projectKey = call.getString("projectKey") ?: return call.noNecessaryDataError()
-        val launchModeKey = call.getString("launchMode") ?: return call.noNecessaryDataError()
-        val environmentKey = call.getString("environment") ?: return call.noNecessaryDataError()
-        val entitlementsCacheLifetimeKey = call.getString("entitlementsCacheLifetime") ?: return call.noNecessaryDataError()
+        val context = context?.applicationContext ?: return call.reject("Can't get application context for Qonversion initialization", "InitializationError")
+        val projectKey = call.getString("projectKey") ?: return call.noNecessaryDataError("projectKey")
+        val launchModeKey = call.getString("launchMode") ?: return call.noNecessaryDataError("launchMode")
+        val environmentKey = call.getString("environment") ?: return call.noNecessaryDataError("environment")
+        val entitlementsCacheLifetimeKey = call.getString("entitlementsCacheLifetime") ?: return call.noNecessaryDataError("entitlementsCacheLifetime")
         val proxyUrl = call.getString("proxyUrl")
         val kidsMode = call.getBoolean("kidsMode") ?: false
         qonversionSandwich.initialize(context, projectKey, launchModeKey, environmentKey, entitlementsCacheLifetimeKey, proxyUrl, kidsMode)
@@ -50,14 +50,14 @@ class QonversionPlugin : Plugin() {
 
     @PluginMethod
     fun identify(call: PluginCall) {
-        val userId = call.getString("userId") ?: return call.noNecessaryDataError()
+        val userId = call.getString("userId") ?: return call.noNecessaryDataError("userId")
 
         qonversionSandwich.identify(userId, call.toResultListener())
     }
 
     @PluginMethod
     fun purchase(call: PluginCall) {
-        val productId = call.getString("productId") ?: return call.reject("Product ID is required")
+        val productId = call.getString("productId") ?: return call.noNecessaryDataError("productId")
         val oldProductId = call.getString("oldProductId")
         val offerId = call.getString("offerId")
         val applyOffer = call.getBoolean("applyOffer")
@@ -118,7 +118,7 @@ class QonversionPlugin : Plugin() {
         if (contextKeys == null) {
             qonversionSandwich.remoteConfigList(call.toResultListener())
         } else {
-            val includeEmptyContextKey = call.getBoolean("includeEmptyContextKey") ?: return call.noNecessaryDataError()
+            val includeEmptyContextKey = call.getBoolean("includeEmptyContextKey") ?: return call.noNecessaryDataError("includeEmptyContextKey")
 
             qonversionSandwich.remoteConfigList(contextKeys, includeEmptyContextKey, call.toResultListener())
         }
@@ -131,8 +131,8 @@ class QonversionPlugin : Plugin() {
 
     @PluginMethod
     fun setDefinedUserProperty(call: PluginCall) {
-        val rawProperty = call.getString("property") ?: return call.noNecessaryDataError()
-        val value = call.getString("value") ?: return call.noNecessaryDataError()
+        val rawProperty = call.getString("property") ?: return call.noNecessaryDataError("property")
+        val value = call.getString("value") ?: return call.noNecessaryDataError("value")
 
         qonversionSandwich.setDefinedProperty(rawProperty, value)
         call.resolve()
@@ -140,8 +140,8 @@ class QonversionPlugin : Plugin() {
 
     @PluginMethod
     fun setCustomUserProperty(call: PluginCall) {
-        val property = call.getString("property") ?: return call.noNecessaryDataError()
-        val value = call.getString("value") ?: return call.noNecessaryDataError()
+        val property = call.getString("property") ?: return call.noNecessaryDataError("property")
+        val value = call.getString("value") ?: return call.noNecessaryDataError("value")
 
         qonversionSandwich.setCustomProperty(property, value)
         call.resolve()
@@ -156,13 +156,13 @@ class QonversionPlugin : Plugin() {
     @PluginMethod
     fun addAttributionData(call: PluginCall) {
         @Suppress("UNCHECKED_CAST")
-        val data = call.getObject("data") as? Map<String, Any> ?: return call.noNecessaryDataError()
+        val data = call.getObject("data") as? Map<String, Any> ?: return call.noNecessaryDataError("data")
 
         if (data.isEmpty()) {
-            return call.noNecessaryDataError()
+            return call.noNecessaryDataError("data")
         }
 
-        val provider = call.getString("provider") ?: return call.noNecessaryDataError()
+        val provider = call.getString("provider") ?: return call.noNecessaryDataError("provider")
 
         qonversionSandwich.addAttributionData(provider, data)
         call.resolve()
@@ -170,36 +170,36 @@ class QonversionPlugin : Plugin() {
 
     @PluginMethod
     fun checkTrialIntroEligibility(call: PluginCall) {
-        val ids = call.getArray("ids")?.toList<String>() ?: return call.noNecessaryDataError()
+        val ids = call.getArray("ids")?.toList<String>() ?: return call.noNecessaryDataError("ids")
 
         qonversionSandwich.checkTrialIntroEligibility(ids, call.toResultListener())
     }
 
     @PluginMethod
     fun attachUserToExperiment(call: PluginCall) {
-        val experimentId = call.getString("experimentId") ?: return call.noNecessaryDataError()
-        val groupId = call.getString("groupId") ?: return call.noNecessaryDataError()
+        val experimentId = call.getString("experimentId") ?: return call.noNecessaryDataError("experimentId")
+        val groupId = call.getString("groupId") ?: return call.noNecessaryDataError("groupId")
 
         qonversionSandwich.attachUserToExperiment(experimentId, groupId, call.toResultListener())
     }
 
     @PluginMethod
     fun detachUserFromExperiment(call: PluginCall) {
-        val experimentId = call.getString("experimentId") ?: return call.noNecessaryDataError()
+        val experimentId = call.getString("experimentId") ?: return call.noNecessaryDataError("experimentId")
 
         qonversionSandwich.detachUserFromExperiment(experimentId, call.toResultListener())
     }
 
     @PluginMethod
     fun attachUserToRemoteConfiguration(call: PluginCall) {
-        val remoteConfigurationId = call.getString("remoteConfigurationId") ?: return call.noNecessaryDataError()
+        val remoteConfigurationId = call.getString("remoteConfigurationId") ?: return call.noNecessaryDataError("remoteConfigurationId")
 
         qonversionSandwich.attachUserToRemoteConfiguration(remoteConfigurationId, call.toResultListener())
     }
 
     @PluginMethod
     fun detachUserFromRemoteConfiguration(call: PluginCall) {
-        val remoteConfigurationId = call.getString("remoteConfigurationId") ?: return call.noNecessaryDataError()
+        val remoteConfigurationId = call.getString("remoteConfigurationId") ?: return call.noNecessaryDataError("remoteConfigurationId")
 
         qonversionSandwich.detachUserFromRemoteConfiguration(remoteConfigurationId, call.toResultListener())
     }
@@ -211,8 +211,8 @@ class QonversionPlugin : Plugin() {
 
     @PluginMethod
     fun storeSdkInfo(call: PluginCall) {
-        val version = call.getString("version") ?: return call.noNecessaryDataError()
-        val source = call.getString("source") ?: return call.noNecessaryDataError()
+        val version = call.getString("version") ?: return call.noNecessaryDataError("version")
+        val source = call.getString("source") ?: return call.noNecessaryDataError("source")
 
         qonversionSandwich.storeSdkInfo(source, version)
         call.resolve()

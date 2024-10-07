@@ -1,11 +1,11 @@
 import {QonversionConfig} from './QonversionConfig';
 import QonversionInternal from './internal/QonversionInternal';
-import {QonversionPlugin} from "./definitions";
+import {QonversionApi} from './QonversionApi';
 
-export default class QonversionPPP {
+export default class Qonversion {
   private constructor() {}
 
-  private static backingInstance: QonversionPlugin | undefined;
+  private static backingInstance: QonversionApi | undefined;
 
   /**
    * Use this variable to get a current initialized instance of the Qonversion SDK.
@@ -15,7 +15,7 @@ export default class QonversionPPP {
    * @return Current initialized instance of the Qonversion SDK.
    * @throws error if the instance has not been initialized
    */
-  static getSharedInstance(): QonversionPlugin {
+  static getSharedInstance(): QonversionApi {
     if (!this.backingInstance) {
       throw "Qonversion has not been initialized. You should call " +
         "the initialize method before accessing the shared instance of Qonversion."
@@ -33,7 +33,7 @@ export default class QonversionPPP {
    *        Call {@link QonversionConfigBuilder.build} to configure and create a QonversionConfig instance.
    * @return Initialized instance of the Qonversion SDK.
    */
-  static initialize(config: QonversionConfig): QonversionPlugin {
+  static initialize(config: QonversionConfig): QonversionApi {
     this.backingInstance = new QonversionInternal(config);
     return this.backingInstance;
   }

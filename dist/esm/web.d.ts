@@ -13,8 +13,8 @@ import { AttributionProvider, UserPropertyKey } from "./dto/enums";
 import { UserProperties } from "./dto/UserProperties";
 import { EntitlementsUpdateListener } from "./dto/EntitlementsUpdateListener";
 import { PromoPurchasesListener } from "./dto/PromoPurchasesListener";
-import type { QonversionPlugin } from './definitions';
-export declare class QonversionWeb extends WebPlugin implements QonversionPlugin {
+import { QonversionApi } from './QonversionApi';
+export declare class QonversionWeb extends WebPlugin implements QonversionApi {
     attachUserToExperiment(experimentId: string, groupId: string): Promise<void>;
     attachUserToRemoteConfiguration(remoteConfigurationId: string): Promise<void>;
     attribution(data: Object, provider: AttributionProvider): void;
