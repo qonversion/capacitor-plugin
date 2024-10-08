@@ -292,27 +292,6 @@ var capacitorQonversion = (function (exports, core) {
         QonversionErrorCode["UNKNOWN_CLIENT_PLATFORM"] = "UnknownClientPlatform";
     })(exports.QonversionErrorCode || (exports.QonversionErrorCode = {}));
 
-    class Entitlement {
-        constructor(id, productId, isActive, renewState, source, startedTimestamp, renewsCount, grantType, transactions, expirationTimestamp, trialStartTimestamp, firstPurchaseTimestamp, lastPurchaseTimestamp, autoRenewDisableTimestamp, lastActivatedOfferCode) {
-            this.id = id;
-            this.productId = productId;
-            this.isActive = isActive;
-            this.renewState = renewState;
-            this.source = source;
-            this.startedDate = new Date(startedTimestamp);
-            this.expirationDate = expirationTimestamp ? new Date(expirationTimestamp) : undefined;
-            this.renewsCount = renewsCount;
-            this.grantType = grantType;
-            this.transactions = transactions;
-            this.expirationDate = expirationTimestamp ? new Date(expirationTimestamp) : undefined;
-            this.trialStartDate = trialStartTimestamp ? new Date(trialStartTimestamp) : undefined;
-            this.firstPurchaseDate = firstPurchaseTimestamp ? new Date(firstPurchaseTimestamp) : undefined;
-            this.lastPurchaseDate = lastPurchaseTimestamp ? new Date(lastPurchaseTimestamp) : undefined;
-            this.autoRenewDisableDate = autoRenewDisableTimestamp ? new Date(autoRenewDisableTimestamp) : undefined;
-            this.lastActivatedOfferCode = lastActivatedOfferCode;
-        }
-    }
-
     class IntroEligibility {
         constructor(status) {
             this.status = status;
@@ -340,55 +319,24 @@ var capacitorQonversion = (function (exports, core) {
         }
     }
 
-    /**
-     * Used to provide all the necessary purchase data to the {@link Qonversion.purchase} method.
-     * Can be created manually or using the {@link Product.toPurchaseModel} method.
-     *
-     * If {@link offerId} is not specified for Android, then the default offer will be applied.
-     * To know how we choose the default offer, see {@link ProductStoreDetails.defaultSubscriptionOfferDetails}.
-     *
-     * If you want to remove any intro/trial offer from the purchase on Android (use only a bare base plan),
-     * call the {@link removeOffer} method.
-     */
-    class PurchaseModel {
-        constructor(productId, offerId = null) {
-            this.offerId = null;
-            this.applyOffer = true;
+    class Entitlement {
+        constructor(id, productId, isActive, renewState, source, startedTimestamp, renewsCount, grantType, transactions, expirationTimestamp, trialStartTimestamp, firstPurchaseTimestamp, lastPurchaseTimestamp, autoRenewDisableTimestamp, lastActivatedOfferCode) {
+            this.id = id;
             this.productId = productId;
-            this.offerId = offerId;
-        }
-        removeOffer() {
-            this.applyOffer = false;
-            return this;
-        }
-    }
-
-    /**
-     * Used to provide all the necessary purchase data to the {@link Qonversion.updatePurchase} method.
-     * Can be created manually or using the {@link Product.toPurchaseUpdateModel} method.
-     *
-     * Requires Qonversion product identifiers - {@link productId} for the purchasing one and
-     * {@link oldProductId} for the purchased one.
-     *
-     * If {@link offerId} is not specified for Android, then the default offer will be applied.
-     * To know how we choose the default offer, see {@link ProductStoreDetails.defaultSubscriptionOfferDetails}.
-     *
-     * If you want to remove any intro/trial offer from the purchase on Android (use only a bare base plan),
-     * call the {@link removeOffer} method.
-     */
-    class PurchaseUpdateModel {
-        constructor(productId, oldProductId, updatePolicy = null, offerId = null) {
-            this.updatePolicy = null;
-            this.offerId = null;
-            this.applyOffer = true;
-            this.productId = productId;
-            this.oldProductId = oldProductId;
-            this.updatePolicy = updatePolicy;
-            this.offerId = offerId;
-        }
-        removeOffer() {
-            this.applyOffer = false;
-            return this;
+            this.isActive = isActive;
+            this.renewState = renewState;
+            this.source = source;
+            this.startedDate = new Date(startedTimestamp);
+            this.expirationDate = expirationTimestamp ? new Date(expirationTimestamp) : undefined;
+            this.renewsCount = renewsCount;
+            this.grantType = grantType;
+            this.transactions = transactions;
+            this.expirationDate = expirationTimestamp ? new Date(expirationTimestamp) : undefined;
+            this.trialStartDate = trialStartTimestamp ? new Date(trialStartTimestamp) : undefined;
+            this.firstPurchaseDate = firstPurchaseTimestamp ? new Date(firstPurchaseTimestamp) : undefined;
+            this.lastPurchaseDate = lastPurchaseTimestamp ? new Date(lastPurchaseTimestamp) : undefined;
+            this.autoRenewDisableDate = autoRenewDisableTimestamp ? new Date(autoRenewDisableTimestamp) : undefined;
+            this.lastActivatedOfferCode = lastActivatedOfferCode;
         }
     }
 
@@ -410,61 +358,6 @@ var capacitorQonversion = (function (exports, core) {
             this.storeTitle = storeTitle;
             this.storeDescription = storeDescription;
             this.prettyIntroductoryPrice = prettyIntroductoryPrice;
-        }
-        /**
-         * Converts this product to purchase model to pass to {@link Qonversion.purchase}.
-         * @param offerId concrete Android offer identifier if necessary.
-         *                If the products' base plan id is specified, but offer id is not provided for
-         *                purchase, then default offer will be used.
-         *                Ignored if base plan id is not specified.
-         *                Ignored for iOS.
-         * To know how we choose the default offer, see {@link ProductStoreDetails.defaultSubscriptionOfferDetails}.
-         * @returns purchase model to pass to the purchase method.
-         */
-        toPurchaseModel(offerId = null) {
-            return new PurchaseModel(this.qonversionID, offerId);
-        }
-        /**
-         * Converts this product to purchase model to pass to {@link Qonversion.purchase}.
-         * @param offer concrete Android offer which you'd like to purchase.
-         * @return purchase model to pass to the purchase method.
-         */
-        toPurchaseModelWithOffer(offer) {
-            const model = this.toPurchaseModel(offer.offerId);
-            // Remove offer for the case when provided offer details are for bare base plan.
-            if (offer.offerId == null) {
-                model.removeOffer();
-            }
-            return model;
-        }
-        /**
-         * Android only.
-         *
-         * Converts this product to purchase update (upgrade/downgrade) model
-         * to pass to {@link Qonversion.updatePurchase}.
-         * @param oldProductId Qonversion product identifier from which the upgrade/downgrade
-         *                     will be initialized.
-         * @param updatePolicy purchase update policy.
-         * @return purchase model to pass to the update purchase method.
-         */
-        toPurchaseUpdateModel(oldProductId, updatePolicy = null) {
-            return new PurchaseUpdateModel(this.qonversionID, oldProductId, updatePolicy);
-        }
-    }
-
-    class QonversionError {
-        constructor(code, description, additionalMessage, domain) {
-            this.code = code;
-            this.domain = domain;
-            this.description = description;
-            this.additionalMessage = additionalMessage;
-        }
-    }
-
-    class User {
-        constructor(qonversionId, identityId) {
-            this.qonversionId = qonversionId;
-            this.identityId = identityId;
         }
     }
 
@@ -539,6 +432,22 @@ var capacitorQonversion = (function (exports, core) {
             this.type = type;
             this.value = value;
             this.error = error;
+        }
+    }
+
+    class QonversionError {
+        constructor(code, description, additionalMessage, domain) {
+            this.code = code;
+            this.domain = domain;
+            this.description = description;
+            this.additionalMessage = additionalMessage;
+        }
+    }
+
+    class User {
+        constructor(qonversionId, identityId) {
+            this.qonversionId = qonversionId;
+            this.identityId = identityId;
         }
     }
 
@@ -622,6 +531,14 @@ var capacitorQonversion = (function (exports, core) {
          */
         getDefinedProperty(key) {
             return this.definedProperties.find(userProperty => userProperty.definedKey == key);
+        }
+    }
+
+    class UserProperty {
+        constructor(key, value) {
+            this.key = key;
+            this.value = value;
+            this.definedKey = Mapper.convertDefinedUserPropertyKey(key);
         }
     }
 
@@ -1283,11 +1200,236 @@ var capacitorQonversion = (function (exports, core) {
         }
     }
 
-    class UserProperty {
-        constructor(key, value) {
-            this.key = key;
-            this.value = value;
-            this.definedKey = Mapper.convertDefinedUserPropertyKey(key);
+    const isIos = () => {
+        return core.Capacitor.getPlatform() === "ios";
+    };
+    const isAndroid = () => {
+        return core.Capacitor.getPlatform() === "android";
+    };
+
+    const sdkVersion = "0.1.0";
+    const entitlementsUpdatedEvent = 'entitlementsUpdatedEvent';
+    const promoPurchaseEvent = 'shouldPurchasePromoProductEvent';
+    const QonversionNative = core.registerPlugin('Qonversion', {
+        web: () => Promise.resolve().then(function () { return web; }).then(m => new m.QonversionWeb()),
+    });
+    class QonversionInternal {
+        constructor(qonversionConfig) {
+            QonversionNative.storeSdkInfo({ source: "capacitor", version: sdkVersion });
+            QonversionNative.initialize({
+                projectKey: qonversionConfig.projectKey,
+                launchMode: qonversionConfig.launchMode,
+                environment: qonversionConfig.environment,
+                entitlementsCacheLifetime: qonversionConfig.entitlementsCacheLifetime,
+                proxyUrl: qonversionConfig.proxyUrl,
+                kidsMode: qonversionConfig.kidsMode
+            });
+            // if (qonversionConfig.entitlementsUpdateListener) {
+            //   this.setEntitlementsUpdateListener(qonversionConfig.entitlementsUpdateListener);
+            // }
+        }
+        syncHistoricalData() {
+            QonversionNative.syncHistoricalData();
+        }
+        syncStoreKit2Purchases() {
+            if (isIos()) {
+                QonversionNative.syncStoreKit2Purchases();
+            }
+        }
+        async purchaseProduct(product, options) {
+            var _a;
+            try {
+                let purchasePromise;
+                if (isIos()) {
+                    purchasePromise = QonversionNative.purchase({
+                        productId: product.qonversionID,
+                        quantity: options.quantity,
+                        contextKeys: options.contextKeys
+                    });
+                }
+                else {
+                    purchasePromise = QonversionNative.purchase({
+                        productId: product.qonversionID,
+                        offerId: options.offerId,
+                        applyOffer: options.applyOffer,
+                        oldProductId: (_a = options.oldProduct) === null || _a === void 0 ? void 0 : _a.qonversionID,
+                        updatePolicyKey: options.updatePolicy,
+                        contextKeys: options.contextKeys
+                    });
+                }
+                const entitlements = await purchasePromise;
+                // noinspection UnnecessaryLocalVariableJS
+                const mappedPermissions = Mapper.convertEntitlements(entitlements);
+                return mappedPermissions;
+            }
+            catch (e) {
+                e.userCanceled = e.code === exports.QonversionErrorCode.PURCHASE_CANCELED;
+                throw e;
+            }
+        }
+        async products() {
+            let products = await QonversionNative.products();
+            const mappedProducts = Mapper.convertProducts(products);
+            return mappedProducts;
+        }
+        async offerings() {
+            let offerings = await QonversionNative.offerings();
+            const mappedOfferings = Mapper.convertOfferings(offerings);
+            return mappedOfferings;
+        }
+        async checkTrialIntroEligibility(ids) {
+            const eligibilityInfo = await QonversionNative.checkTrialIntroEligibilityForProductIds({ ids });
+            const mappedEligibility = Mapper.convertEligibility(eligibilityInfo);
+            return mappedEligibility;
+        }
+        async checkEntitlements() {
+            const entitlements = await QonversionNative.checkEntitlements();
+            const mappedPermissions = Mapper.convertEntitlements(entitlements);
+            return mappedPermissions;
+        }
+        async restore() {
+            const entitlements = await QonversionNative.restore();
+            const mappedPermissions = Mapper.convertEntitlements(entitlements);
+            return mappedPermissions;
+        }
+        syncPurchases() {
+            if (!isAndroid()) {
+                return;
+            }
+            QonversionNative.syncPurchases();
+        }
+        async identify(userID) {
+            const userInfo = await QonversionNative.identify({ userId: userID });
+            const mappedUserInfo = Mapper.convertUserInfo(userInfo);
+            return mappedUserInfo;
+        }
+        logout() {
+            QonversionNative.logout();
+        }
+        async userInfo() {
+            const info = await QonversionNative.userInfo();
+            const mappedUserInfo = Mapper.convertUserInfo(info);
+            return mappedUserInfo;
+        }
+        collectAdvertisingId() {
+            if (isIos()) {
+                QonversionNative.collectAdvertisingId();
+            }
+        }
+        collectAppleSearchAdsAttribution() {
+            if (isIos()) {
+                QonversionNative.collectAppleSearchAdsAttribution();
+            }
+        }
+        setEntitlementsUpdateListener(listener) {
+            QonversionNative.addListener(entitlementsUpdatedEvent, (payload) => {
+                const entitlements = Mapper.convertEntitlements(payload);
+                listener.onEntitlementsUpdated(entitlements);
+            });
+        }
+        setPromoPurchasesDelegate(delegate) {
+            if (!isIos()) {
+                return;
+            }
+            QonversionNative.addListener(promoPurchaseEvent, (payload) => {
+                const promoPurchaseExecutor = async () => {
+                    const entitlements = await QonversionNative.promoPurchase({ productId: payload.productId });
+                    const mappedPermissions = Mapper.convertEntitlements(entitlements);
+                    return mappedPermissions;
+                };
+                delegate.onPromoPurchaseReceived(payload.productId, promoPurchaseExecutor);
+            });
+        }
+        presentCodeRedemptionSheet() {
+            if (isIos()) {
+                QonversionNative.presentCodeRedemptionSheet();
+            }
+        }
+        async remoteConfig(contextKey) {
+            const remoteConfig = await QonversionNative.remoteConfig({ contextKey });
+            const mappedRemoteConfig = Mapper.convertRemoteConfig(remoteConfig);
+            return mappedRemoteConfig;
+        }
+        async remoteConfigList() {
+            const remoteConfigList = await QonversionNative.remoteConfigList();
+            const mappedRemoteConfigList = Mapper.convertRemoteConfigList(remoteConfigList);
+            return mappedRemoteConfigList;
+        }
+        async remoteConfigListForContextKeys(contextKeys, includeEmptyContextKey) {
+            const remoteConfigList = await QonversionNative.remoteConfigList({ contextKeys, includeEmptyContextKey });
+            const mappedRemoteConfigList = Mapper.convertRemoteConfigList(remoteConfigList);
+            return mappedRemoteConfigList;
+        }
+        async attachUserToExperiment(experimentId, groupId) {
+            await QonversionNative.attachUserToExperiment({ experimentId, groupId });
+            return;
+        }
+        async detachUserFromExperiment(experimentId) {
+            await QonversionNative.detachUserFromExperiment({ experimentId });
+            return;
+        }
+        async attachUserToRemoteConfiguration(remoteConfigurationId) {
+            await QonversionNative.attachUserToRemoteConfiguration({ remoteConfigurationId });
+            return;
+        }
+        async detachUserFromRemoteConfiguration(remoteConfigurationId) {
+            await QonversionNative.detachUserFromRemoteConfiguration({ remoteConfigurationId });
+            return;
+        }
+        async isFallbackFileAccessible() {
+            const isAccessibleResult = await QonversionNative.isFallbackFileAccessible();
+            return isAccessibleResult.success;
+        }
+        attribution(data, provider) {
+            QonversionNative.addAttributionData({ data, provider });
+        }
+        setUserProperty(property, value) {
+            if (property === exports.UserPropertyKey.CUSTOM) {
+                console.warn("Can not set user property with the key `UserPropertyKey.CUSTOM`. " +
+                    "To set custom user property, use the `setCustomUserProperty` method.");
+                return;
+            }
+            QonversionNative.setDefinedProperty({ property, value });
+        }
+        setCustomUserProperty(property, value) {
+            QonversionNative.setCustomProperty({ property, value });
+        }
+        async userProperties() {
+            const properties = await QonversionNative.userProperties();
+            const mappedUserProperties = Mapper.convertUserProperties(properties);
+            return mappedUserProperties;
+        }
+    }
+
+    class Qonversion {
+        constructor() { }
+        /**
+         * Use this variable to get a current initialized instance of the Qonversion SDK.
+         * Please, use the property only after calling {@link Qonversion.initialize}.
+         * Otherwise, trying to access the variable will cause an exception.
+         *
+         * @return Current initialized instance of the Qonversion SDK.
+         * @throws error if the instance has not been initialized
+         */
+        static getSharedInstance() {
+            if (!this.backingInstance) {
+                throw "Qonversion has not been initialized. You should call " +
+                    "the initialize method before accessing the shared instance of Qonversion.";
+            }
+            return this.backingInstance;
+        }
+        /**
+         * An entry point to use Qonversion SDK. Call to initialize Qonversion SDK with required and extra configs.
+         * The function is the best way to set additional configs you need to use Qonversion SDK.
+         * You still have an option to set a part of additional configs later via calling separate setters.
+         *
+         * @param config a config that contains key SDK settings.
+         *        Call {@link QonversionConfigBuilder.build} to configure and create a QonversionConfig instance.
+         * @return Initialized instance of the Qonversion SDK.
+         */
+        static initialize(config) {
+            this.backingInstance = new QonversionInternal(config);
+            return this.backingInstance;
         }
     }
 
@@ -1488,262 +1630,86 @@ var capacitorQonversion = (function (exports, core) {
         }
     }
 
-    const isIos = () => {
-        return core.Capacitor.getPlatform() === "ios";
-    };
-
-    const sdkVersion = "0.1.0";
-    const QonversionNative = core.registerPlugin('Qonversion', {
-        web: () => Promise.resolve().then(function () { return web; }).then(m => new m.QonversionWeb()),
-    });
-    class QonversionInternal {
-        constructor(qonversionConfig) {
-            QonversionNative.storeSdkInfo({ source: "capacitor", version: sdkVersion });
-            QonversionNative.initialize({
-                projectKey: qonversionConfig.projectKey,
-                launchMode: qonversionConfig.launchMode,
-                environment: qonversionConfig.environment,
-                entitlementsCacheLifetime: qonversionConfig.entitlementsCacheLifetime,
-                proxyUrl: qonversionConfig.proxyUrl,
-                kidsMode: qonversionConfig.kidsMode
-            });
-            // if (qonversionConfig.entitlementsUpdateListener) {
-            //   this.setEntitlementsUpdateListener(qonversionConfig.entitlementsUpdateListener);
-            // }
-        }
-        syncHistoricalData() {
-            QonversionNative.syncHistoricalData();
-        }
-        syncStoreKit2Purchases() {
-            if (isIos()) {
-                QonversionNative.syncStoreKit2Purchases();
-            }
-        }
-        async isFallbackFileAccessible() {
-            const isAccessibleResult = await QonversionNative.isFallbackFileAccessible();
-            return isAccessibleResult.success;
-        }
-        //
-        // async purchaseProduct(product: Product, options: PurchaseOptions): Promise<Map<string, Entitlement>> {
-        //   try {
-        //     let purchasePromise: Promise<Record<string, QEntitlement> | null | undefined>;
-        //     if (isIos()) {
-        //       purchasePromise = QonversionNative.purchase(product.qonversionID, options.quantity, options.contextKeys);
-        //     } else {
-        //       purchasePromise = QonversionNative.purchase(
-        //           product.qonversionID,
-        //           options.offerId,
-        //           options.applyOffer,
-        //           options.oldProduct?.qonversionID,
-        //           options.updatePolicy,
-        //           options.contextKeys
-        //       );
-        //     }
-        //     const entitlements = await purchasePromise;
-        //
-        //     // noinspection UnnecessaryLocalVariableJS
-        //     const mappedPermissions = Mapper.convertEntitlements(entitlements);
-        //
-        //     return mappedPermissions;
-        //   } catch (e) {
-        //     e.userCanceled = e.code === QonversionErrorCode.PURCHASE_CANCELED;
-        //     throw e;
-        //   }
-        // }
-        //
-        // async purchase(purchaseModel: PurchaseModel): Promise<Map<string, Entitlement>> {
-        //   try {
-        //     let purchasePromise: Promise<Record<string, QEntitlement> | null | undefined>;
-        //     if (isIos()) {
-        //       purchasePromise = QonversionNative.purchase(purchaseModel.productId, 1, null);
-        //     } else {
-        //       purchasePromise = QonversionNative.purchase(
-        //         purchaseModel.productId,
-        //         purchaseModel.offerId,
-        //         purchaseModel.applyOffer,
-        //         null,
-        //         null,
-        //         null
-        //       );
-        //     }
-        //     const entitlements = await purchasePromise;
-        //
-        //     // noinspection UnnecessaryLocalVariableJS
-        //     const mappedPermissions = Mapper.convertEntitlements(entitlements);
-        //
-        //     return mappedPermissions;
-        //   } catch (e) {
-        //     e.userCanceled = e.code === QonversionErrorCode.PURCHASE_CANCELED;
-        //     throw e;
-        //   }
-        // }
-        // async updatePurchase(purchaseUpdateModel: PurchaseUpdateModel): Promise<Map<string, Entitlement> | null> {
-        //   if (!isAndroid()) {
-        //     return null;
-        //   }
-        //
-        //   try {
-        //     const entitlements = await QonversionNative.updatePurchase(
-        //       purchaseUpdateModel.productId,
-        //       purchaseUpdateModel.offerId,
-        //       purchaseUpdateModel.applyOffer,
-        //       purchaseUpdateModel.oldProductId,
-        //       purchaseUpdateModel.updatePolicy,
-        //       null
-        //     );
-        //
-        //     // noinspection UnnecessaryLocalVariableJS
-        //     const mappedPermissions: Map<string, Entitlement> = Mapper.convertEntitlements(entitlements);
-        //
-        //     return mappedPermissions;
-        //   } catch (e) {
-        //     e.userCanceled = e.code === QonversionErrorCode.PURCHASE_CANCELED;
-        //     throw e;
-        //   }
-        // }
-        //
-        // async products(): Promise<Map<string, Product>> {
-        //   let products = await QonversionNative.products();
-        //   const mappedProducts: Map<string, Product> = Mapper.convertProducts(
-        //     products
-        //   );
-        //
-        //   return mappedProducts;
-        // }
-        //
-        // async offerings(): Promise<Offerings | null> {
-        //   let offerings = await QonversionNative.offerings();
-        //   const mappedOfferings = Mapper.convertOfferings(offerings);
-        //
-        //   return mappedOfferings;
-        // }
-        //
-        // async checkTrialIntroEligibility(
-        //   ids: string[]
-        // ): Promise<Map<string, IntroEligibility>> {
-        //   const eligibilityInfo = await QonversionNative.checkTrialIntroEligibilityForProductIds(ids);
-        //
-        //   const mappedEligibility: Map<
-        //     string,
-        //     IntroEligibility
-        //   > = Mapper.convertEligibility(eligibilityInfo);
-        //
-        //   return mappedEligibility;
-        // }
-        async checkEntitlements() {
-            const entitlements = await QonversionNative.checkEntitlements();
-            console.log('Entitlements from native', entitlements, JSON.stringify(entitlements));
-            const mappedPermissions = Mapper.convertEntitlements(entitlements);
-            return mappedPermissions;
-        }
-    }
-
-    class Qonversion {
-        constructor() { }
-        /**
-         * Use this variable to get a current initialized instance of the Qonversion SDK.
-         * Please, use the property only after calling {@link Qonversion.initialize}.
-         * Otherwise, trying to access the variable will cause an exception.
-         *
-         * @return Current initialized instance of the Qonversion SDK.
-         * @throws error if the instance has not been initialized
-         */
-        static getSharedInstance() {
-            if (!this.backingInstance) {
-                throw "Qonversion has not been initialized. You should call " +
-                    "the initialize method before accessing the shared instance of Qonversion.";
-            }
-            return this.backingInstance;
-        }
-        /**
-         * An entry point to use Qonversion SDK. Call to initialize Qonversion SDK with required and extra configs.
-         * The function is the best way to set additional configs you need to use Qonversion SDK.
-         * You still have an option to set a part of additional configs later via calling separate setters.
-         *
-         * @param config a config that contains key SDK settings.
-         *        Call {@link QonversionConfigBuilder.build} to configure and create a QonversionConfig instance.
-         * @return Initialized instance of the Qonversion SDK.
-         */
-        static initialize(config) {
-            this.backingInstance = new QonversionInternal(config);
-            return this.backingInstance;
-        }
-    }
-
     class QonversionWeb extends core.WebPlugin {
-        attachUserToExperiment(experimentId, groupId) {
+        addAttributionData(params) {
             throw this.unimplemented("not implemented yet");
         }
-        attachUserToRemoteConfiguration(remoteConfigurationId) {
+        attachUserToExperiment(params) {
             throw this.unimplemented("not implemented yet");
         }
-        attribution(data, provider) {
+        attachUserToRemoteConfiguration(params) {
+            throw this.unimplemented("not implemented yet");
         }
         checkEntitlements() {
             throw this.unimplemented("not implemented yet");
         }
-        checkTrialIntroEligibility(ids) {
+        checkTrialIntroEligibilityForProductIds(params) {
             throw this.unimplemented("not implemented yet");
         }
         collectAdvertisingId() {
+            throw this.unimplemented("not implemented yet");
         }
         collectAppleSearchAdsAttribution() {
-        }
-        detachUserFromExperiment(experimentId) {
             throw this.unimplemented("not implemented yet");
         }
-        detachUserFromRemoteConfiguration(remoteConfigurationId) {
+        detachUserFromExperiment(params) {
             throw this.unimplemented("not implemented yet");
         }
-        identify(userID) {
+        detachUserFromRemoteConfiguration(params) {
+            throw this.unimplemented("not implemented yet");
+        }
+        identify(params) {
+            throw this.unimplemented("not implemented yet");
+        }
+        initialize(params) {
             throw this.unimplemented("not implemented yet");
         }
         isFallbackFileAccessible() {
             throw this.unimplemented("not implemented yet");
         }
         logout() {
+            throw this.unimplemented("not implemented yet");
         }
         offerings() {
             throw this.unimplemented("not implemented yet");
         }
         presentCodeRedemptionSheet() {
+            throw this.unimplemented("not implemented yet");
         }
         products() {
             throw this.unimplemented("not implemented yet");
         }
-        purchase(purchaseModel) {
+        promoPurchase(params) {
             throw this.unimplemented("not implemented yet");
         }
-        purchaseProduct(product, options) {
+        purchase(params) {
             throw this.unimplemented("not implemented yet");
         }
-        remoteConfig(contextKey) {
+        remoteConfig(params) {
             throw this.unimplemented("not implemented yet");
         }
-        remoteConfigList() {
-            throw this.unimplemented("not implemented yet");
-        }
-        remoteConfigListForContextKeys(contextKeys, includeEmptyContextKey) {
+        remoteConfigList(params) {
             throw this.unimplemented("not implemented yet");
         }
         restore() {
             throw this.unimplemented("not implemented yet");
         }
-        setCustomUserProperty(key, value) {
+        setCustomProperty(param) {
+            throw this.unimplemented("not implemented yet");
         }
-        setEntitlementsUpdateListener(listener) {
+        setDefinedProperty(param) {
+            throw this.unimplemented("not implemented yet");
         }
-        setPromoPurchasesDelegate(delegate) {
-        }
-        setUserProperty(key, value) {
+        storeSdkInfo(params) {
+            throw this.unimplemented("not implemented yet");
         }
         syncHistoricalData() {
+            throw this.unimplemented("not implemented yet");
         }
         syncPurchases() {
+            throw this.unimplemented("not implemented yet");
         }
         syncStoreKit2Purchases() {
-        }
-        updatePurchase(purchaseUpdateModel) {
             throw this.unimplemented("not implemented yet");
         }
         userInfo() {
@@ -1774,10 +1740,8 @@ var capacitorQonversion = (function (exports, core) {
     exports.ProductPrice = ProductPrice;
     exports.ProductPricingPhase = ProductPricingPhase;
     exports.ProductStoreDetails = ProductStoreDetails;
-    exports.PurchaseModel = PurchaseModel;
     exports.PurchaseOptions = PurchaseOptions;
     exports.PurchaseOptionsBuilder = PurchaseOptionsBuilder;
-    exports.PurchaseUpdateModel = PurchaseUpdateModel;
     exports.Qonversion = Qonversion;
     exports.QonversionConfig = QonversionConfig;
     exports.QonversionConfigBuilder = QonversionConfigBuilder;

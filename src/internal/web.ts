@@ -1,5 +1,5 @@
 import {WebPlugin} from '@capacitor/core';
-import {QonversionNativePlugin} from './QonversionNativePlugin';
+import {QonversionNativePlugin} from '../QonversionNativePlugin';
 import {
     QEntitlement,
     QOfferings,
@@ -9,7 +9,7 @@ import {
     QTrialIntroEligibility,
     QUser,
     QUserProperties
-} from './internal/Mapper';
+} from './Mapper';
 
 export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
     addAttributionData(params: { data: Object; provider: string }): void {

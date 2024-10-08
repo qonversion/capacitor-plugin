@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Example Capacitor App</title>
+    <link rel="stylesheet" href="index.css">
     <meta
       name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -11,16 +12,44 @@
   </head>
   <body>
     <main>
-      <h1>Capacitor Test Plugin Project</h1>
-      <p>
-        This project can be used to test out the functionality of your plugin. Nothing in the <em>example/</em> folder
-        will be published to npm when using this template, so you can create away!
-      </p>
-      <label for="echoInput">Echo Text:</label>
-      <input type="text" id="echoInput" name="echoInput" value="Hello World!" />
-      <button onclick="testEcho()">Click Me!</button>
+      <h1>Qonversion Capacitor Sample Project</h1>
+      <div class="button-container">
+        <button onclick="initializeSdk()" type="button" class="qon-button top-margin">Initialize SDK</button>
+        <div class="row top-margin">
+          <input placeholder="Product id" id="product-id" type="text" class="qon-input" name="product-id" />
+          <input placeholder="Android Offer id" id="offer-id" type="text" class="qon-input" name="offer-id" />
+          <button onclick="purchase()" type="button" class="qon-button">Purchase</button>
+        </div>
+        <button onclick="getProducts()" type="button" class="qon-button top-margin">Get Products</button>
+        <button onclick="getRemoteConfig()" type="button" class="qon-button top-margin">Get Remote Config</button>
+        <button onclick="getRemoteConfigList()" type="button" class="qon-button top-margin">Get Remote Config List</button>
+        <button onclick="getOfferings()" type="button" class="qon-button top-margin">Get Offerings</button>
+        <div class="row top-margin">
+          <input placeholder="id1, id2, ..." id="product-ids" type="text" class="qon-input" name="product-ids" />
+          <button onclick="checkTrialIntroEligibility()" type="button" class="qon-button">Check trial/intro</button>
+        </div>
+        <button onclick="checkEntitlements()" type="button" class="qon-button top-margin">Check Entitlements</button>
+        <button onclick="restore()" type="button" class="qon-button top-margin">Restore</button>
+        <button onclick="syncPurchases()" type="button" class="qon-button top-margin">Sync Purchases</button>
+        <button onclick="syncHistoricalData()" type="button" class="qon-button top-margin">Sync Historical Data</button>
+        <div class="row top-margin">
+          <input placeholder="User id" id="user-id" type="text" class="qon-input" name="user-id" />
+          <button onclick="identify()" type="button" class="qon-button">Identify</button>
+        </div>
+        <button onclick="logout()" type="button" class="qon-button top-margin">Logout</button>
+        <button onclick="userInfo()" type="button" class="qon-button top-margin">User Info</button>
+        <button onclick="attribution()" type="button" class="qon-button top-margin">Attribution</button>
+        <button onclick="setUserProperty()" type="button" class="qon-button top-margin">Set User Property</button>
+        <button onclick="setCustomUserProperty()" type="button" class="qon-button top-margin">Set Custom User Property</button>
+        <button onclick="userProperties()" type="button" class="qon-button top-margin">User Properties</button>
+        <button onclick="setEntitlementsUpdateListener()" type="button" class="qon-button top-margin">Set Entitlements Update Listener</button>
+        <button onclick="collectAdvertisingId()" type="button" class="qon-button top-margin">Collect Advertising Id</button>
+        <button onclick="collectAppleSearchAdsAttribution()" type="button" class="qon-button top-margin">Collect ASA Attribution</button>
+        <button onclick="setPromoPurchasesDelegate()" type="button" class="qon-button top-margin">Set Promo Purchases Delegate</button>
+        <button onclick="presentCodeRedemptionSheet()" type="button" class="qon-button top-margin">Present Code Redemption Sheet</button>
+      </div>
     </main>
 
-    <script src="./js/example.js" type="module"></script>
+    <script src="./js/index.js" type="module"></script>
   </body>
 </html>
