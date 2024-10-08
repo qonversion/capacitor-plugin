@@ -45,13 +45,22 @@ window.getProducts = async () => {
 }
 
 window.getRemoteConfig = async () => {
-  const remoteConfig = await Qonversion.getSharedInstance().remoteConfig();
-  console.log('Qonversion remote config:', remoteConfig);
+  const contextKey = document.getElementById('context-key').value;
+  const key = contextKey?.length > 0 ? contextKey : undefined;
+  const remoteConfig = await Qonversion.getSharedInstance().remoteConfig(key);
+  console.log('Qonversion remote config:', remoteConfig, key);
 }
 
 window.getRemoteConfigList = async () => {
-  const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigList();
-  console.log('Qonversion remote config list:', remoteConfigList);
+  const contextKeys = document.getElementById('context-keys').value;
+  if (contextKeys?.length > 0) {
+    const keys = contextKeys.split(', ');
+    const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigListForContextKeys(keys, true);
+    console.log('Qonversion remote config list:', remoteConfigList, keys);
+  } else {
+    const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigList();
+    console.log('Qonversion remote config list:', remoteConfigList);
+  }
 }
 
 window.getOfferings = async () => {

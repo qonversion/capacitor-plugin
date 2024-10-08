@@ -119,7 +119,7 @@ class QonversionPlugin : Plugin() {
 
     @PluginMethod
     fun remoteConfigList(call: PluginCall) {
-        val contextKeys = call.getArray("contextKeys").toList<String>()
+        val contextKeys = call.getArray("contextKeys")?.toList<String>()
 
         if (contextKeys == null) {
             qonversionSandwich.remoteConfigList(call.toResultListener())

@@ -21,8 +21,14 @@
           <button onclick="purchase()" type="button" class="qon-button">Purchase</button>
         </div>
         <button onclick="getProducts()" type="button" class="qon-button top-margin">Get Products</button>
-        <button onclick="getRemoteConfig()" type="button" class="qon-button top-margin">Get Remote Config</button>
-        <button onclick="getRemoteConfigList()" type="button" class="qon-button top-margin">Get Remote Config List</button>
+        <div class="row top-margin">
+          <input placeholder="context key" id="context-key" type="text" class="qon-input" name="context-key" />
+          <button onclick="getRemoteConfig()" type="button" class="qon-button">Get Remote Config</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="key1, key2" id="context-keys" type="text" class="qon-input" name="context-keys" />
+          <button onclick="getRemoteConfigList()" type="button" class="qon-button">Get Remote Config List</button>
+        </div>
         <button onclick="getOfferings()" type="button" class="qon-button top-margin">Get Offerings</button>
         <div class="row top-margin">
           <input placeholder="id1, id2, ..." id="product-ids" type="text" class="qon-input" name="product-ids" />
