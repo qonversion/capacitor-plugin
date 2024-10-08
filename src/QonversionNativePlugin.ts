@@ -68,9 +68,9 @@ export interface QonversionNativePlugin {
 
   addAttributionData(params: {data: Object, provider: string}): void;
 
-  setDefinedProperty(param: {property: string, value: string}): void;
+  setDefinedUserProperty(param: {property: string, value: string}): void;
 
-  setCustomProperty(param: {property: string, value: string}): void;
+  setCustomUserProperty(param: {property: string, value: string}): void;
 
   userProperties(): Promise<QUserProperties>;
 

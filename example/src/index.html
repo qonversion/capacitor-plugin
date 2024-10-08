@@ -21,8 +21,14 @@
           <button onclick="purchase()" type="button" class="qon-button">Purchase</button>
         </div>
         <button onclick="getProducts()" type="button" class="qon-button top-margin">Get Products</button>
-        <button onclick="getRemoteConfig()" type="button" class="qon-button top-margin">Get Remote Config</button>
-        <button onclick="getRemoteConfigList()" type="button" class="qon-button top-margin">Get Remote Config List</button>
+        <div class="row top-margin">
+          <input placeholder="context key" id="context-key" type="text" class="qon-input" name="context-key" />
+          <button onclick="getRemoteConfig()" type="button" class="qon-button">Get Remote Config</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="key1, key2" id="context-keys" type="text" class="qon-input" name="context-keys" />
+          <button onclick="getRemoteConfigList()" type="button" class="qon-button">Get Remote Config List</button>
+        </div>
         <button onclick="getOfferings()" type="button" class="qon-button top-margin">Get Offerings</button>
         <div class="row top-margin">
           <input placeholder="id1, id2, ..." id="product-ids" type="text" class="qon-input" name="product-ids" />
@@ -48,6 +54,24 @@
         <button onclick="collectAppleSearchAdsAttribution()" type="button" class="qon-button top-margin">Collect ASA Attribution</button>
         <button onclick="setPromoPurchasesDelegate()" type="button" class="qon-button top-margin">Set Promo Purchases Delegate</button>
         <button onclick="presentCodeRedemptionSheet()" type="button" class="qon-button top-margin">Present Code Redemption Sheet</button>
+        <div class="row top-margin">
+          <input placeholder="experiment id" id="attach-experiment-id" type="text" class="qon-input" name="attach-experiment-id" />
+          <input placeholder="group id" id="attach-group-id" type="text" class="qon-input" name="attach-group-id" />
+          <button onclick="attachUserToExperiment()" type="button" class="qon-button">Attach user to experiment</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="experiment id" id="detach-experiment-id" type="text" class="qon-input" name="detach-experiment-id" />
+          <button onclick="detachUserFromExperiment()" type="button" class="qon-button">Detach user from experiment</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="config id" id="attach-config-id" type="text" class="qon-input" name="attach-config-id" />
+          <button onclick="attachUserToRemoteConfiguration()" type="button" class="qon-button">Attach user to remote configuration</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="config id" id="detach-config-id" type="text" class="qon-input" name="detach-config-id" />
+          <button onclick="detachUserFromRemoteConfiguration()" type="button" class="qon-button">Detach user from remote configuration</button>
+        </div>
+        <button onclick="isFallbackFileAccessible()" type="button" class="qon-button top-margin">Is fallback file accessible</button>
       </div>
     </main>
 

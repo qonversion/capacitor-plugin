@@ -265,11 +265,11 @@ export default class QonversionInternal implements QonversionApi {
       return;
     }
 
-    QonversionNative.setDefinedProperty({property, value});
+    QonversionNative.setDefinedUserProperty({property, value});
   }
 
   setCustomUserProperty(property: string, value: string) {
-    QonversionNative.setCustomProperty({property, value});
+    QonversionNative.setCustomUserProperty({property, value});
   }
 
   async userProperties(): Promise<UserProperties> {
