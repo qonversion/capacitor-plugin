@@ -16,6 +16,7 @@ import {UserProperties} from '../dto/UserProperties';
 import {RemoteConfigList} from '../dto/RemoteConfigList';
 import {QonversionApi} from '../QonversionApi';
 import {QonversionNativePlugin} from '../QonversionNativePlugin';
+import {PurchaseOptionsBuilder} from '../dto/PurchaseOptionsBuilder';
 
 const sdkVersion = "0.1.0";
 
@@ -39,9 +40,9 @@ export default class QonversionInternal implements QonversionApi {
       kidsMode: qonversionConfig.kidsMode
     });
 
-    // if (qonversionConfig.entitlementsUpdateListener) {
-    //   this.setEntitlementsUpdateListener(qonversionConfig.entitlementsUpdateListener);
-    // }
+    if (qonversionConfig.entitlementsUpdateListener) {
+      this.setEntitlementsUpdateListener(qonversionConfig.entitlementsUpdateListener);
+    }
   }
 
   syncHistoricalData() {
@@ -54,8 +55,12 @@ export default class QonversionInternal implements QonversionApi {
     }
   }
 
-  async purchaseProduct(product: Product, options: PurchaseOptions): Promise<Map<string, Entitlement>> {
+  async purchaseProduct(product: Product, options: PurchaseOptions | undefined): Promise<Map<string, Entitlement>> {
     try {
+      if (!options) {
+        options = new PurchaseOptionsBuilder().build();
+      }
+
       let purchasePromise: Promise<Record<string, QEntitlement> | null | undefined>;
       if (isIos()) {
         purchasePromise = QonversionNative.purchase({
