@@ -54,6 +54,23 @@
         <button onclick="collectAppleSearchAdsAttribution()" type="button" class="qon-button top-margin">Collect ASA Attribution</button>
         <button onclick="setPromoPurchasesDelegate()" type="button" class="qon-button top-margin">Set Promo Purchases Delegate</button>
         <button onclick="presentCodeRedemptionSheet()" type="button" class="qon-button top-margin">Present Code Redemption Sheet</button>
+        <div class="row top-margin">
+          <input placeholder="experiment id" id="attach-experiment-id" type="text" class="qon-input" name="attach-experiment-id" />
+          <input placeholder="group id" id="attach-group-id" type="text" class="qon-input" name="attach-group-id" />
+          <button onclick="attachUserToExperiment()" type="button" class="qon-button">Attach user to experiment</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="experiment id" id="detach-experiment-id" type="text" class="qon-input" name="detach-experiment-id" />
+          <button onclick="detachUserFromExperiment()" type="button" class="qon-button">Detach user from experiment</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="config id" id="attach-config-id" type="text" class="qon-input" name="attach-config-id" />
+          <button onclick="attachUserToRemoteConfiguration()" type="button" class="qon-button">Attach user to remote configuration</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="config id" id="detach-config-id" type="text" class="qon-input" name="detach-config-id" />
+          <button onclick="detachUserFromRemoteConfiguration()" type="button" class="qon-button">Detach user from remote configuration</button>
+        </div>
       </div>
     </main>
 

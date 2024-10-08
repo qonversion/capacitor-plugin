@@ -63,6 +63,35 @@ window.getRemoteConfigList = async () => {
   }
 }
 
+window.attachUserToExperiment = async () => {
+  const experimentId = document.getElementById('attach-experiment-id').value;
+  const groupId = document.getElementById('attach-group-id').value;
+
+  await Qonversion.getSharedInstance().attachUserToExperiment(experimentId, groupId);
+  console.log('Qonversion attachUserToExperiment');
+}
+
+window.detachUserFromExperiment = async () => {
+  const experimentId = document.getElementById('detach-experiment-id').value;
+
+  await Qonversion.getSharedInstance().detachUserFromExperiment(experimentId);
+  console.log('Qonversion detachUserFromExperiment');
+}
+
+window.attachUserToRemoteConfiguration = async () => {
+  const remoteConfigurationId = document.getElementById('attach-config-id').value;
+
+  await Qonversion.getSharedInstance().attachUserToRemoteConfiguration(remoteConfigurationId);
+  console.log('Qonversion attachUserToRemoteConfiguration');
+}
+
+window.detachUserFromRemoteConfiguration = async () => {
+  const remoteConfigurationId = document.getElementById('detach-config-id').value;
+
+  await Qonversion.getSharedInstance().detachUserFromRemoteConfiguration(remoteConfigurationId);
+  console.log('Qonversion detachUserFromRemoteConfiguration');
+}
+
 window.getOfferings = async () => {
   const offerings = await Qonversion.getSharedInstance().offerings();
   console.log('Qonversion offerings:', offerings);
