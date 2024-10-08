@@ -163,7 +163,8 @@ window.attribution = () => {
     a: 'aaaa',
     b: {
       c: 25.52,
-    }
+    },
+    d: null
   };
   const provider = AttributionProvider.APPSFLYER;
   Qonversion.getSharedInstance().attribution(data, provider);

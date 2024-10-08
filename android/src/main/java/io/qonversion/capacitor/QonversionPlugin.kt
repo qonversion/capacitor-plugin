@@ -167,8 +167,7 @@ class QonversionPlugin : Plugin() {
 
     @PluginMethod
     fun addAttributionData(call: PluginCall) {
-        @Suppress("UNCHECKED_CAST")
-        val data = call.getObject("data") as? Map<String, Any> ?: return call.noNecessaryDataError("data")
+        val data = call.getObject("data")?.toMap() ?: return call.noNecessaryDataError("data")
 
         if (data.isEmpty()) {
             return call.noNecessaryDataError("data")

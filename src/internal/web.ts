@@ -113,11 +113,11 @@ export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
         throw this.unimplemented("not implemented yet");
     }
 
-    setCustomProperty(param: { property: string; value: string }): void {
+    setCustomUserProperty(param: { property: string; value: string }): void {
         throw this.unimplemented("not implemented yet");
     }
 
-    setDefinedProperty(param: { property: string; value: string }): void {
+    setDefinedUserProperty(param: { property: string; value: string }): void {
         throw this.unimplemented("not implemented yet");
     }
 
