@@ -109,7 +109,7 @@ export default class QonversionInternal implements QonversionApi {
   async checkTrialIntroEligibility(
     ids: string[]
   ): Promise<Map<string, IntroEligibility>> {
-    const eligibilityInfo = await QonversionNative.checkTrialIntroEligibilityForProductIds({ids});
+    const eligibilityInfo = await QonversionNative.checkTrialIntroEligibility({ids});
 
     const mappedEligibility: Map<
       string,

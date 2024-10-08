@@ -28,7 +28,7 @@ export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
         throw this.unimplemented("not implemented yet");
     }
 
-    checkTrialIntroEligibilityForProductIds(params: {
+    checkTrialIntroEligibility(params: {
         ids: string[]
     }): Promise<QTrialIntroEligibility | null | undefined> {
         throw this.unimplemented("not implemented yet");

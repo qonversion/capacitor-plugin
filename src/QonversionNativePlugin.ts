@@ -40,7 +40,7 @@ export interface QonversionNativePlugin {
 
   offerings(): Promise<QOfferings | null | undefined>;
 
-  checkTrialIntroEligibilityForProductIds(params: {ids: string[]}): Promise<QTrialIntroEligibility | null | undefined>;
+  checkTrialIntroEligibility(params: {ids: string[]}): Promise<QTrialIntroEligibility | null | undefined>;
 
   restore(): Promise<Record<string, QEntitlement> | null | undefined>;
 
