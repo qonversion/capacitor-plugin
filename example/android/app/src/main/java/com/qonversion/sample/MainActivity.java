@@ -1,4 +1,4 @@
-package com.example.plugin;
+package com.qonversion.sample;
 
 import com.getcapacitor.BridgeActivity;
 

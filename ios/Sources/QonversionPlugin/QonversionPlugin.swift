@@ -9,6 +9,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
   public let pluginMethods: [CAPPluginMethod] = [
     CAPPluginMethod(name: "initialize", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "identify", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "products", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "purchase", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "promoPurchase", returnType: CAPPluginReturnPromise),
@@ -66,6 +67,11 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
     }
     
     qonversionSandwich?.identify(userId, getDefaultCompletion(call))
+  }
+  
+  @objc func logout(_ call: CAPPluginCall) {
+    qonversionSandwich?.logout()
+    call.resolve()
   }
   
   @objc func products(_ call: CAPPluginCall) {

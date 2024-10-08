@@ -56,6 +56,12 @@ class QonversionPlugin : Plugin() {
     }
 
     @PluginMethod
+    fun logout(call: PluginCall) {
+        qonversionSandwich.logout()
+        call.resolve()
+    }
+
+    @PluginMethod
     fun purchase(call: PluginCall) {
         val productId = call.getString("productId") ?: return call.noNecessaryDataError("productId")
         val oldProductId = call.getString("oldProductId")
@@ -122,6 +128,12 @@ class QonversionPlugin : Plugin() {
 
             qonversionSandwich.remoteConfigList(contextKeys, includeEmptyContextKey, call.toResultListener())
         }
+    }
+
+    @PluginMethod
+    fun syncHistoricalData(call: PluginCall) {
+        qonversionSandwich.syncHistoricalData()
+        call.resolve()
     }
 
     @PluginMethod
