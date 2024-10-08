@@ -92,6 +92,11 @@ window.detachUserFromRemoteConfiguration = async () => {
   console.log('Qonversion detachUserFromRemoteConfiguration');
 }
 
+window.isFallbackFileAccessible = async () => {
+  const res = await Qonversion.getSharedInstance().isFallbackFileAccessible();
+  console.log('Qonversion isFallbackFileAccessible', res);
+}
+
 window.getOfferings = async () => {
   const offerings = await Qonversion.getSharedInstance().offerings();
   console.log('Qonversion offerings:', offerings);
