@@ -94,6 +94,11 @@ window.syncHistoricalData = async () => {
   console.log('Qonversion syncHistoricalData');
 }
 
+window.syncStoreKit2Purchases = async () => {
+  await Qonversion.getSharedInstance().syncStoreKit2Purchases();
+  console.log('Qonversion syncHistoricalData');
+}
+
 window.identify = async () => {
   const userId = document.getElementById('user-id').value;
   const user = await Qonversion.getSharedInstance().identify(userId);
