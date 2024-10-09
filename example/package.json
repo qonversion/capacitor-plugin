@@ -23,7 +23,7 @@
     "@capacitor/core": "latest",
     "@capacitor/ios": "^6.0.0",
     "@capacitor/splash-screen": "latest",
-    "qonversion-capacitor": "file:.."
+    "@qonversion/capacitor-plugin": "file:.."
   },
   "devDependencies": {
     "@capacitor/cli": "latest",

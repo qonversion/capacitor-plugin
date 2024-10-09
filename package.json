@@ -1,7 +1,7 @@
 {
-  "name": "qonversion-capacitor",
+  "name": "@qonversion/capacitor-plugin",
   "version": "0.0.1",
-  "description": "Qonversion",
+  "description": "Qonversion provides full in-app purchases infrastructure, so you do not need to build your own server for receipt validation. Implement in-app subscriptions, validate user receipts, check subscription status, and provide access to your app features and content using our StoreKit wrapper and Google Play Billing wrapper.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -15,8 +15,12 @@
     "Package.swift",
     "QonversionCapacitor.podspec"
   ],
-  "author": "",
+  "author": {
+    "name": "Qonversion",
+    "email": "hi@qonversion.io"
+  },
   "license": "MIT",
+  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qonversion/qonversion-capacitor.git"
@@ -26,8 +30,17 @@
   },
   "keywords": [
     "capacitor",
+    "ionic",
     "plugin",
-    "native"
+    "native",
+    "qonversion",
+    "StoreKit",
+    "SKStoreKit",
+    "Google",
+    "Play",
+    "Billing",
+    "in-app",
+    "Purchases"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
@@ -40,9 +53,10 @@
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
     "build": "npm run clean && tsc && rollup -c rollup.config.js",
-    "clean": "rimraf ./dist",
+    "clean": "./node_modules/rimraf/bin.js ./dist",
     "watch": "tsc --watch",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "deploy": "npm publish"
   },
   "devDependencies": {
     "@capacitor/android": "^6.0.0",
