@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Example Capacitor App</title>
+    <link rel="stylesheet" href="index.css">
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <main>
+      <h1>Qonversion Capacitor Sample Project</h1>
+      <div class="button-container">
+        <button onclick="initializeSdk()" type="button" class="qon-button top-margin">Initialize SDK</button>
+        <div class="row top-margin">
+          <input placeholder="Product id" id="product-id" type="text" class="qon-input" name="product-id" />
+          <input placeholder="Android Offer id" id="offer-id" type="text" class="qon-input" name="offer-id" />
+          <button onclick="purchase()" type="button" class="qon-button">Purchase</button>
+        </div>
+        <button onclick="getProducts()" type="button" class="qon-button top-margin">Get Products</button>
+        <div class="row top-margin">
+          <input placeholder="context key" id="context-key" type="text" class="qon-input" name="context-key" />
+          <button onclick="getRemoteConfig()" type="button" class="qon-button">Get Remote Config</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="key1, key2" id="context-keys" type="text" class="qon-input" name="context-keys" />
+          <button onclick="getRemoteConfigList()" type="button" class="qon-button">Get Remote Config List</button>
+        </div>
+        <button onclick="getOfferings()" type="button" class="qon-button top-margin">Get Offerings</button>
+        <div class="row top-margin">
+          <input placeholder="id1, id2, ..." id="product-ids" type="text" class="qon-input" name="product-ids" />
+          <button onclick="checkTrialIntroEligibility()" type="button" class="qon-button">Check trial/intro</button>
+        </div>
+        <button onclick="checkEntitlements()" type="button" class="qon-button top-margin">Check Entitlements</button>
+        <button onclick="restore()" type="button" class="qon-button top-margin">Restore</button>
+        <button onclick="syncPurchases()" type="button" class="qon-button top-margin">Sync Purchases</button>
+        <button onclick="syncHistoricalData()" type="button" class="qon-button top-margin">Sync Historical Data</button>
+        <button onclick="syncStoreKit2Purchases()" type="button" class="qon-button top-margin">Sync StoreKit 2 Purchases</button>
+        <div class="row top-margin">
+          <input placeholder="User id" id="user-id" type="text" class="qon-input" name="user-id" />
+          <button onclick="identify()" type="button" class="qon-button">Identify</button>
+        </div>
+        <button onclick="logout()" type="button" class="qon-button top-margin">Logout</button>
+        <button onclick="userInfo()" type="button" class="qon-button top-margin">User Info</button>
+        <button onclick="attribution()" type="button" class="qon-button top-margin">Attribution</button>
+        <button onclick="setUserProperty()" type="button" class="qon-button top-margin">Set User Property</button>
+        <button onclick="setCustomUserProperty()" type="button" class="qon-button top-margin">Set Custom User Property</button>
+        <button onclick="userProperties()" type="button" class="qon-button top-margin">User Properties</button>
+        <button onclick="setEntitlementsUpdateListener()" type="button" class="qon-button top-margin">Set Entitlements Update Listener</button>
+        <button onclick="collectAdvertisingId()" type="button" class="qon-button top-margin">Collect Advertising Id</button>
+        <button onclick="collectAppleSearchAdsAttribution()" type="button" class="qon-button top-margin">Collect ASA Attribution</button>
+        <button onclick="setPromoPurchasesDelegate()" type="button" class="qon-button top-margin">Set Promo Purchases Delegate</button>
+        <button onclick="presentCodeRedemptionSheet()" type="button" class="qon-button top-margin">Present Code Redemption Sheet</button>
+        <div class="row top-margin">
+          <input placeholder="experiment id" id="attach-experiment-id" type="text" class="qon-input" name="attach-experiment-id" />
+          <input placeholder="group id" id="attach-group-id" type="text" class="qon-input" name="attach-group-id" />
+          <button onclick="attachUserToExperiment()" type="button" class="qon-button">Attach user to experiment</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="experiment id" id="detach-experiment-id" type="text" class="qon-input" name="detach-experiment-id" />
+          <button onclick="detachUserFromExperiment()" type="button" class="qon-button">Detach user from experiment</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="config id" id="attach-config-id" type="text" class="qon-input" name="attach-config-id" />
+          <button onclick="attachUserToRemoteConfiguration()" type="button" class="qon-button">Attach user to remote configuration</button>
+        </div>
+        <div class="row top-margin">
+          <input placeholder="config id" id="detach-config-id" type="text" class="qon-input" name="detach-config-id" />
+          <button onclick="detachUserFromRemoteConfiguration()" type="button" class="qon-button">Detach user from remote configuration</button>
+        </div>
+        <button onclick="isFallbackFileAccessible()" type="button" class="qon-button top-margin">Is fallback file accessible</button>
+      </div>
+    </main>
+
+    <script src="./js/index.js" type="module"></script>
+  </body>
+</html>
