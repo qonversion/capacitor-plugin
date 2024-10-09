@@ -15,7 +15,7 @@ jobs:
       - name: Build
         run: |
           yarn
-          yarn prepare
+          yarn build
 
       - name: Setup node for publishing
         uses: actions/setup-node@v3
