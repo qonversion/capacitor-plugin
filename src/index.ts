@@ -1,10 +1,35 @@
-import { registerPlugin } from '@capacitor/core';
-
-import type { QonversionPlugin } from './definitions';
-
-const Qonversion = registerPlugin<QonversionPlugin>('Qonversion', {
-  web: () => import('./web').then(m => new m.QonversionWeb()),
-});
-
-export * from './definitions';
-export { Qonversion };
+export {default as Qonversion} from './Qonversion';
+export * from './dto/enums';
+export * from './dto/Entitlement';
+export * from './dto/IntroEligibility';
+export * from './dto/Offering';
+export * from './dto/Offerings';
+export * from './dto/Product';
+export * from './dto/QonversionError';
+export * from './dto/User';
+export * from './dto/UserProperty';
+export * from './dto/UserProperties';
+export * from './QonversionConfig';
+export * from './QonversionConfigBuilder';
+export * from './dto/Experiment';
+export * from './dto/Transaction';
+export * from './dto/RemoteConfig';
+export * from './dto/RemoteConfigList';
+export * from './dto/RemoteConfigurationSource';
+export * from './dto/ExperimentGroup';
+export * from './dto/SubscriptionPeriod';
+export * from './dto/storeProducts/ProductInAppDetails';
+export * from './dto/storeProducts/ProductInstallmentPlanDetails';
+export * from './dto/storeProducts/ProductOfferDetails';
+export * from './dto/storeProducts/ProductPrice';
+export * from './dto/storeProducts/ProductPricingPhase';
+export * from './dto/storeProducts/ProductStoreDetails';
+export * from './dto/PurchaseOptions';
+export * from './dto/PurchaseOptionsBuilder';
+export * from './dto/EntitlementsUpdateListener';
+export * from './dto/PromoPurchasesListener';
+export * from './dto/storeProducts/SKProduct';
+export * from './dto/storeProducts/SKProductDiscount';
+export * from './dto/storeProducts/SKSubscriptionPeriod';
+export * from './dto/storeProducts/SkuDetails';
+export * from './dto/ActionResult';

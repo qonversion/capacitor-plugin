@@ -1,6 +1,6 @@
 {
-  "appId": "com.example.plugin",
-  "appName": "example",
+  "appId": "com.qonversion.sample",
+  "appName": "Qonversion Sample",
   "webDir": "dist",
   "plugins": {
     "SplashScreen": {

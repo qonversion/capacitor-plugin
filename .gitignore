@@ -1,0 +1,75 @@
+# Node modules
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build output
+www/
+dist/
+build/
+.build/
+out/
+lib/
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+
+# Android/IntelliJ
+build/
+.idea
+.gradle
+local.properties
+*.iml
+
+# Capacitor specific
+android/capacitor-plugins.json
+ios/Podfile.lock
+ios/Pods/
+ios/*.xcuserdata/
+ios/*.xcworkspace/
+
+# Configuration files
+*.env
+*.local
+.env.local
+*.pid
+
+# Miscellaneous
+*.bak
+*.orig
+*.swp
+*.swo
