@@ -7,7 +7,7 @@ import {
   Qonversion,
   QonversionConfigBuilder,
   UserPropertyKey
-} from "qonversion-capacitor";
+} from "@qonversion/capacitor-plugin";
 
 window.initializeSdk = () => {
   const config = new QonversionConfigBuilder(
