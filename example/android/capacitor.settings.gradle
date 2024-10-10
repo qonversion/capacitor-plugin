@@ -8,5 +8,5 @@ project(':capacitor-camera').projectDir = new File('../node_modules/@capacitor/c
 include ':capacitor-splash-screen'
 project(':capacitor-splash-screen').projectDir = new File('../node_modules/@capacitor/splash-screen/android')
 
-include ':qonversion-capacitor'
-project(':qonversion-capacitor').projectDir = new File('../node_modules/qonversion-capacitor/android')
+include ':qonversion-capacitor-plugin'
+project(':qonversion-capacitor-plugin').projectDir = new File('../node_modules/@qonversion/capacitor-plugin/android')
