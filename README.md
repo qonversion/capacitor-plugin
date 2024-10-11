@@ -16,7 +16,7 @@ Qonversion - In-app subscription monetization: implement subscriptions and grow 
      </a>
 </p>
 
-[![npm](https://img.shields.io/npm/v/qonversion-capacitor-qonversion)](https://www.npmjs.com/package/qonversion-capacitor)
+[![npm](https://img.shields.io/npm/v/qonversion-capacitor-qonversion)](https://www.npmjs.com/package/@qonversion/capacitor-plugin)
 [![MIT License](http://img.shields.io/cocoapods/l/Qonversion.svg?style=flat)](https://qonversion.io)
 
 
