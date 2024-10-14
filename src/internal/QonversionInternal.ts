@@ -18,7 +18,7 @@ import {QonversionApi} from '../QonversionApi';
 import {QonversionNativePlugin} from '../QonversionNativePlugin';
 import {PurchaseOptionsBuilder} from '../dto/PurchaseOptionsBuilder';
 
-const sdkVersion = "0.1.0";
+const sdkVersion = "0.1.1";
 
 const entitlementsUpdatedEvent = 'entitlementsUpdatedEvent';
 const promoPurchaseEvent = 'shouldPurchasePromoProductEvent';
