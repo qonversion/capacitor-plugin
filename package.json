@@ -1,6 +1,6 @@
 {
   "name": "@qonversion/capacitor-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Qonversion provides full in-app purchases infrastructure, so you do not need to build your own server for receipt validation. Implement in-app subscriptions, validate user receipts, check subscription status, and provide access to your app features and content using our StoreKit wrapper and Google Play Billing wrapper.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -13,7 +13,7 @@
     "ios/Sources",
     "ios/Tests",
     "Package.swift",
-    "QonversionCapacitor.podspec"
+    "QonversionCapacitorPlugin.podspec"
   ],
   "author": {
     "name": "Qonversion",
