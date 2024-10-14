@@ -9,7 +9,7 @@ PODS:
   - Qonversion (5.12.3):
     - Qonversion/Main (= 5.12.3)
   - Qonversion/Main (5.12.3)
-  - QonversionCapacitor (0.0.1):
+  - QonversionCapacitorPlugin (0.1.0):
     - Capacitor
     - QonversionSandwich (= 5.1.5)
   - QonversionSandwich (5.1.5):
@@ -20,7 +20,7 @@ DEPENDENCIES:
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
-  - QonversionCapacitor (from `../../node_modules/qonversion-capacitor`)
+  - "QonversionCapacitorPlugin (from `../../node_modules/@qonversion/capacitor-plugin`)"
 
 SPEC REPOS:
   trunk:
@@ -36,8 +36,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorSplashScreen:
     :path: "../../node_modules/@capacitor/splash-screen"
-  QonversionCapacitor:
-    :path: "../../node_modules/qonversion-capacitor"
+  QonversionCapacitorPlugin:
+    :path: "../../node_modules/@qonversion/capacitor-plugin"
 
 SPEC CHECKSUMS:
   Capacitor: 679f9673fdf30597493a6362a5d5bf233d46abc2
@@ -45,9 +45,9 @@ SPEC CHECKSUMS:
   CapacitorCordova: f48c89f96c319101cd2f0ce8a2b7449b5fb8b3dd
   CapacitorSplashScreen: 250df9ef8014fac5c7c1fd231f0f8b1d8f0b5624
   Qonversion: d1a0c6aeff9ba9772ed5020899c2b13422f6aff1
-  QonversionCapacitor: 54585ea1bc444184a9bcffbbe2cd4574b809d454
+  QonversionCapacitorPlugin: 6a5a80259d86bfab3d1ca0bd5ada5be2959f1d23
   QonversionSandwich: 427599ed4e5c655a63eba1cf029647e49a12a457
 
-PODFILE CHECKSUM: 3db5691f2f4da3ecec4a7865926b8521ff6ec736
+PODFILE CHECKSUM: 238528980101a97d01a6a29581a5e0d56d489a11
 
 COCOAPODS: 1.15.2

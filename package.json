@@ -13,7 +13,7 @@
     "ios/Sources",
     "ios/Tests",
     "Package.swift",
-    "QonversionCapacitor.podspec"
+    "QonversionCapacitorPlugin.podspec"
   ],
   "author": {
     "name": "Qonversion",
