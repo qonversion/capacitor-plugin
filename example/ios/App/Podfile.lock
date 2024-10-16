@@ -6,14 +6,14 @@ PODS:
   - CapacitorCordova (6.1.2)
   - CapacitorSplashScreen (6.0.2):
     - Capacitor
-  - Qonversion (5.12.3):
-    - Qonversion/Main (= 5.12.3)
-  - Qonversion/Main (5.12.3)
-  - QonversionCapacitorPlugin (0.1.0):
+  - Qonversion (5.12.4):
+    - Qonversion/Main (= 5.12.4)
+  - Qonversion/Main (5.12.4)
+  - QonversionCapacitorPlugin (0.1.1):
     - Capacitor
-    - QonversionSandwich (= 5.1.5)
-  - QonversionSandwich (5.1.5):
-    - Qonversion (= 5.12.3)
+    - QonversionSandwich (= 5.1.6)
+  - QonversionSandwich (5.1.6):
+    - Qonversion (= 5.12.4)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -44,9 +44,9 @@ SPEC CHECKSUMS:
   CapacitorCamera: ed022171dbf3853e68eec877b4d78995378af6b7
   CapacitorCordova: f48c89f96c319101cd2f0ce8a2b7449b5fb8b3dd
   CapacitorSplashScreen: 250df9ef8014fac5c7c1fd231f0f8b1d8f0b5624
-  Qonversion: d1a0c6aeff9ba9772ed5020899c2b13422f6aff1
-  QonversionCapacitorPlugin: 6a5a80259d86bfab3d1ca0bd5ada5be2959f1d23
-  QonversionSandwich: 427599ed4e5c655a63eba1cf029647e49a12a457
+  Qonversion: cca480020597aa8bb74d9c5d0bf1916e68b8440e
+  QonversionCapacitorPlugin: e1ef7bcf16b785b6edbe6c2f35a323fcb4bb07b4
+  QonversionSandwich: 5ed2ecfc84e4af49e49ddb1250ccf00dc9a7c0a5
 
 PODFILE CHECKSUM: 238528980101a97d01a6a29581a5e0d56d489a11
 
