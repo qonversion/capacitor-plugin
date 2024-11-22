@@ -64,9 +64,6 @@ window.getPromoOffer = async () => {
   try {
     const promoOffer = await Qonversion.getSharedInstance().getPromotionalOffer(product, discount);
     console.log('Qonversion getPromotionalOffer:', promoOffer);
-
-    const entitlements = await Qonversion.getSharedInstance().purchaseProduct(product, new PurchaseOptionsBuilder().setPromotionalOffer(promoOffer).build());
-    console.log('Entitlements: ', entitlements);
   } catch (e) {
     console.log('Qonversion getPromotionalOffer failed', e);
   }
