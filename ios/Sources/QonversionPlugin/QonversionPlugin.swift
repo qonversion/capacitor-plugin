@@ -11,6 +11,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
     CAPPluginMethod(name: "identify", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "products", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "getPromotionalOffer", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "purchase", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "promoPurchase", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "checkEntitlements", returnType: CAPPluginReturnPromise),
@@ -80,14 +81,24 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
     qonversionSandwich?.products(getDefaultCompletion(call))
   }
 
+  @objc func getPromotionalOffer(_ call: CAPPluginCall) {
+    guard let productId = call.getString("productId"),
+          let discountId = call.getString("discountId") else {
+      return call.noNecessaryDataError()
+    }
+
+    qonversionSandwich?.getPromotionalOffer(productId, productDiscountId:discountId, completion: getDefaultCompletion(call))
+  }
+
   @objc func purchase(_ call: CAPPluginCall) {
     guard let productId = call.getString("productId") else {
       return call.noNecessaryDataError()
     }
     let quantity = call.getInt("quantity") ?? 1
-      let contextKeys = call.getArray("contextKeys")?.capacitor.replacingNullValues().compactMap({$0}) as? [String] ?? []
+    let contextKeys = call.getArray("contextKeys")?.capacitor.replacingNullValues().compactMap({$0}) as? [String] ?? []
+    let promoOffer = call.getObject("promoOffer") ?? [:]
 
-    qonversionSandwich?.purchase(productId, quantity:quantity, contextKeys:contextKeys, completion: getDefaultCompletion(call))
+    qonversionSandwich?.purchase(productId, quantity:quantity, contextKeys:contextKeys, promoOffer:promoOffer, completion: getDefaultCompletion(call))
   }
 
   @objc func promoPurchase(_ call: CAPPluginCall) {

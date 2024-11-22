@@ -44,6 +44,34 @@ window.getProducts = async () => {
   console.log('Qonversion products:', products);
 }
 
+window.getPromoOffer = async () => {
+  const productId = document.getElementById('product-id-promo').value;
+  const discountId = document.getElementById('discount-id-promo').value;
+  const products = await Qonversion.getSharedInstance().products();
+
+  const product = products.get(productId);
+  if (!product) {
+    console.log('Qonversion product not found: ', productId);
+    return;
+  }
+
+  const discount = product.skProduct.discounts.find(discount => discount.identifier === discountId);
+  if (!discount) {
+    console.log('Qonversion discount not found for requested product: ', discountId);
+    return;
+  }
+
+  try {
+    const promoOffer = await Qonversion.getSharedInstance().getPromotionalOffer(product, discount);
+    console.log('Qonversion getPromotionalOffer:', promoOffer);
+
+    const entitlements = await Qonversion.getSharedInstance().purchaseProduct(product, new PurchaseOptionsBuilder().setPromotionalOffer(promoOffer).build());
+    console.log('Entitlements: ', entitlements);
+  } catch (e) {
+    console.log('Qonversion getPromotionalOffer failed', e);
+  }
+}
+
 window.getRemoteConfig = async () => {
   const contextKey = document.getElementById('context-key').value;
   const key = contextKey?.length > 0 ? contextKey : undefined;

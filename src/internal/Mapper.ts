@@ -47,6 +47,8 @@ import {ProductInAppDetails} from "../dto/storeProducts/ProductInAppDetails";
 import {ProductPrice} from "../dto/storeProducts/ProductPrice";
 import {ProductPricingPhase} from "../dto/storeProducts/ProductPricingPhase";
 import {ProductInstallmentPlanDetails} from '../dto/storeProducts/ProductInstallmentPlanDetails';
+import {PromotionalOffer} from '../dto/PromotionalOffer';
+import {SKPaymentDiscount} from '../dto/storeProducts/SKPaymentDiscount';
 
 export type QProduct = {
   id: string;
@@ -102,6 +104,11 @@ type QProductPricingPhase = {
 type QProductInstallmentPlanDetails = {
   commitmentPaymentsCount: number;
   subsequentCommitmentPaymentsCount: number;
+}
+
+export type QPromotionalOffer = {
+  productDiscount: QProductDiscount,
+  paymentDiscount: QPaymentDiscount,
 }
 
 type QProductOfferDetails = {
@@ -185,6 +192,14 @@ type QProductDiscount = {
   priceLocale: QLocale;
 };
 
+type QPaymentDiscount = {
+  identifier: string;
+  keyIdentifier: string;
+  nonce: string;
+  signature: string;
+  timestamp: number;
+};
+
 type QLocale = {
   currencySymbol: string | null;
   currencyCode: string | null;
@@ -226,6 +241,7 @@ type QTransaction = {
   environment: string;
   ownershipType: string;
   type: string;
+  promoOfferId: string;
 }
 
 export type QOfferings = {
@@ -286,6 +302,19 @@ export type QUserProperties = {
 const priceMicrosRatio = 1000000;
 
 class Mapper {
+  static convertPromoOffer(
+    promoOffer: QPromotionalOffer | null | undefined
+  ): PromotionalOffer | null {
+    if (!promoOffer) {
+      return null;
+    }
+
+    const productDiscount = this.convertProductDiscount(promoOffer.productDiscount);
+    const paymentDiscount = this.convertPaymentDiscount(promoOffer.paymentDiscount);
+
+    return new PromotionalOffer(productDiscount, paymentDiscount);
+  }
+
   static convertEntitlements(
     entitlements: Record<string, QEntitlement> | null | undefined
   ): Map<string, Entitlement> {
@@ -364,6 +393,7 @@ class Mapper {
         transaction.expirationTimestamp,
         transaction.transactionRevocationTimestamp,
         transaction.offerCode,
+        transaction.promoOfferId,
     );
   }
 
@@ -905,6 +935,10 @@ class Mapper {
       subscriptionPeriod.numberOfUnits,
       SKPeriodUnit[subscriptionPeriod.unit]
     );
+  }
+
+  static convertPaymentDiscount(discount: QPaymentDiscount): SKPaymentDiscount {
+    return new SKPaymentDiscount(discount.identifier, discount.keyIdentifier, discount.nonce, discount.signature, discount.timestamp)
   }
 
   static convertProductDiscount(discount: QProductDiscount): SKProductDiscount {
