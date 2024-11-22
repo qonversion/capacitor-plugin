@@ -20,7 +20,7 @@ import {PurchaseOptionsBuilder} from '../dto/PurchaseOptionsBuilder';
 import {SKProductDiscount} from '../dto/storeProducts/SKProductDiscount';
 import {PromotionalOffer} from '../dto/PromotionalOffer';
 
-const sdkVersion = "0.1.3";
+const sdkVersion = "0.2.0";
 
 const entitlementsUpdatedEvent = 'entitlementsUpdatedEvent';
 const promoPurchaseEvent = 'shouldPurchasePromoProductEvent';
