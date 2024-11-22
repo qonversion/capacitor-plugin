@@ -3,7 +3,7 @@ import {QonversionNativePlugin} from '../QonversionNativePlugin';
 import {
     QEntitlement,
     QOfferings,
-    QProduct,
+    QProduct, QPromotionalOffer,
     QRemoteConfig,
     QRemoteConfigList,
     QTrialIntroEligibility,
@@ -47,6 +47,10 @@ export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
     }
 
     detachUserFromRemoteConfiguration(params: { remoteConfigurationId: string }): Promise<void> {
+        throw this.unimplemented("not implemented yet");
+    }
+
+    getPromotionalOffer(params: { productId: string; discountId: string | undefined }): Promise<QPromotionalOffer> {
         throw this.unimplemented("not implemented yet");
     }
 

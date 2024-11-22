@@ -2,10 +2,12 @@ import {
   QEntitlement,
   QOfferings,
   QProduct,
+  QPromotionalOffer,
   QRemoteConfig,
   QRemoteConfigList,
   QTrialIntroEligibility,
-  QUser, QUserProperties
+  QUser,
+  QUserProperties
 } from './internal/Mapper';
 
 export interface QonversionNativePlugin {
@@ -26,6 +28,8 @@ export interface QonversionNativePlugin {
 
   storeSdkInfo(params: {source: string, version: string}): void;
 
+  getPromotionalOffer(params: {productId: string, discountId: string | undefined}): Promise<QPromotionalOffer>;
+
   purchase(params: {
     productId: string,
     quantity?: number,
@@ -34,6 +38,7 @@ export interface QonversionNativePlugin {
     applyOffer?: boolean | undefined,
     oldProductId?: string | undefined,
     updatePolicyKey?: string | null | undefined,
+    promoOffer?: Object | null,
   }): Promise<Record<string, QEntitlement> | null | undefined>;
 
   products(): Promise<Record<string, QProduct> | null | undefined>;

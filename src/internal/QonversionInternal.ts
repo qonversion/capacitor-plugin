@@ -17,8 +17,10 @@ import {RemoteConfigList} from '../dto/RemoteConfigList';
 import {QonversionApi} from '../QonversionApi';
 import {QonversionNativePlugin} from '../QonversionNativePlugin';
 import {PurchaseOptionsBuilder} from '../dto/PurchaseOptionsBuilder';
+import {SKProductDiscount} from '../dto/storeProducts/SKProductDiscount';
+import {PromotionalOffer} from '../dto/PromotionalOffer';
 
-const sdkVersion = "0.1.3";
+const sdkVersion = "0.2.0";
 
 const entitlementsUpdatedEvent = 'entitlementsUpdatedEvent';
 const promoPurchaseEvent = 'shouldPurchasePromoProductEvent';
@@ -55,6 +57,20 @@ export default class QonversionInternal implements QonversionApi {
     }
   }
 
+  async getPromotionalOffer(product: Product, discount: SKProductDiscount): Promise<PromotionalOffer | null> {
+    if (isAndroid()) {
+      return null;
+    }
+
+    const promoOffer = await QonversionNative.getPromotionalOffer({
+      productId: product.qonversionID,
+      discountId: discount.identifier,
+    });
+    const mappedPromoOffer: PromotionalOffer | null = Mapper.convertPromoOffer(promoOffer);
+
+    return mappedPromoOffer;
+  }
+
   async purchaseProduct(product: Product, options: PurchaseOptions | undefined): Promise<Map<string, Entitlement>> {
     try {
       if (!options) {
@@ -62,11 +78,20 @@ export default class QonversionInternal implements QonversionApi {
       }
 
       let purchasePromise: Promise<Record<string, QEntitlement> | null | undefined>;
+      const promoOffer = {
+        productDiscountId: options.promotionalOffer?.productDiscount.identifier,
+        keyIdentifier: options.promotionalOffer?.paymentDiscount.keyIdentifier,
+        nonce: options.promotionalOffer?.paymentDiscount.nonce,
+        signature: options.promotionalOffer?.paymentDiscount.signature,
+        timestamp: options.promotionalOffer?.paymentDiscount.timestamp
+      };
+
       if (isIos()) {
         purchasePromise = QonversionNative.purchase({
           productId: product.qonversionID,
           quantity: options.quantity,
-          contextKeys: options.contextKeys
+          contextKeys: options.contextKeys,
+          promoOffer: promoOffer
         });
       } else {
         purchasePromise = QonversionNative.purchase({
