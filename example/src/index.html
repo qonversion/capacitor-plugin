@@ -22,6 +22,11 @@
         </div>
         <button onclick="getProducts()" type="button" class="qon-button top-margin">Get Products</button>
         <div class="row top-margin">
+          <input placeholder="Product id" id="product-id-promo" type="text" class="qon-input" name="product-id" />
+          <input placeholder="Discount id" id="discount-id-promo" type="text" class="qon-input" name="discount-id" />
+          <button onclick="getPromoOffer()" type="button" class="qon-button">Get Promo Offer</button>
+        </div>
+        <div class="row top-margin">
           <input placeholder="context key" id="context-key" type="text" class="qon-input" name="context-key" />
           <button onclick="getRemoteConfig()" type="button" class="qon-button">Get Remote Config</button>
         </div>
