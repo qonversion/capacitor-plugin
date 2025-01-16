@@ -261,7 +261,7 @@ export type QUser = {
 };
 
 export type QRemoteConfig = {
-  payload: Map<string, Object>;
+  payload: Record<string, Object>;
   experiment?: QExperiment | null;
   source: QRemoteConfigurationSource;
 };
