@@ -12,9 +12,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "sync": "npx cap sync",
-    "runIos": "npx cap run ios",
-    "runAndroid": "npx cap run android",
-    "clean": "rm -rf node_modules && yarn && yarn sync && yarn build",
+    "ios": "npx cap run ios",
+    "android": "npx cap run android",
+    "clean": "cd .. && yarn build && cd example && rm -rf node_modules && yarn && yarn sync && yarn build",
     "refresh": "cd .. && yarn build && cd example && yarn clean"
   },
   "dependencies": {
