@@ -13,7 +13,7 @@ def capacitor_pods
   pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorCamera', :path => '../../node_modules/@capacitor/camera'
   pod 'CapacitorSplashScreen', :path => '../../node_modules/@capacitor/splash-screen'
-  pod 'QonversionCapacitorPlugin', :path => '../../..'
+  pod 'QonversionCapacitorPlugin', :path => '../../node_modules/@qonversion/capacitor-plugin'
 end
 
 target 'App' do
