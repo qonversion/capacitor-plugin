@@ -1,5 +1,6 @@
 import {Product} from './dto/Product';
 import {PurchaseOptions} from './dto/PurchaseOptions';
+import {PurchaseResult} from './dto/PurchaseResult';
 import {Entitlement} from './dto/Entitlement';
 import {Offerings} from './dto/Offerings';
 import {IntroEligibility} from './dto/IntroEligibility';
@@ -40,14 +41,15 @@ export interface QonversionApi {
   getPromotionalOffer(product: Product, discount: SKProductDiscount): Promise<PromotionalOffer | null>;
 
   /**
-   * Make a purchase and validate it through server-to-server using Qonversion's Backend
+   * Make a purchase and validate it through server-to-server using Qonversion's Backend.
+   * Returns a PurchaseResult containing the status, entitlements, and transaction details.
    * @param product product to purchase
    * @param options additional options for the purchase process.
-   * @returns the promise with the user entitlements including the ones obtained by the purchase
+   * @returns the promise with the purchase result
    *
    * @see [Making Purchases](https://documentation.qonversion.io/docs/making-purchases)
    */
-  purchaseProduct(product: Product, options: PurchaseOptions | undefined): Promise<Map<string, Entitlement>>
+  purchase(product: Product, options?: PurchaseOptions): Promise<PurchaseResult>
 
   /**
    * Returns Qonversion products in association with Apple and Google Play Store Products.

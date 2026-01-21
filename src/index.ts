@@ -27,6 +27,8 @@ export * from './dto/storeProducts/ProductPricingPhase';
 export * from './dto/storeProducts/ProductStoreDetails';
 export * from './dto/PurchaseOptions';
 export * from './dto/PurchaseOptionsBuilder';
+export * from './dto/PurchaseResult';
+export * from './dto/StoreTransaction';
 export * from './dto/EntitlementsUpdateListener';
 export * from './dto/PromoPurchasesListener';
 export * from './dto/storeProducts/SKPaymentDiscount';

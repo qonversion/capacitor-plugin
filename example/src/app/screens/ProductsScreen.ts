@@ -1,6 +1,6 @@
 import { Qonversion, PurchaseOptionsBuilder, type Product } from '@qonversion/capacitor-plugin';
 import { store } from '../store';
-import { showToast } from '../utils';
+import { showToast, showPurchaseResultDialog } from '../utils';
 
 // Update products section without full re-render
 function updateProductsSection(): void {
@@ -149,25 +149,18 @@ function attachPurchaseListeners(): void {
           return;
         }
 
-        const entitlements = await Qonversion.getSharedInstance().purchaseProduct(product);
-        console.log('✅ [Qonversion] Purchase successful');
+        const result = await Qonversion.getSharedInstance().purchase(product);
+        console.log('✅ [Qonversion] Purchase result:', result.status);
         
-        store.dispatch({ type: 'SET_ENTITLEMENTS', payload: entitlements });
-        showToast('Purchase successful!', 'success');
-      } catch (error: any) {
-        console.error('❌ [Qonversion] Purchase failed:', JSON.stringify(error, null, 2));
-        console.log('❌ [Qonversion] Error keys:', Object.keys(error));
-        console.log('❌ [Qonversion] Error code:', error.code, 'errorCode:', error.errorCode, 'userCanceled:', error.userCanceled);
-        // Check if user canceled - check both flag and various code locations
-        const isCanceled = error.userCanceled || 
-          error.code === 'PurchaseCanceled' ||
-          error.errorCode === 'PurchaseCanceled' ||
-          (error.message && error.message.includes('PurchaseCanceled'));
-        if (isCanceled) {
-          showToast('Purchase canceled', 'info');
-        } else {
-          showToast(error.message || 'Purchase failed', 'error');
+        // Show full PurchaseResult dialog
+        showPurchaseResultDialog(result);
+        
+        if (result.isSuccess && result.entitlements) {
+          store.dispatch({ type: 'SET_ENTITLEMENTS', payload: result.entitlements });
         }
+      } catch (error: any) {
+        console.error('❌ [Qonversion] Purchase failed:', error);
+        showToast(error.message || 'Purchase failed', 'error');
       } finally {
         store.dispatch({ type: 'SET_LOADING', payload: false });
       }
@@ -203,18 +196,17 @@ function attachPurchaseListeners(): void {
         }
 
         const purchaseOptions = new PurchaseOptionsBuilder().setOfferId(offerId).build();
-        const entitlements = await Qonversion.getSharedInstance().purchaseProduct(product, purchaseOptions);
+        const result = await Qonversion.getSharedInstance().purchase(product, purchaseOptions);
         
-        store.dispatch({ type: 'SET_ENTITLEMENTS', payload: entitlements });
-        showToast('Purchase with offer successful!', 'success');
+        // Show full PurchaseResult dialog
+        showPurchaseResultDialog(result);
+        
+        if (result.isSuccess && result.entitlements) {
+          store.dispatch({ type: 'SET_ENTITLEMENTS', payload: result.entitlements });
+        }
       } catch (error: any) {
         console.error('❌ [Qonversion] Purchase with offer failed:', error);
-        // Check if user canceled
-        if (error.userCanceled) {
-          showToast('Purchase canceled', 'info');
-        } else {
-          showToast(error.message || 'Purchase failed', 'error');
-        }
+        showToast(error.message || 'Purchase failed', 'error');
       } finally {
         store.dispatch({ type: 'SET_LOADING', payload: false });
       }

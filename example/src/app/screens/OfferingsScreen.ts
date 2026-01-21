@@ -1,6 +1,6 @@
 import { Qonversion, type Offering, type Product } from '@qonversion/capacitor-plugin';
 import { store } from '../store';
-import { showToast } from '../utils';
+import { showToast, showPurchaseResultDialog } from '../utils';
 
 const renderProduct = (product: Product): string => {
   const priceStr = product.prettyPrice || (product.price ? `${product.currencyCode || ''} ${product.price}` : 'N/A');
@@ -108,16 +108,17 @@ function attachOfferingsPurchaseListeners(): void {
           return;
         }
 
-        const entitlements = await Qonversion.getSharedInstance().purchaseProduct(product);
-        store.dispatch({ type: 'SET_ENTITLEMENTS', payload: entitlements });
-        showToast('Purchase successful!', 'success');
+        const result = await Qonversion.getSharedInstance().purchase(product);
+        
+        // Show full PurchaseResult dialog
+        showPurchaseResultDialog(result);
+        
+        if (result.isSuccess && result.entitlements) {
+          store.dispatch({ type: 'SET_ENTITLEMENTS', payload: result.entitlements });
+        }
       } catch (error: any) {
         console.error('❌ [Qonversion] Purchase failed:', error);
-        if (error.userCanceled) {
-          showToast('Purchase canceled', 'info');
-        } else {
-          showToast(error.message || 'Purchase failed', 'error');
-        }
+        showToast(error.message || 'Purchase failed', 'error');
       } finally {
         store.dispatch({ type: 'SET_LOADING', payload: false });
       }
