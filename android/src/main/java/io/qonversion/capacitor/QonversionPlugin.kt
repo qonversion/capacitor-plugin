@@ -70,7 +70,7 @@ class QonversionPlugin : Plugin() {
         val updatePolicyKey = call.getString("updatePolicyKey")
         val contextKeys = call.getArray("contextKeys")?.toList<String>()
 
-        qonversionSandwich.purchase(
+        qonversionSandwich.purchaseWithResult(
             productId,
             offerId,
             applyOffer,

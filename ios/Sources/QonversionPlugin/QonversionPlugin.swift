@@ -98,7 +98,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
     let contextKeys = call.getArray("contextKeys")?.capacitor.replacingNullValues().compactMap({$0}) as? [String] ?? []
     let promoOffer = call.getObject("promoOffer") ?? [:]
 
-    qonversionSandwich?.purchase(productId, quantity:quantity, contextKeys:contextKeys, promoOffer:promoOffer, completion: getDefaultCompletion(call))
+    qonversionSandwich?.purchaseWithResult(productId, quantity:quantity, contextKeys:contextKeys, promoOffer:promoOffer, completion: getDefaultCompletion(call))
   }
 
   @objc func promoPurchase(_ call: CAPPluginCall) {

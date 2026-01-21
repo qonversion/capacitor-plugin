@@ -3,7 +3,9 @@ import {QonversionNativePlugin} from '../QonversionNativePlugin';
 import {
     QEntitlement,
     QOfferings,
-    QProduct, QPromotionalOffer,
+    QProduct,
+    QPromotionalOffer,
+    QPurchaseResult,
     QRemoteConfig,
     QRemoteConfigList,
     QTrialIntroEligibility,
@@ -100,8 +102,9 @@ export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
         offerId?: string | null | undefined;
         applyOffer?: boolean | undefined;
         oldProductId?: string | undefined;
-        updatePolicyKey?: string | null | undefined
-    }): Promise<Record<string, QEntitlement> | null | undefined> {
+        updatePolicyKey?: string | null | undefined;
+        promoOffer?: Object | null;
+    }): Promise<QPurchaseResult> {
         throw this.unimplemented("not implemented yet");
     }
 
