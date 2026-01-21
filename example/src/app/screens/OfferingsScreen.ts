@@ -6,10 +6,10 @@ const renderProduct = (product: Product): string => {
   const priceStr = product.prettyPrice || (product.price ? `${product.currencyCode || ''} ${product.price}` : 'N/A');
   
   return `
-    <div class="list-item" data-purchase-offering="${product.qonversionID}">
+    <div class="list-item" data-purchase-offering="${product.qonversionId}">
       <div class="list-item-content">
-        <div class="list-item-title">${product.storeTitle || product.qonversionID}</div>
-        <div class="list-item-subtitle">${product.qonversionID}</div>
+        <div class="list-item-title">${product.storeTitle || product.qonversionId}</div>
+        <div class="list-item-subtitle">${product.qonversionId}</div>
       </div>
       <span class="product-price">${priceStr}</span>
     </div>
@@ -99,7 +99,7 @@ function attachOfferingsPurchaseListeners(): void {
         let product: Product | undefined;
         
         for (const offering of offerings?.availableOffering || []) {
-          product = offering.products.find(p => p.qonversionID === productId);
+          product = offering.products.find(p => p.qonversionId === productId);
           if (product) break;
         }
         

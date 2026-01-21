@@ -16,19 +16,19 @@ function updateProductsSection(): void {
     return `
       <div class="product-card">
         <div class="product-header">
-          <span class="product-name">${product.storeTitle || product.qonversionID}</span>
+          <span class="product-name">${product.storeTitle || product.qonversionId}</span>
           <span class="product-price">${priceStr}</span>
         </div>
-        <div class="product-id">${product.qonversionID}</div>
+        <div class="product-id">${product.qonversionId}</div>
         ${product.storeDescription ? `
           <div class="product-description">${product.storeDescription}</div>
         ` : ''}
         <div class="button-row">
-          <button class="btn btn-primary btn-sm" data-purchase="${product.qonversionID}">
+          <button class="btn btn-primary btn-sm" data-purchase="${product.qonversionId}">
             Purchase
           </button>
           ${hasOffers ? `
-            <button class="btn btn-secondary btn-sm" data-purchase-offer="${product.qonversionID}">
+            <button class="btn btn-secondary btn-sm" data-purchase-offer="${product.qonversionId}">
               With Offer
             </button>
           ` : ''}
@@ -66,19 +66,19 @@ export function renderProductsScreen(): string {
     return `
       <div class="product-card">
         <div class="product-header">
-          <span class="product-name">${product.storeTitle || product.qonversionID}</span>
+          <span class="product-name">${product.storeTitle || product.qonversionId}</span>
           <span class="product-price">${priceStr}</span>
         </div>
-        <div class="product-id">${product.qonversionID}</div>
+        <div class="product-id">${product.qonversionId}</div>
         ${product.storeDescription ? `
           <div class="product-description">${product.storeDescription}</div>
         ` : ''}
         <div class="button-row">
-          <button class="btn btn-primary btn-sm" data-purchase="${product.qonversionID}">
+          <button class="btn btn-primary btn-sm" data-purchase="${product.qonversionId}">
             Purchase
           </button>
           ${hasOffers ? `
-            <button class="btn btn-secondary btn-sm" data-purchase-offer="${product.qonversionID}">
+            <button class="btn btn-secondary btn-sm" data-purchase-offer="${product.qonversionId}">
               With Offer
             </button>
           ` : ''}
