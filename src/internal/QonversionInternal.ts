@@ -20,7 +20,8 @@ import {PurchaseOptionsBuilder} from '../dto/PurchaseOptionsBuilder';
 import {SKProductDiscount} from '../dto/storeProducts/SKProductDiscount';
 import {PromotionalOffer} from '../dto/PromotionalOffer';
 
-const sdkVersion = "0.3.1";
+export const sdkVersion = "0.3.1";
+export const sdkSource = "capacitor";
 
 const entitlementsUpdatedEvent = 'entitlementsUpdatedEvent';
 const promoPurchaseEvent = 'shouldPurchasePromoProductEvent';
@@ -32,7 +33,7 @@ const QonversionNative = registerPlugin<QonversionNativePlugin>('Qonversion', {
 export default class QonversionInternal implements QonversionApi {
 
   constructor(qonversionConfig: QonversionConfig) {
-    QonversionNative.storeSdkInfo({source: "capacitor", version: sdkVersion});
+    QonversionNative.storeSdkInfo({source: sdkSource, version: sdkVersion});
     QonversionNative.initialize({
       projectKey: qonversionConfig.projectKey,
       launchMode: qonversionConfig.launchMode,
@@ -109,7 +110,7 @@ export default class QonversionInternal implements QonversionApi {
       const mappedPermissions = Mapper.convertEntitlements(entitlements);
 
       return mappedPermissions;
-    } catch (e) {
+    } catch (e: any) {
       e.userCanceled = e.code === QonversionErrorCode.PURCHASE_CANCELED;
       throw e;
     }

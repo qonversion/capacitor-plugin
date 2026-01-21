@@ -1,9 +1,11 @@
 import {
+  ActionType,
   EntitlementGrantType,
   EntitlementRenewState,
   EntitlementSource,
   ExperimentGroupType,
   IntroEligibilityStatus,
+  NoCodesErrorCode,
   OfferingTag,
   PricingPhaseRecurrenceMode,
   PricingPhaseType,
@@ -29,7 +31,6 @@ import {SKProduct} from "../dto/storeProducts/SKProduct";
 import {SKProductDiscount} from "../dto/storeProducts/SKProductDiscount";
 import {SKSubscriptionPeriod} from "../dto/storeProducts/SKSubscriptionPeriod";
 import {SkuDetails} from "../dto/storeProducts/SkuDetails";
-import {ActionResult} from "../dto/ActionResult";
 import {QonversionError} from "../dto/QonversionError";
 import {User} from '../dto/User';
 import {Experiment} from "../dto/Experiment";
@@ -49,6 +50,9 @@ import {ProductPricingPhase} from "../dto/storeProducts/ProductPricingPhase";
 import {ProductInstallmentPlanDetails} from '../dto/storeProducts/ProductInstallmentPlanDetails';
 import {PromotionalOffer} from '../dto/PromotionalOffer';
 import {SKPaymentDiscount} from '../dto/storeProducts/SKPaymentDiscount';
+import {NoCodesAction} from '../dto/NoCodesAction';
+import {NoCodesError} from '../dto/NoCodesError';
+import {ScreenPresentationConfig} from '../dto/ScreenPresentationConfig';
 
 export type QProduct = {
   id: string;
@@ -212,6 +216,25 @@ export type QTrialIntroEligibility = Record<string, {
     | "intro_or_trial_eligible"
     | "intro_or_trial_ineligible";
 }>;
+
+export type QNoCodeAction = {
+  type: ActionType;
+  parameters: Map<string, string | undefined>;
+  error: QNoCodesError | undefined;
+};
+
+type QQonversionError = {
+  code?: string;
+  description?: string | null;
+  additionalMessage?: string | null;
+  domain?: string | null;
+};
+
+export type QNoCodesError = QQonversionError & {
+  qonversionError?: QQonversionError | null;
+};
+
+export type QNoCodeScreenInfo = { screenId: string };
 
 export type QEntitlement = {
   id: string;
@@ -999,16 +1022,6 @@ class Mapper {
     }
   }
 
-  static convertActionResult(
-    payload: Record<string, any>
-  ): ActionResult {
-    return new ActionResult(
-      payload["type"],
-      payload["value"],
-      this.convertQonversionError(payload["error"])
-    );
-  }
-
   static convertQonversionError(
     payload: Record<string, string> | undefined
   ): QonversionError | undefined {
@@ -1132,6 +1145,70 @@ class Mapper {
     }
 
     return QonversionErrorCode.UNKNOWN;
+  }
+
+  // NoCodes conversion methods
+
+  static convertAction(payload: QNoCodeAction): NoCodesAction {
+    return new NoCodesAction(
+      payload.type,
+      payload.parameters,
+      this.convertNoCodesError(payload.error)
+    );
+  }
+
+  static convertNoCodesError(payload: QNoCodesError | undefined): NoCodesError | undefined {
+    if (!payload) return undefined;
+
+    const code = this.convertNoCodesErrorCode(payload.code);
+    const error = payload.qonversionError
+      ? this.convertQonversionError(payload.qonversionError as unknown as Record<string, string>)
+      : undefined;
+    return new NoCodesError(
+      code,
+      payload.description,
+      payload.additionalMessage,
+      payload.domain,
+      error
+    );
+  }
+
+  static convertNoCodesErrorCode(code: string | undefined): NoCodesErrorCode {
+    if (!code) {
+      return NoCodesErrorCode.UNKNOWN;
+    }
+
+    switch (code) {
+      case NoCodesErrorCode.UNKNOWN: return NoCodesErrorCode.UNKNOWN;
+      case NoCodesErrorCode.BAD_NETWORK_REQUEST: return NoCodesErrorCode.BAD_NETWORK_REQUEST;
+      case NoCodesErrorCode.BAD_RESPONSE: return NoCodesErrorCode.BAD_RESPONSE;
+      case NoCodesErrorCode.ACTIVITY_START: return NoCodesErrorCode.ACTIVITY_START;
+      case NoCodesErrorCode.NETWORK_REQUEST_EXECUTION: return NoCodesErrorCode.NETWORK_REQUEST_EXECUTION;
+      case NoCodesErrorCode.SERIALIZATION: return NoCodesErrorCode.SERIALIZATION;
+      case NoCodesErrorCode.DESERIALIZATION: return NoCodesErrorCode.DESERIALIZATION;
+      case NoCodesErrorCode.REQUEST_DENIED: return NoCodesErrorCode.REQUEST_DENIED;
+      case NoCodesErrorCode.MAPPING: return NoCodesErrorCode.MAPPING;
+      case NoCodesErrorCode.BACKEND_ERROR: return NoCodesErrorCode.BACKEND_ERROR;
+      case NoCodesErrorCode.SCREEN_NOT_FOUND: return NoCodesErrorCode.SCREEN_NOT_FOUND;
+      case NoCodesErrorCode.QONVERSION_ERROR: return NoCodesErrorCode.QONVERSION_ERROR;
+      case NoCodesErrorCode.INTERNAL: return NoCodesErrorCode.INTERNAL;
+      case NoCodesErrorCode.AUTHORIZATION_FAILED: return NoCodesErrorCode.AUTHORIZATION_FAILED;
+      case NoCodesErrorCode.CRITICAL: return NoCodesErrorCode.CRITICAL;
+      case NoCodesErrorCode.PRODUCT_NOT_FOUND: return NoCodesErrorCode.PRODUCT_NOT_FOUND;
+      case NoCodesErrorCode.PRODUCTS_LOADING_FAILED: return NoCodesErrorCode.PRODUCTS_LOADING_FAILED;
+      case NoCodesErrorCode.RATE_LIMIT_EXCEEDED: return NoCodesErrorCode.RATE_LIMIT_EXCEEDED;
+      case NoCodesErrorCode.SCREEN_LOADING_FAILED: return NoCodesErrorCode.SCREEN_LOADING_FAILED;
+      case NoCodesErrorCode.SDK_INITIALIZATION_ERROR: return NoCodesErrorCode.SDK_INITIALIZATION_ERROR;
+    }
+
+    return NoCodesErrorCode.UNKNOWN;
+  }
+
+  static convertScreenPresentationConfig(config: ScreenPresentationConfig): Record<string, unknown> {
+    return {
+      presentationStyle: config.presentationStyle,
+      animated: config.animated,
+    };
   }
 }
 

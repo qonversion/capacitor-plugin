@@ -259,14 +259,92 @@ export enum RemoteConfigurationAssignmentType {
   MANUAL = "manual",
 }
 
-export enum ActionResultType {
-  UNKNOWN = "unknown",
-  URL = "url",
-  DEEPLINK = "deeplink",
-  NAVIGATION = "navigate",
-  PURCHASE = "purchase",
-  RESTORE = "restore",
-  CLOSE = "close",
+export enum ActionType {
+  /**
+   * Unspecified action type
+   */
+  UNKNOWN = 'unknown',
+
+  /**
+   * URL action that opens the URL using SafariViewController
+   */
+  URL = 'url',
+
+  /**
+   * Deeplink action that opens if Application can open specified deeplink
+   */
+  DEEPLINK = 'deeplink',
+
+  /**
+   * Navigation to another No-Codes screen
+   */
+  NAVIGATION = 'navigation',
+
+  /**
+   * Purchase the product
+   */
+  PURCHASE = 'purchase',
+
+  /**
+   * Restore all purchases
+   */
+  RESTORE = 'restore',
+
+  /**
+   * Close current screen
+   */
+  CLOSE = 'close',
+
+  /**
+   * Close all No-Code screens
+   */
+  CLOSE_ALL = 'closeAll',
+}
+
+export enum ScreenPresentationStyle {
+  /**
+   * on Android - default screen transaction animation will be used.
+   * on iOS - not a modal presentation. This style pushes a controller to a current navigation stack.
+   * For iOS NavigationController on the top of the stack is required.
+   */
+  PUSH = 'Push',
+  /**
+   * on Android - screen will move from bottom to top.
+   * on iOS - UIModalPresentationFullScreen analog.
+   */
+  FULL_SCREEN = 'FullScreen',
+  /**
+   * iOS only - UIModalPresentationPopover analog
+   */
+  POPOVER = 'Popover',
+  /**
+   * Android only - screen will appear/disappear without any animation.
+   * For iOS consider providing the {@link ScreenPresentationConfig.animated} flag.
+   */
+  NO_ANIMATION = 'NoAnimation',
+}
+
+export enum NoCodesErrorCode {
+  UNKNOWN = "Unknown",
+  BAD_NETWORK_REQUEST = "BadNetworkRequest",
+  BAD_RESPONSE = "BadResponse",
+  ACTIVITY_START = "ActivityStart", // Android
+  NETWORK_REQUEST_EXECUTION = "NetworkRequestExecution", // Android
+  SERIALIZATION = "Serialization", // Android
+  DESERIALIZATION = "Deserialization", // Android
+  REQUEST_DENIED = "RequestDenied", // Android
+  MAPPING = "Mapping", // Android
+  BACKEND_ERROR = "BackendError", // Android
+  SCREEN_NOT_FOUND = "ScreenNotFound", // Android
+  QONVERSION_ERROR = "QonversionError",
+  INTERNAL = "Internal", // iOS
+  AUTHORIZATION_FAILED = "AuthorizationFailed", // iOS
+  CRITICAL = "Critical", // iOS
+  PRODUCT_NOT_FOUND = "ProductNotFound", // iOS
+  PRODUCTS_LOADING_FAILED = "ProductsLoadingFailed", // iOS
+  RATE_LIMIT_EXCEEDED = "RateLimitExceeded", // iOS
+  SCREEN_LOADING_FAILED = "ScreenLoadingFailed", // iOS
+  SDK_INITIALIZATION_ERROR = "SDKInitializationError" // iOS
 }
 
 export enum QonversionErrorCode {
