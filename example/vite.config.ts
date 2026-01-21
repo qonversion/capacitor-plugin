@@ -7,4 +7,9 @@ export default defineConfig({
     minify: false,
     emptyOutDir: true,
   },
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
 });
