@@ -244,16 +244,16 @@ export function setupNoCodesScreenEvents(): void {
       
       const customPurchaseDelegate: PurchaseDelegate = {
         async purchase(product: Product): Promise<void> {
-          console.log('🛒 [PurchaseDelegate] Custom purchase called for:', product.qonversionID);
-          store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: `Custom purchase: ${product.qonversionID}` });
+          console.log('🛒 [PurchaseDelegate] Custom purchase called for:', product.qonversionId);
+          store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: `Custom purchase: ${product.qonversionId}` });
           
           // Use Qonversion SDK for purchase
           const result = await Qonversion.getSharedInstance().purchase(product);
           
           if (result.isSuccess) {
-            store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: `Purchase completed: ${product.qonversionID}` });
+            store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: `Purchase completed: ${product.qonversionId}` });
           } else if (result.isCanceled) {
-            store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: `Purchase canceled: ${product.qonversionID}` });
+            store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: `Purchase canceled: ${product.qonversionId}` });
             throw new Error('Purchase canceled by user');
           } else if (result.isError) {
             store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: `Purchase failed: ${result.error?.description}` });

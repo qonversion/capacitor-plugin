@@ -65,7 +65,7 @@ export default class QonversionInternal implements QonversionApi {
     }
 
     const promoOffer = await QonversionNative.getPromotionalOffer({
-      productId: product.qonversionID,
+      productId: product.qonversionId,
       discountId: discount.identifier,
     });
     const mappedPromoOffer: PromotionalOffer | null = Mapper.convertPromoOffer(promoOffer);
@@ -89,17 +89,17 @@ export default class QonversionInternal implements QonversionApi {
     let purchaseResult: QPurchaseResult;
     if (isIos()) {
       purchaseResult = await QonversionNative.purchase({
-        productId: product.qonversionID,
+        productId: product.qonversionId,
         quantity: options.quantity,
         contextKeys: options.contextKeys,
         promoOffer: promoOffer
       });
     } else {
       purchaseResult = await QonversionNative.purchase({
-        productId: product.qonversionID,
+        productId: product.qonversionId,
         offerId: options.offerId,
         applyOffer: options.applyOffer,
-        oldProductId: options.oldProduct?.qonversionID,
+        oldProductId: options.oldProduct?.qonversionId,
         updatePolicyKey: options.updatePolicy,
         contextKeys: options.contextKeys
       });
@@ -172,8 +172,8 @@ export default class QonversionInternal implements QonversionApi {
     QonversionNative.syncPurchases();
   }
 
-  async identify(userID: string): Promise<User> {
-    const userInfo = await QonversionNative.identify({userId: userID});
+  async identify(userId: string): Promise<User> {
+    const userInfo = await QonversionNative.identify({userId: userId});
     const mappedUserInfo: User = Mapper.convertUserInfo(userInfo);
 
     return mappedUserInfo;
