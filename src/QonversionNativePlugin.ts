@@ -3,6 +3,7 @@ import {
   QOfferings,
   QProduct,
   QPromotionalOffer,
+  QPurchaseResult,
   QRemoteConfig,
   QRemoteConfigList,
   QTrialIntroEligibility,
@@ -39,7 +40,7 @@ export interface QonversionNativePlugin {
     oldProductId?: string | undefined,
     updatePolicyKey?: string | null | undefined,
     promoOffer?: Object | null,
-  }): Promise<Record<string, QEntitlement> | null | undefined>;
+  }): Promise<QPurchaseResult>;
 
   products(): Promise<Record<string, QProduct> | null | undefined>;
 
