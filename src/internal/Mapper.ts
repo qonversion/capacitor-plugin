@@ -32,7 +32,6 @@ import {Product} from "../dto/Product";
 import {SKProduct} from "../dto/storeProducts/SKProduct";
 import {SKProductDiscount} from "../dto/storeProducts/SKProductDiscount";
 import {SKSubscriptionPeriod} from "../dto/storeProducts/SKSubscriptionPeriod";
-import {SkuDetails} from "../dto/storeProducts/SkuDetails";
 import {QonversionError} from "../dto/QonversionError";
 import {User} from '../dto/User';
 import {Experiment} from "../dto/Experiment";
@@ -65,7 +64,6 @@ export type QProduct = {
   type: string;
   subscriptionPeriod?: QSubscriptionPeriod | null;
   trialPeriod?: QSubscriptionPeriod | null;
-  skuDetails?: QSkuDetails | null; // android
   storeDetails?: QProductStoreDetails // android
   skProduct?: QSKProduct | null // iOS
   prettyPrice?: string | null;
@@ -145,28 +143,6 @@ type QProductPrice = {
 type QProductInAppDetails = {
   price: QProductPrice,
 }
-
-type QSkuDetails = {
-  description: string;
-  freeTrialPeriod: string;
-  iconUrl: string;
-  introductoryPrice: string;
-  introductoryPriceAmountMicros: number;
-  introductoryPriceCycles: number;
-  introductoryPricePeriod: string;
-  originalJson: string;
-  originalPrice: string;
-  originalPriceAmountMicros: number;
-  price: string;
-  priceAmountMicros: number;
-  priceCurrencyCode: string;
-  sku: string;
-  subscriptionPeriod: string;
-  title: string;
-  type: string;
-  hashCode: number;
-  toString: string;
-};
 
 type QSKProduct = {
   subscriptionPeriod: null | QSKSubscriptionPeriod;
@@ -582,7 +558,6 @@ class Mapper {
     const offeringId: string | null = product.offeringId ?? null;
 
     let skProduct: SKProduct | null = null;
-    let skuDetails: SkuDetails | null = null;
     let storeDetails: ProductStoreDetails | null = null;
     let price: number | undefined;
     let currencyCode: string | undefined;
@@ -601,18 +576,7 @@ class Mapper {
         prettyIntroductoryPrice = skProduct.productDiscount.currencySymbol + skProduct.productDiscount.price;
       }
     } else {
-      let priceMicros = null
-      if (!!product.skuDetails) {
-        skuDetails = Mapper.convertSkuDetails(product.skuDetails as QSkuDetails);
-        storeTitle = skuDetails.title;
-        storeDescription = skuDetails.description;
-
-        priceMicros = skuDetails.priceAmountMicros;
-        currencyCode = skuDetails.priceCurrencyCode;
-        if (skuDetails.introductoryPrice.length > 0) {
-          prettyIntroductoryPrice = skuDetails.introductoryPrice;
-        }
-      }
+      let priceMicros = null;
 
       if (!!product.storeDetails) {
         storeDetails = Mapper.convertProductStoreDetails(product.storeDetails);
@@ -639,7 +603,6 @@ class Mapper {
       product.id,
       product.storeId,
       product.basePlanId ?? null,
-      skuDetails,
       storeDetails,
       skProduct,
       offeringId,
@@ -696,30 +659,6 @@ class Mapper {
     const tag = OfferingTag[offering.tag] ?? OfferingTag['0'];
 
     return new Offering(offering.id, tag, products);
-  }
-
-  static convertSkuDetails(skuDetails: QSkuDetails): SkuDetails {
-    return new SkuDetails(
-      skuDetails.description,
-      skuDetails.freeTrialPeriod,
-      skuDetails.iconUrl,
-      skuDetails.introductoryPrice,
-      skuDetails.introductoryPriceAmountMicros,
-      skuDetails.introductoryPriceCycles,
-      skuDetails.introductoryPricePeriod,
-      skuDetails.originalJson,
-      skuDetails.originalPrice,
-      skuDetails.originalPriceAmountMicros,
-      skuDetails.price,
-      skuDetails.priceAmountMicros,
-      skuDetails.priceCurrencyCode,
-      skuDetails.sku,
-      skuDetails.subscriptionPeriod,
-      skuDetails.title,
-      skuDetails.type,
-      skuDetails.hashCode,
-      skuDetails.toString
-    );
   }
 
   static convertProductType(productType: string): ProductType {

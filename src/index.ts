@@ -35,7 +35,6 @@ export * from './dto/storeProducts/SKPaymentDiscount';
 export * from './dto/storeProducts/SKProduct';
 export * from './dto/storeProducts/SKProductDiscount';
 export * from './dto/storeProducts/SKSubscriptionPeriod';
-export * from './dto/storeProducts/SkuDetails';
 // NoCodes exports
 export { NoCodes } from './NoCodes';
 export type { NoCodesApi } from './NoCodesApi';
