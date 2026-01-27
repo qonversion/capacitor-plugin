@@ -52,8 +52,9 @@ class NoCodesPlugin : Plugin() {
 
         val proxyUrl = call.getString("proxyUrl")
         val locale = call.getString("locale")
+        val theme = call.getString("theme")
 
-        noCodesSandwich.initialize(context, projectKey, proxyUrl, locale = locale)
+        noCodesSandwich.initialize(context, projectKey, proxyUrl, locale = locale, theme = theme)
         noCodesSandwich.setDelegate(noCodesEventListener)
 
         val source = call.getString("source")
@@ -94,6 +95,13 @@ class NoCodesPlugin : Plugin() {
     fun setLocale(call: PluginCall) {
         val locale = call.getString("locale")
         noCodesSandwich.setLocale(locale)
+        call.resolve()
+    }
+
+    @PluginMethod
+    fun setTheme(call: PluginCall) {
+        val theme = call.getString("theme")
+        noCodesSandwich.setTheme(theme)
         call.resolve()
     }
 

@@ -6,7 +6,7 @@ import type { NoCodesListener } from '../dto/NoCodesListener';
 import type { PurchaseDelegate } from '../dto/PurchaseDelegate';
 import { ScreenPresentationConfig } from '../dto/ScreenPresentationConfig';
 import { NoCodesError } from '../dto/NoCodesError';
-import { NoCodesErrorCode } from '../dto/enums';
+import { NoCodesErrorCode, NoCodesTheme } from '../dto/enums';
 import type { NoCodeEvent } from '../NoCodesNativePlugin';
 import { NoCodesPlugin } from '../NoCodesNativePlugin';
 import { sdkSource, sdkVersion } from './QonversionInternal';
@@ -29,6 +29,7 @@ export class NoCodesInternal implements NoCodesApi {
       version: sdkVersion,
       proxyUrl: config.proxyUrl,
       locale: config.locale,
+      theme: config.theme,
     });
 
     if (config.noCodesListener) {
@@ -55,6 +56,10 @@ export class NoCodesInternal implements NoCodesApi {
 
   setLocale(locale: string | null) {
     NoCodesPlugin.setLocale({ locale });
+  }
+
+  setTheme(theme: NoCodesTheme) {
+    NoCodesPlugin.setTheme({ theme });
   }
 
   private noCodeEventHandler = (event: NoCodeEvent) => {

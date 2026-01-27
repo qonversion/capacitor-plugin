@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
   s.ios.deployment_target  = '14.0'
   s.dependency 'Capacitor'
   s.swift_version = '5.1'
-  s.dependency "QonversionSandwich", "7.3.1"
+  s.dependency "QonversionSandwich", "7.4.0"
 end
