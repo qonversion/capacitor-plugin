@@ -1,6 +1,7 @@
 import type { NoCodesListener } from './dto/NoCodesListener';
 import type { PurchaseDelegate } from './dto/PurchaseDelegate';
 import { NoCodesConfig } from './NoCodesConfig';
+import { NoCodesTheme } from './dto/enums';
 
 export class NoCodesConfigBuilder {
   private readonly projectKey: string;
@@ -8,6 +9,7 @@ export class NoCodesConfigBuilder {
   private purchaseDelegate: PurchaseDelegate | undefined = undefined;
   private proxyUrl: string | undefined = undefined;
   private locale: string | undefined = undefined;
+  private theme: NoCodesTheme | undefined = undefined;
 
   constructor(projectKey: string) {
     this.projectKey = projectKey;
@@ -64,6 +66,19 @@ export class NoCodesConfigBuilder {
   }
 
   /**
+   * Set the theme mode for No-Code screens.
+   * Controls how screens adapt to light/dark themes.
+   *
+   * @param theme the desired theme mode. Use AUTO to follow device settings,
+   *              LIGHT to force light theme, or DARK to force dark theme.
+   * @return builder instance for chain calls.
+   */
+  setTheme(theme: NoCodesTheme): NoCodesConfigBuilder {
+    this.theme = theme;
+    return this;
+  }
+
+  /**
    * Generate {@link NoCodesConfig} instance with all the provided configurations.
    *
    * @return the complete {@link NoCodesConfig} instance.
@@ -74,7 +89,8 @@ export class NoCodesConfigBuilder {
       this.noCodesListener,
       this.purchaseDelegate,
       this.proxyUrl,
-      this.locale
+      this.locale,
+      this.theme
     );
   }
 }
