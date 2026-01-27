@@ -13,6 +13,7 @@ export interface NoCodesNativePlugin {
     version: string;
     proxyUrl?: string;
     locale?: string;
+    theme?: string;
   }): void;
 
   setScreenPresentationConfig(params: {
@@ -27,6 +28,8 @@ export interface NoCodesNativePlugin {
   setPurchaseDelegate(): void;
 
   setLocale(params: { locale: string | null }): void;
+
+  setTheme(params: { theme: string }): void;
 
   delegatedPurchaseCompleted(): void;
 

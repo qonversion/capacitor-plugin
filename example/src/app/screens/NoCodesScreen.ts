@@ -3,6 +3,7 @@ import {
   NoCodesConfigBuilder,
   ScreenPresentationConfig,
   ScreenPresentationStyle,
+  NoCodesTheme,
   Qonversion,
   type NoCodesAction,
   type NoCodesError,
@@ -103,6 +104,26 @@ export function renderNoCodesScreen(): string {
     </div>
 
     <div class="section">
+      <div class="card">
+        <h3 class="card-title">Theme</h3>
+        <p style="color: var(--color-text-muted); font-size: 13px; margin-bottom: 12px;">
+          Set the theme mode for No-Code screens. Controls how screens adapt to light/dark themes.
+        </p>
+        <div class="button-row">
+          <button class="btn btn-outline" id="set-theme-auto" ${!noCodesInitialized ? 'disabled' : ''}>
+            Auto
+          </button>
+          <button class="btn btn-outline" id="set-theme-light" ${!noCodesInitialized ? 'disabled' : ''}>
+            Light
+          </button>
+          <button class="btn btn-outline" id="set-theme-dark" ${!noCodesInitialized ? 'disabled' : ''}>
+            Dark
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
       <button class="btn btn-outline btn-block" id="close-nocodes" ${!noCodesInitialized ? 'disabled' : ''}>
         Close No-Codes Screen
       </button>
@@ -162,6 +183,15 @@ function updateNoCodesStatus(): void {
   
   const resetBtn = document.getElementById('reset-locale') as HTMLButtonElement;
   if (resetBtn) resetBtn.disabled = !noCodesInitialized;
+
+  const themeAutoBtn = document.getElementById('set-theme-auto') as HTMLButtonElement;
+  if (themeAutoBtn) themeAutoBtn.disabled = !noCodesInitialized;
+
+  const themeLightBtn = document.getElementById('set-theme-light') as HTMLButtonElement;
+  if (themeLightBtn) themeLightBtn.disabled = !noCodesInitialized;
+
+  const themeDarkBtn = document.getElementById('set-theme-dark') as HTMLButtonElement;
+  if (themeDarkBtn) themeDarkBtn.disabled = !noCodesInitialized;
   
   const closeBtn = document.getElementById('close-nocodes') as HTMLButtonElement;
   if (closeBtn) closeBtn.disabled = !noCodesInitialized;
@@ -358,6 +388,45 @@ export function setupNoCodesScreenEvents(): void {
       showToast('Locale reset to default', 'success');
     } catch (error: any) {
       showToast(error.message || 'Failed to reset locale', 'error');
+    }
+  });
+
+  // Set theme - Auto
+  document.getElementById('set-theme-auto')?.addEventListener('click', () => {
+    try {
+      console.log('🔄 [NoCodes] Setting theme: Auto');
+      NoCodes.getSharedInstance().setTheme(NoCodesTheme.AUTO);
+      
+      store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: 'Theme set: Auto' });
+      showToast('Theme set to Auto', 'success');
+    } catch (error: any) {
+      showToast(error.message || 'Failed to set theme', 'error');
+    }
+  });
+
+  // Set theme - Light
+  document.getElementById('set-theme-light')?.addEventListener('click', () => {
+    try {
+      console.log('🔄 [NoCodes] Setting theme: Light');
+      NoCodes.getSharedInstance().setTheme(NoCodesTheme.LIGHT);
+      
+      store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: 'Theme set: Light' });
+      showToast('Theme set to Light', 'success');
+    } catch (error: any) {
+      showToast(error.message || 'Failed to set theme', 'error');
+    }
+  });
+
+  // Set theme - Dark
+  document.getElementById('set-theme-dark')?.addEventListener('click', () => {
+    try {
+      console.log('🔄 [NoCodes] Setting theme: Dark');
+      NoCodes.getSharedInstance().setTheme(NoCodesTheme.DARK);
+      
+      store.dispatch({ type: 'ADD_NOCODES_EVENT', payload: 'Theme set: Dark' });
+      showToast('Theme set to Dark', 'success');
+    } catch (error: any) {
+      showToast(error.message || 'Failed to set theme', 'error');
     }
   });
 

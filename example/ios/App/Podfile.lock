@@ -1,26 +1,26 @@
 PODS:
-  - Capacitor (7.3.0):
+  - Capacitor (8.0.1):
     - CapacitorCordova
-  - CapacitorCamera (7.0.1):
+  - CapacitorCamera (8.0.0):
     - Capacitor
-  - CapacitorCordova (7.3.0)
-  - CapacitorSplashScreen (7.0.1):
+  - CapacitorCordova (8.0.1)
+  - CapacitorSplashScreen (8.0.0):
     - Capacitor
-  - Qonversion (6.3.1):
-    - Qonversion/Main (= 6.3.1)
-  - Qonversion/Main (6.3.1)
-  - QonversionCapacitorPlugin (0.3.1):
+  - Qonversion (6.4.0):
+    - Qonversion/Main (= 6.4.0)
+  - Qonversion/Main (6.4.0)
+  - QonversionCapacitorPlugin (1.0.0):
     - Capacitor
-    - QonversionSandwich (= 7.3.1)
-  - QonversionSandwich (7.3.1):
-    - Qonversion (= 6.3.1)
+    - QonversionSandwich (= 7.4.0)
+  - QonversionSandwich (7.4.0):
+    - Qonversion (= 6.4.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
-  - "QonversionCapacitorPlugin (from `../../node_modules/@qonversion/capacitor-plugin`)"
+  - QonversionCapacitorPlugin (from `../../..`)
 
 SPEC REPOS:
   trunk:
@@ -37,17 +37,17 @@ EXTERNAL SOURCES:
   CapacitorSplashScreen:
     :path: "../../node_modules/@capacitor/splash-screen"
   QonversionCapacitorPlugin:
-    :path: "../../node_modules/@qonversion/capacitor-plugin"
+    :path: "../../.."
 
 SPEC CHECKSUMS:
-  Capacitor: fbd134fa28e503720559ecddb5ab6b41d69de347
-  CapacitorCamera: eb8687d8687fed853598ec9460d94bcd5e16babe
-  CapacitorCordova: 2685f5c43675793b5f06dfd66b3b26268f003b97
-  CapacitorSplashScreen: 19cd3573e57507e02d6f34597a8c421e00931487
-  Qonversion: 48d745b4ada2b50c57bf58d82c14822675ef3535
-  QonversionCapacitorPlugin: 79081868e54201f0319bdd66575f6ae136a2f44e
-  QonversionSandwich: d3e6fd4882ac0778b8e9708248117d36a51000c0
+  Capacitor: 2d8b1a05870ddb600b0e1e32b83fcf0890c244e1
+  CapacitorCamera: 05ac5bd4499ed4b8cf5358d1b4a874b385de7b4d
+  CapacitorCordova: 0d65b9bb74e995dcecb9463f34f1af2aba6f955c
+  CapacitorSplashScreen: 4b78177a21f0f73ccc1c78dd93b2a94854ac4b83
+  Qonversion: f7620e1cc3b03541b9cf4a0ed357a5646d123fe3
+  QonversionCapacitorPlugin: 1d8ef7c70cdc188e8aa62f7db46080b722c48096
+  QonversionSandwich: 58a58f43664d2ddb755b315b51adfe9392ede3f9
 
-PODFILE CHECKSUM: afe3f9454c98dc22ff3619593d5dcbd43e1499e8
+PODFILE CHECKSUM: 997ea9e24aadc2907f2351506e72f75dadd36129
 
 COCOAPODS: 1.16.2

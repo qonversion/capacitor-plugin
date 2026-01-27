@@ -17,6 +17,7 @@ public class NoCodesPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "close", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "setPurchaseDelegate", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "setLocale", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setTheme", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "delegatedPurchaseCompleted", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "delegatedPurchaseFailed", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "delegatedRestoreCompleted", returnType: CAPPluginReturnPromise),
@@ -37,8 +38,9 @@ public class NoCodesPlugin: CAPPlugin, CAPBridgedPlugin {
 
         let proxyUrl = call.getString("proxyUrl")
         let locale = call.getString("locale")
+        let theme = call.getString("theme")
 
-        noCodesSandwich?.initialize(projectKey: projectKey, proxyUrl: proxyUrl, locale: locale)
+        noCodesSandwich?.initialize(projectKey: projectKey, proxyUrl: proxyUrl, locale: locale, theme: theme)
 
         if let source = call.getString("source"),
            let version = call.getString("version") {
@@ -81,6 +83,12 @@ public class NoCodesPlugin: CAPPlugin, CAPBridgedPlugin {
     @objc func setLocale(_ call: CAPPluginCall) {
         let locale = call.getString("locale")
         noCodesSandwich?.setLocale(locale)
+        call.resolve()
+    }
+
+    @objc func setTheme(_ call: CAPPluginCall) {
+        let theme = call.getString("theme")
+        noCodesSandwich?.setTheme(theme)
         call.resolve()
     }
 
