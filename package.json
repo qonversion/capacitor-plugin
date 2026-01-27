@@ -23,10 +23,10 @@
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qonversion/qonversion-capacitor.git"
+    "url": "git+https://github.com/qonversion/capacitor-plugin.git"
   },
   "bugs": {
-    "url": "https://github.com/qonversion/qonversion-capacitor/issues"
+    "url": "https://github.com/qonversion/capacitor-plugin/issues"
   },
   "keywords": [
     "capacitor",
