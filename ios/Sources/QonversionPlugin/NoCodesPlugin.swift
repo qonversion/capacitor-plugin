@@ -67,8 +67,10 @@ public class NoCodesPlugin: CAPPlugin, CAPBridgedPlugin {
             return call.noNecessaryDataError()
         }
 
+        let customVariables = call.getObject("customVariables") as? [String: String]
+
         DispatchQueue.main.async { [weak self] in
-            self?.noCodesSandwich?.showScreen(contextKey)
+            self?.noCodesSandwich?.showScreen(contextKey, customVariables: customVariables)
         }
         call.resolve()
     }

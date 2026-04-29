@@ -80,6 +80,8 @@ export interface QonversionNativePlugin {
 
   userProperties(): Promise<QUserProperties>;
 
+  forceSendProperties(): Promise<void>;
+
   collectAdvertisingId(): void;
 
   collectAppleSearchAdsAttribution(): void;

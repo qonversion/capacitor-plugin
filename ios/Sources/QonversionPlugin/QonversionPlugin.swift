@@ -19,6 +19,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
     CAPPluginMethod(name: "remoteConfigList", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "userInfo", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "userProperties", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "forceSendProperties", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "restore", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "offerings", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "setDefinedUserProperty", returnType: CAPPluginReturnPromise),
@@ -136,6 +137,12 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
 
   @objc func userProperties(_ call: CAPPluginCall) {
     qonversionSandwich?.userProperties(getDefaultCompletion(call))
+  }
+
+  @objc func forceSendProperties(_ call: CAPPluginCall) {
+    qonversionSandwich?.forceSendProperties {
+      call.resolve()
+    }
   }
 
   @objc func restore(_ call: CAPPluginCall) {

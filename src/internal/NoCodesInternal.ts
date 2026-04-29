@@ -46,8 +46,8 @@ export class NoCodesInternal implements NoCodesApi {
     await NoCodesPlugin.setScreenPresentationConfig({ configData: data, contextKey });
   }
 
-  async showScreen(contextKey: string) {
-    await NoCodesPlugin.showScreen({ contextKey });
+  async showScreen(contextKey: string, customVariables?: Record<string, string>) {
+    await NoCodesPlugin.showScreen({ contextKey, customVariables });
   }
 
   async close() {

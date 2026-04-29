@@ -21,7 +21,7 @@ export interface NoCodesNativePlugin {
     contextKey?: string;
   }): Promise<void>;
 
-  showScreen(params: { contextKey: string }): Promise<void>;
+  showScreen(params: { contextKey: string; customVariables?: Record<string, string> }): Promise<void>;
 
   close(): Promise<void>;
 
