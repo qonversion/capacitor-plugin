@@ -81,7 +81,16 @@ class NoCodesPlugin : Plugin() {
         val contextKey = call.getString("contextKey")
             ?: return call.noNecessaryDataError("contextKey")
 
-        noCodesSandwich.showScreen(contextKey)
+        val customVariablesJson = call.getObject("customVariables")
+        val customVariables: Map<String, String>? = customVariablesJson?.let { json ->
+            buildMap {
+                json.keys().forEach { key ->
+                    json.optString(key, null)?.let { value -> put(key, value) }
+                }
+            }
+        }
+
+        noCodesSandwich.showScreen(contextKey, customVariables)
         call.resolve()
     }
 

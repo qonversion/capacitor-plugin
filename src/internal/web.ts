@@ -151,4 +151,8 @@ export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
     userProperties(): Promise<QUserProperties> {
         throw this.unimplemented("not implemented yet");
     }
+
+    forceSendProperties(): Promise<void> {
+        throw this.unimplemented("not implemented yet");
+    }
 }

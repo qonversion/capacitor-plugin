@@ -107,6 +107,13 @@ class QonversionPlugin : Plugin() {
     }
 
     @PluginMethod
+    fun forceSendProperties(call: PluginCall) {
+        qonversionSandwich.forceSendProperties {
+            call.resolve()
+        }
+    }
+
+    @PluginMethod
     fun isFallbackFileAccessible(call: PluginCall) {
         qonversionSandwich.isFallbackFileAccessible(call.toResultListener())
     }
