@@ -85,7 +85,7 @@ class NoCodesPlugin : Plugin() {
         val customVariables: Map<String, String>? = customVariablesJson?.let { json ->
             buildMap {
                 json.keys().forEach { key ->
-                    json.optString(key, null)?.let { value -> put(key, value) }
+                    (json.opt(key) as? String)?.let { value -> put(key, value) }
                 }
             }
         }
