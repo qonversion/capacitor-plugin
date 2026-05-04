@@ -7,6 +7,7 @@ export class QonversionConfig {
   readonly launchMode: LaunchMode;
   readonly environment: Environment;
   readonly entitlementsCacheLifetime: EntitlementsCacheLifetime;
+  /** @deprecated Use {@link deferredPurchasesListener} instead. */
   readonly entitlementsUpdateListener: EntitlementsUpdateListener | undefined;
   readonly deferredPurchasesListener: DeferredPurchasesListener | undefined;
   readonly proxyUrl: string | undefined;
@@ -18,9 +19,9 @@ export class QonversionConfig {
     environment: Environment = Environment.PRODUCTION,
     entitlementsCacheLifetime: EntitlementsCacheLifetime = EntitlementsCacheLifetime.MONTH,
     entitlementsUpdateListener: EntitlementsUpdateListener | undefined = undefined,
+    deferredPurchasesListener: DeferredPurchasesListener | undefined = undefined,
     proxyUrl: string | undefined,
     kidsMode: boolean = false,
-    deferredPurchasesListener: DeferredPurchasesListener | undefined = undefined,
   ) {
     this.projectKey = projectKey;
     this.launchMode = launchMode;
