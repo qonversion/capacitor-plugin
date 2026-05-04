@@ -35,6 +35,11 @@ const QonversionNative = registerPlugin<QonversionNativePlugin>('Qonversion', {
 
 export default class QonversionInternal implements QonversionApi {
 
+  private entitlementsUpdateListener: EntitlementsUpdateListener | null = null;
+  private deferredPurchasesListener: DeferredPurchasesListener | null = null;
+  private entitlementsEventSubscribed = false;
+  private deferredPurchaseEventSubscribed = false;
+
   constructor(qonversionConfig: QonversionConfig) {
     QonversionNative.storeSdkInfo({source: sdkSource, version: sdkVersion});
     QonversionNative.initialize({
@@ -214,20 +219,42 @@ export default class QonversionInternal implements QonversionApi {
   }
 
   setEntitlementsUpdateListener(listener: EntitlementsUpdateListener) {
-    QonversionNative.addListener(entitlementsUpdatedEvent, (payload: Record<string, QEntitlement> | null | undefined) => {
-      const entitlements = Mapper.convertEntitlements(payload);
-      listener.onEntitlementsUpdated(entitlements);
-    });
+    this.subscribeToEntitlementsUpdatedEvent();
+    this.entitlementsUpdateListener = listener;
   }
 
   setDeferredPurchasesListener(listener: DeferredPurchasesListener) {
-    QonversionNative.addListener(deferredPurchaseCompletedEvent, (payload: QPurchaseResult | null | undefined) => {
-      const purchaseResult = Mapper.convertPurchaseResult(payload);
-      if (purchaseResult) {
-        listener.onDeferredPurchaseCompleted(purchaseResult);
-      }
-    });
+    this.subscribeToDeferredPurchaseEvent();
+    this.deferredPurchasesListener = listener;
   }
+
+  private subscribeToEntitlementsUpdatedEvent() {
+    if (this.entitlementsEventSubscribed) {
+      return;
+    }
+    QonversionNative.addListener(entitlementsUpdatedEvent, this.entitlementsUpdatedEventHandler);
+    this.entitlementsEventSubscribed = true;
+  }
+
+  private subscribeToDeferredPurchaseEvent() {
+    if (this.deferredPurchaseEventSubscribed) {
+      return;
+    }
+    QonversionNative.addListener(deferredPurchaseCompletedEvent, this.deferredPurchaseCompletedEventHandler);
+    this.deferredPurchaseEventSubscribed = true;
+  }
+
+  private entitlementsUpdatedEventHandler = (payload: Record<string, QEntitlement> | null | undefined) => {
+    const entitlements = Mapper.convertEntitlements(payload);
+    this.entitlementsUpdateListener?.onEntitlementsUpdated(entitlements);
+  };
+
+  private deferredPurchaseCompletedEventHandler = (payload: QPurchaseResult | null | undefined) => {
+    const purchaseResult = Mapper.convertPurchaseResult(payload);
+    if (purchaseResult) {
+      this.deferredPurchasesListener?.onDeferredPurchaseCompleted(purchaseResult);
+    }
+  };
 
   setPromoPurchasesDelegate(delegate: PromoPurchasesListener) {
     if (!isIos()) {
