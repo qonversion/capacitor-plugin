@@ -265,6 +265,7 @@ export interface QonversionApi {
    * with {@link Qonversion.initialize}.
    *
    * @param listener listener to be called when entitlements update
+   * @deprecated Use {@link QonversionApi.setDeferredPurchasesListener} instead, which provides detailed purchase result information for deferred purchase completions.
    */
   setEntitlementsUpdateListener(listener: EntitlementsUpdateListener): void;
 
@@ -272,9 +273,8 @@ export interface QonversionApi {
    * Provide a listener to be notified about deferred purchases (e.g., SCA, Ask to Buy)
    * once they are completed.
    *
-   * You may set the listener both *after* Qonversion SDK initializing
-   * with {@link QonversionApi.setDeferredPurchasesListener} and *while* Qonversion initializing
-   * with {@link Qonversion.initialize}.
+   * You may set this listener *after* Qonversion SDK initialization using this method,
+   * or *during* Qonversion initialization via {@link QonversionConfigBuilder.setDeferredPurchasesListener}.
    *
    * @param listener listener to be called when a deferred purchase completes.
    */
