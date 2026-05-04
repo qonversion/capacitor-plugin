@@ -12,6 +12,7 @@ import io.qonversion.sandwich.QonversionSandwich
 import io.qonversion.sandwich.BridgeData
 
 private const val EntitlementsUpdatedEvent = "entitlementsUpdatedEvent"
+private const val DeferredPurchaseCompletedEvent = "deferredPurchaseCompletedEvent"
 
 @CapacitorPlugin(name = "Qonversion")
 class QonversionPlugin : Plugin() {
@@ -32,6 +33,10 @@ class QonversionPlugin : Plugin() {
         QonversionEventsListener {
         override fun onEntitlementsUpdated(entitlements: BridgeData) {
             notifyListeners(EntitlementsUpdatedEvent, entitlements.toJSObject())
+        }
+
+        override fun onDeferredPurchaseCompleted(transaction: BridgeData) {
+            notifyListeners(DeferredPurchaseCompletedEvent, transaction.toJSObject())
         }
     }
 

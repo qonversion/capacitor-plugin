@@ -1,5 +1,6 @@
 import {EntitlementsCacheLifetime, Environment, LaunchMode} from './dto/enums';
 import {EntitlementsUpdateListener} from './dto/EntitlementsUpdateListener';
+import {DeferredPurchasesListener} from './dto/DeferredPurchasesListener';
 import {QonversionConfig} from './QonversionConfig';
 
 export class QonversionConfigBuilder {
@@ -14,6 +15,7 @@ export class QonversionConfigBuilder {
   private environment: Environment = Environment.PRODUCTION;
   private entitlementsCacheLifetime: EntitlementsCacheLifetime = EntitlementsCacheLifetime.MONTH;
   private entitlementsUpdateListener: EntitlementsUpdateListener | undefined = undefined;
+  private deferredPurchasesListener: DeferredPurchasesListener | undefined = undefined;
   private proxyUrl: string | undefined = undefined;
   private kidsMode: boolean = false;
 
@@ -58,6 +60,18 @@ export class QonversionConfigBuilder {
   }
 
   /**
+   * Provide a listener to be notified about deferred purchases (e.g., SCA, Ask to Buy)
+   * once they are completed.
+   *
+   * @param deferredPurchasesListener listener to be called when a deferred purchase completes.
+   * @return builder instance for chain calls.
+   */
+  setDeferredPurchasesListener(deferredPurchasesListener: DeferredPurchasesListener): QonversionConfigBuilder {
+    this.deferredPurchasesListener = deferredPurchasesListener;
+    return this;
+  }
+
+  /**
    * Provide a URL to your proxy server which will redirect all the requests from the app
    * to our API. Please, contact us before using this feature.
    *
@@ -94,7 +108,8 @@ export class QonversionConfigBuilder {
       this.entitlementsCacheLifetime,
       this.entitlementsUpdateListener,
       this.proxyUrl,
-      this.kidsMode
+      this.kidsMode,
+      this.deferredPurchasesListener,
     )
   }
 }

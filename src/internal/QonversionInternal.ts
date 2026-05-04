@@ -8,6 +8,7 @@ import {Entitlement} from "../dto/Entitlement";
 import {Product} from "../dto/Product";
 import {isAndroid, isIos} from "./utils";
 import {EntitlementsUpdateListener} from '../dto/EntitlementsUpdateListener';
+import {DeferredPurchasesListener} from '../dto/DeferredPurchasesListener';
 import {PromoPurchasesListener} from '../dto/PromoPurchasesListener';
 import {User} from '../dto/User';
 import {PurchaseOptions} from '../dto/PurchaseOptions'
@@ -25,6 +26,7 @@ export const sdkVersion = "1.4.0";
 export const sdkSource = "capacitor";
 
 const entitlementsUpdatedEvent = 'entitlementsUpdatedEvent';
+const deferredPurchaseCompletedEvent = 'deferredPurchaseCompletedEvent';
 const promoPurchaseEvent = 'shouldPurchasePromoProductEvent';
 
 const QonversionNative = registerPlugin<QonversionNativePlugin>('Qonversion', {
@@ -46,6 +48,10 @@ export default class QonversionInternal implements QonversionApi {
 
     if (qonversionConfig.entitlementsUpdateListener) {
       this.setEntitlementsUpdateListener(qonversionConfig.entitlementsUpdateListener);
+    }
+
+    if (qonversionConfig.deferredPurchasesListener) {
+      this.setDeferredPurchasesListener(qonversionConfig.deferredPurchasesListener);
     }
   }
 
@@ -211,6 +217,15 @@ export default class QonversionInternal implements QonversionApi {
     QonversionNative.addListener(entitlementsUpdatedEvent, (payload: Record<string, QEntitlement> | null | undefined) => {
       const entitlements = Mapper.convertEntitlements(payload);
       listener.onEntitlementsUpdated(entitlements);
+    });
+  }
+
+  setDeferredPurchasesListener(listener: DeferredPurchasesListener) {
+    QonversionNative.addListener(deferredPurchaseCompletedEvent, (payload: QPurchaseResult | null | undefined) => {
+      const purchaseResult = Mapper.convertPurchaseResult(payload);
+      if (purchaseResult) {
+        listener.onDeferredPurchaseCompleted(purchaseResult);
+      }
     });
   }
 

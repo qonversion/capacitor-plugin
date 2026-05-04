@@ -92,5 +92,7 @@ export interface QonversionNativePlugin {
 
   addListener(event: 'entitlementsUpdatedEvent', listener: (payload: (Record<string, QEntitlement> | null | undefined)) => void): void;
 
+  addListener(event: 'deferredPurchaseCompletedEvent', listener: (payload: QPurchaseResult | null | undefined) => void): void;
+
   addListener(event: 'shouldPurchasePromoProductEvent', listener: (payload: {productId: string}) => void): void;
 }

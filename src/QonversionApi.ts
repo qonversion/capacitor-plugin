@@ -10,6 +10,7 @@ import {RemoteConfigList} from './dto/RemoteConfigList';
 import {AttributionProvider, UserPropertyKey} from './dto/enums';
 import {UserProperties} from './dto/UserProperties';
 import {EntitlementsUpdateListener} from './dto/EntitlementsUpdateListener';
+import {DeferredPurchasesListener} from './dto/DeferredPurchasesListener';
 import {PromoPurchasesListener} from './dto/PromoPurchasesListener';
 import {SKProductDiscount} from './dto/storeProducts/SKProductDiscount';
 import {PromotionalOffer} from './dto/PromotionalOffer';
@@ -266,6 +267,18 @@ export interface QonversionApi {
    * @param listener listener to be called when entitlements update
    */
   setEntitlementsUpdateListener(listener: EntitlementsUpdateListener): void;
+
+  /**
+   * Provide a listener to be notified about deferred purchases (e.g., SCA, Ask to Buy)
+   * once they are completed.
+   *
+   * You may set the listener both *after* Qonversion SDK initializing
+   * with {@link QonversionApi.setDeferredPurchasesListener} and *while* Qonversion initializing
+   * with {@link Qonversion.initialize}.
+   *
+   * @param listener listener to be called when a deferred purchase completes.
+   */
+  setDeferredPurchasesListener(listener: DeferredPurchasesListener): void;
 
   /**
    * iOS only. Does nothing if called on Android.

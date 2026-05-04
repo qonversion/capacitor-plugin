@@ -283,6 +283,10 @@ extension QonversionPlugin: QonversionEventListener {
     self.notifyListeners("entitlementsUpdatedEvent", data: entitlements)
   }
 
+  public func qonversionDidCompleteDeferredPurchase(_ transaction: [String : Any]) {
+    self.notifyListeners("deferredPurchaseCompletedEvent", data: transaction)
+  }
+
   public func shouldPurchasePromoProduct(with productId: String) {
     self.notifyListeners("shouldPurchasePromoProductEvent", data: ["productId": productId])
   }
