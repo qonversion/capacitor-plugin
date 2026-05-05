@@ -80,6 +80,8 @@ export interface QonversionNativePlugin {
 
   userProperties(): Promise<QUserProperties>;
 
+  forceSendProperties(): Promise<void>;
+
   collectAdvertisingId(): void;
 
   collectAppleSearchAdsAttribution(): void;
@@ -89,6 +91,8 @@ export interface QonversionNativePlugin {
   promoPurchase(params: { productId: string }): Promise<Record<string, QEntitlement> | null | undefined>;
 
   addListener(event: 'entitlementsUpdatedEvent', listener: (payload: (Record<string, QEntitlement> | null | undefined)) => void): void;
+
+  addListener(event: 'deferredPurchaseCompletedEvent', listener: (payload: QPurchaseResult | null | undefined) => void): void;
 
   addListener(event: 'shouldPurchasePromoProductEvent', listener: (payload: {productId: string}) => void): void;
 }

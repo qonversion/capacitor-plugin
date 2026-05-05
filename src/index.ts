@@ -30,6 +30,7 @@ export * from './dto/PurchaseOptionsBuilder';
 export * from './dto/PurchaseResult';
 export * from './dto/StoreTransaction';
 export * from './dto/EntitlementsUpdateListener';
+export * from './dto/DeferredPurchasesListener';
 export * from './dto/PromoPurchasesListener';
 export * from './dto/storeProducts/SKPaymentDiscount';
 export * from './dto/storeProducts/SKProduct';

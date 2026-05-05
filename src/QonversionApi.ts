@@ -10,6 +10,7 @@ import {RemoteConfigList} from './dto/RemoteConfigList';
 import {AttributionProvider, UserPropertyKey} from './dto/enums';
 import {UserProperties} from './dto/UserProperties';
 import {EntitlementsUpdateListener} from './dto/EntitlementsUpdateListener';
+import {DeferredPurchasesListener} from './dto/DeferredPurchasesListener';
 import {PromoPurchasesListener} from './dto/PromoPurchasesListener';
 import {SKProductDiscount} from './dto/storeProducts/SKProductDiscount';
 import {PromotionalOffer} from './dto/PromotionalOffer';
@@ -246,6 +247,13 @@ export interface QonversionApi {
   userProperties(): Promise<UserProperties>;
 
   /**
+   * Force-flushes any pending user property updates to the server immediately.
+   * Use this when you need to ensure all previously set properties have been sent
+   * before performing an operation that depends on them.
+   */
+  forceSendProperties(): Promise<void>;
+
+  /**
    * Provide a listener to be notified about asynchronous user entitlements updates.
    *
    * Make sure you provide this listener for being up-to-date with the user entitlements.
@@ -257,8 +265,20 @@ export interface QonversionApi {
    * with {@link Qonversion.initialize}.
    *
    * @param listener listener to be called when entitlements update
+   * @deprecated Use {@link QonversionApi.setDeferredPurchasesListener} instead, which provides detailed purchase result information for deferred purchase completions.
    */
   setEntitlementsUpdateListener(listener: EntitlementsUpdateListener): void;
+
+  /**
+   * Provide a listener to be notified about deferred purchases (e.g., SCA, Ask to Buy)
+   * once they are completed.
+   *
+   * You may set this listener *after* Qonversion SDK initialization using this method,
+   * or *during* Qonversion initialization via {@link QonversionConfigBuilder.setDeferredPurchasesListener}.
+   *
+   * @param listener listener to be called when a deferred purchase completes.
+   */
+  setDeferredPurchasesListener(listener: DeferredPurchasesListener): void;
 
   /**
    * iOS only. Does nothing if called on Android.
