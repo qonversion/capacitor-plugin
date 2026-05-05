@@ -67,8 +67,18 @@ public class NoCodesPlugin: CAPPlugin, CAPBridgedPlugin {
             return call.noNecessaryDataError()
         }
 
+        let customVariables: [String: String]? = call.getObject("customVariables").map { rawObject in
+            var result: [String: String] = [:]
+            for (key, value) in rawObject {
+                if let stringValue = value as? String {
+                    result[key] = stringValue
+                }
+            }
+            return result
+        }
+
         DispatchQueue.main.async { [weak self] in
-            self?.noCodesSandwich?.showScreen(contextKey)
+            self?.noCodesSandwich?.showScreen(contextKey, customVariables: customVariables)
         }
         call.resolve()
     }
