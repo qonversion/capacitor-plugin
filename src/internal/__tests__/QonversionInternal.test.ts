@@ -30,8 +30,8 @@ function buildConfig(): QonversionConfig {
     EntitlementsCacheLifetime.MONTH,
     undefined,
     undefined,
-    undefined,
     false,
+    undefined,
   );
 }
 

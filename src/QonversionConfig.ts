@@ -19,9 +19,9 @@ export class QonversionConfig {
     environment: Environment = Environment.PRODUCTION,
     entitlementsCacheLifetime: EntitlementsCacheLifetime = EntitlementsCacheLifetime.MONTH,
     entitlementsUpdateListener: EntitlementsUpdateListener | undefined = undefined,
-    deferredPurchasesListener: DeferredPurchasesListener | undefined = undefined,
     proxyUrl: string | undefined,
     kidsMode: boolean = false,
+    deferredPurchasesListener: DeferredPurchasesListener | undefined = undefined,
   ) {
     this.projectKey = projectKey;
     this.launchMode = launchMode;

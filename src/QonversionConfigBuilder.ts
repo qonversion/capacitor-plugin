@@ -108,9 +108,9 @@ export class QonversionConfigBuilder {
       this.environment,
       this.entitlementsCacheLifetime,
       this.entitlementsUpdateListener,
-      this.deferredPurchasesListener,
       this.proxyUrl,
       this.kidsMode,
+      this.deferredPurchasesListener,
     )
   }
 }
