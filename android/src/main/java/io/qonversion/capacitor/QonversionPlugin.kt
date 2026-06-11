@@ -35,8 +35,8 @@ class QonversionPlugin : Plugin() {
             notifyListeners(EntitlementsUpdatedEvent, entitlements.toJSObject())
         }
 
-        override fun onDeferredPurchaseCompleted(transaction: BridgeData) {
-            notifyListeners(DeferredPurchaseCompletedEvent, transaction.toJSObject())
+        override fun onDeferredPurchaseCompleted(purchaseResult: BridgeData) {
+            notifyListeners(DeferredPurchaseCompletedEvent, purchaseResult.toJSObject())
         }
     }
 
