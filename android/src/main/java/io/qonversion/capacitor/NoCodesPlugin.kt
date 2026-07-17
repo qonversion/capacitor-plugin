@@ -95,6 +95,14 @@ class NoCodesPlugin : Plugin() {
     }
 
     @PluginMethod
+    fun loadScreen(call: PluginCall) {
+        val contextKey = call.getString("contextKey")
+            ?: return call.noNecessaryDataError("contextKey")
+
+        noCodesSandwich.loadScreen(contextKey, call.toResultListener())
+    }
+
+    @PluginMethod
     fun close(call: PluginCall) {
         noCodesSandwich.close()
         call.resolve()

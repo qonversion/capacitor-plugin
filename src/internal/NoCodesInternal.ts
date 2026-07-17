@@ -1,11 +1,12 @@
 import type { NoCodesApi } from '../NoCodesApi';
 import { NoCodesConfig } from '../NoCodesConfig';
-import type { QNoCodeAction, QNoCodesError, QNoCodeScreenInfo, QProduct } from './Mapper';
+import type { QNoCodeAction, QNoCodeCustomActionInfo, QNoCodesError, QNoCodeScreenInfo, QProduct } from './Mapper';
 import Mapper from './Mapper';
 import type { NoCodesListener } from '../dto/NoCodesListener';
 import type { PurchaseDelegate } from '../dto/PurchaseDelegate';
 import { ScreenPresentationConfig } from '../dto/ScreenPresentationConfig';
 import { NoCodesError } from '../dto/NoCodesError';
+import type { NoCodesScreen } from '../dto/NoCodesScreen';
 import { NoCodesErrorCode, NoCodesTheme } from '../dto/enums';
 import type { NoCodeEvent } from '../NoCodesNativePlugin';
 import { NoCodesPlugin } from '../NoCodesNativePlugin';
@@ -17,6 +18,7 @@ const EVENT_ACTION_STARTED = 'nocodes_action_started';
 const EVENT_ACTION_FAILED = 'nocodes_action_failed';
 const EVENT_ACTION_FINISHED = 'nocodes_action_finished';
 const EVENT_SCREEN_FAILED_TO_LOAD = 'nocodes_screen_failed_to_load';
+const EVENT_CUSTOM_ACTION = 'nocodes_custom_action';
 
 export class NoCodesInternal implements NoCodesApi {
   private noCodesListener: NoCodesListener | null = null;
@@ -50,6 +52,11 @@ export class NoCodesInternal implements NoCodesApi {
     await NoCodesPlugin.showScreen({ contextKey, customVariables });
   }
 
+  async loadScreen(contextKey: string): Promise<NoCodesScreen> {
+    const screenData = await NoCodesPlugin.loadScreen({ contextKey });
+    return Mapper.convertScreen(screenData);
+  }
+
   async close() {
     await NoCodesPlugin.close();
   }
@@ -79,6 +86,10 @@ export class NoCodesInternal implements NoCodesApi {
       case EVENT_ACTION_FINISHED:
         const actionFinished = Mapper.convertAction(event.payload as QNoCodeAction);
         this.noCodesListener?.onActionFinishedExecuting(actionFinished);
+        break;
+      case EVENT_CUSTOM_ACTION:
+        const value = (event.payload as QNoCodeCustomActionInfo | undefined)?.value ?? '';
+        this.noCodesListener?.onCustomAction?.(value);
         break;
       case EVENT_FINISHED:
         this.noCodesListener?.onFinished();

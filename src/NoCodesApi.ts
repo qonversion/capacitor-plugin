@@ -1,3 +1,4 @@
+import type { NoCodesScreen } from './dto/NoCodesScreen';
 import type { PurchaseDelegate } from './dto/PurchaseDelegate';
 import { ScreenPresentationConfig } from './dto/ScreenPresentationConfig';
 import { NoCodesTheme } from './dto/enums';
@@ -27,6 +28,19 @@ export interface NoCodesApi {
    *                        to the provided contextKey and only applied to that screen.
    */
   showScreen(contextKey: string, customVariables?: Record<string, string>): void;
+
+  /**
+   * Load a No-Code screen (from cache or network) without presenting it, so you can decide
+   * whether to present it or show your own fallback UI before any SDK screen appears.
+   * Present the screen with {@link showScreen} — the loaded content is served from cache.
+   *
+   * The returned {@link NoCodesScreen} exposes the typed default variables configured
+   * in the builder and the default selected product id.
+   *
+   * @param contextKey the context key of the screen to load.
+   * @returns the loaded screen data.
+   */
+  loadScreen(contextKey: string): Promise<NoCodesScreen>;
 
   /**
    * Close the current opened No-Code screen.

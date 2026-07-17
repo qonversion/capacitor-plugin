@@ -14,6 +14,7 @@ public class NoCodesPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "initialize", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "setScreenPresentationConfig", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "showScreen", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "loadScreen", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "close", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "setPurchaseDelegate", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "setLocale", returnType: CAPPluginReturnPromise),
@@ -81,6 +82,30 @@ public class NoCodesPlugin: CAPPlugin, CAPBridgedPlugin {
             self?.noCodesSandwich?.showScreen(contextKey, customVariables: customVariables)
         }
         call.resolve()
+    }
+
+    @objc func loadScreen(_ call: CAPPluginCall) {
+        guard let contextKey = call.getString("contextKey") else {
+            return call.noNecessaryDataError()
+        }
+
+        DispatchQueue.main.async { [weak self] in
+            guard let noCodesSandwich = self?.noCodesSandwich else {
+                return call.reject("No-Codes SDK is not initialized", "SDKInitializationError")
+            }
+
+            noCodesSandwich.loadScreen(contextKey) { data, error in
+                if let error = error {
+                    return call.sandwichError(error)
+                }
+
+                guard let data else {
+                    return call.reject("Failed to load No-Code screen: empty native response", "ScreenLoadingFailed")
+                }
+
+                call.resolve(data)
+            }
+        }
     }
 
     @objc func close(_ call: CAPPluginCall) {
