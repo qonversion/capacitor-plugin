@@ -1,9 +1,9 @@
 import { registerPlugin } from '@capacitor/core';
-import type { QProduct, QNoCodeAction, QNoCodesError, QNoCodeScreenInfo } from './internal/Mapper';
+import type { QProduct, QNoCodeAction, QNoCodeCustomActionInfo, QNoCodesError, QNoCodeScreen, QNoCodeScreenInfo } from './internal/Mapper';
 
 export type NoCodeEvent = {
   name: string;
-  payload: QNoCodeAction | QNoCodesError | QNoCodeScreenInfo | undefined;
+  payload: QNoCodeAction | QNoCodesError | QNoCodeScreenInfo | QNoCodeCustomActionInfo | undefined;
 };
 
 export interface NoCodesNativePlugin {
@@ -22,6 +22,8 @@ export interface NoCodesNativePlugin {
   }): Promise<void>;
 
   showScreen(params: { contextKey: string; customVariables?: Record<string, string> }): Promise<void>;
+
+  loadScreen(params: { contextKey: string }): Promise<QNoCodeScreen>;
 
   close(): Promise<void>;
 
