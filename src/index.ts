@@ -45,4 +45,5 @@ export type { NoCodesListener } from './dto/NoCodesListener';
 export type { PurchaseDelegate } from './dto/PurchaseDelegate';
 export { NoCodesAction } from './dto/NoCodesAction';
 export { NoCodesError } from './dto/NoCodesError';
+export { NoCodesScreen, NoCodesScreenVariable } from './dto/NoCodesScreen';
 export { ScreenPresentationConfig } from './dto/ScreenPresentationConfig';

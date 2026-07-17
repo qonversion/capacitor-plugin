@@ -6,6 +6,7 @@ import {
   ExperimentGroupType,
   IntroEligibilityStatus,
   NoCodesErrorCode,
+  NoCodesScreenVariableKind,
   OfferingTag,
   PricingPhaseRecurrenceMode,
   PricingPhaseType,
@@ -54,6 +55,7 @@ import {ProductInstallmentPlanDetails} from '../dto/storeProducts/ProductInstall
 import {PromotionalOffer} from '../dto/PromotionalOffer';
 import {SKPaymentDiscount} from '../dto/storeProducts/SKPaymentDiscount';
 import {NoCodesAction} from '../dto/NoCodesAction';
+import {NoCodesScreen, NoCodesScreenVariable} from '../dto/NoCodesScreen';
 import {NoCodesError} from '../dto/NoCodesError';
 import {ScreenPresentationConfig} from '../dto/ScreenPresentationConfig';
 
@@ -215,6 +217,23 @@ export type QNoCodesError = QQonversionError & {
 };
 
 export type QNoCodeScreenInfo = { screenId: string };
+
+export type QNoCodeCustomActionInfo = { value?: string | null };
+
+export type QScreenVariable = {
+  kind?: string | null;
+  key: string;
+  type: string;
+  value?: boolean | string | number | null;
+  stringValue?: string | null;
+};
+
+export type QNoCodeScreen = {
+  id: string;
+  contextKey: string;
+  defaultSelectedProductId?: string | null;
+  defaultVariables?: QScreenVariable[] | null;
+};
 
 export type QEntitlement = {
   id: string;
@@ -1117,6 +1136,38 @@ class Mapper {
       payload.parameters,
       this.convertNoCodesError(payload.error)
     );
+  }
+
+  static convertScreen(payload: QNoCodeScreen): NoCodesScreen {
+    const variables = (payload.defaultVariables ?? []).map(
+      variable =>
+        new NoCodesScreenVariable(
+          this.convertScreenVariableKind(variable.kind),
+          variable.key,
+          variable.type,
+          variable.value ?? null,
+          variable.stringValue ?? ''
+        )
+    );
+    return new NoCodesScreen(
+      payload.id,
+      payload.contextKey,
+      payload.defaultSelectedProductId ?? undefined,
+      variables
+    );
+  }
+
+  static convertScreenVariableKind(kind: string | null | undefined): NoCodesScreenVariableKind {
+    switch (kind) {
+      case NoCodesScreenVariableKind.CUSTOM:
+        return NoCodesScreenVariableKind.CUSTOM;
+      case NoCodesScreenVariableKind.PRODUCT:
+        return NoCodesScreenVariableKind.PRODUCT;
+      case NoCodesScreenVariableKind.SELECTED_PRODUCT:
+        return NoCodesScreenVariableKind.SELECTED_PRODUCT;
+      default:
+        return NoCodesScreenVariableKind.UNKNOWN;
+    }
   }
 
   static convertNoCodesError(payload: QNoCodesError | undefined): NoCodesError | undefined {
