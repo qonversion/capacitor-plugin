@@ -90,12 +90,18 @@ public class NoCodesPlugin: CAPPlugin, CAPBridgedPlugin {
         }
 
         DispatchQueue.main.async { [weak self] in
-            self?.noCodesSandwich?.loadScreen(contextKey) { data, error in
+            guard let noCodesSandwich = self?.noCodesSandwich else {
+                return call.reject("No-Codes SDK is not initialized", "SDKInitializationError")
+            }
+
+            noCodesSandwich.loadScreen(contextKey) { data, error in
                 if let error = error {
                     return call.sandwichError(error)
                 }
 
-                guard let data else { return call.resolve() }
+                guard let data else {
+                    return call.reject("Failed to load No-Code screen: empty native response", "ScreenLoadingFailed")
+                }
 
                 call.resolve(data)
             }
