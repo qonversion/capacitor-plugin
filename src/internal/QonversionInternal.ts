@@ -22,7 +22,7 @@ import {PurchaseOptionsBuilder} from '../dto/PurchaseOptionsBuilder';
 import {SKProductDiscount} from '../dto/storeProducts/SKProductDiscount';
 import {PromotionalOffer} from '../dto/PromotionalOffer';
 
-export const sdkVersion = "1.5.0";
+export const sdkVersion = "1.6.0";
 export const sdkSource = "capacitor";
 
 const entitlementsUpdatedEvent = 'entitlementsUpdatedEvent';
