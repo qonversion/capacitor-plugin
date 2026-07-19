@@ -1,4 +1,4 @@
-import type { Product, Offerings, Entitlement, RemoteConfigList, User } from '@qonversion/capacitor-plugin';
+import type { Product, Entitlement, RemoteConfigList, User } from '@qonversion/capacitor-plugin';
 
 export interface AppState {
   currentScreen: string;
@@ -11,7 +11,6 @@ export interface AppState {
   // Data
   userInfo: User | null;
   products: Map<string, Product> | null;
-  offerings: Offerings | null;
   entitlements: Map<string, Entitlement> | null;
   remoteConfigs: RemoteConfigList | null;
   
@@ -32,7 +31,6 @@ export type AppAction =
   | { type: 'SET_NOCODES_INITIALIZED'; payload: boolean }
   | { type: 'SET_USER_INFO'; payload: User | null }
   | { type: 'SET_PRODUCTS'; payload: Map<string, Product> }
-  | { type: 'SET_OFFERINGS'; payload: Offerings }
   | { type: 'SET_ENTITLEMENTS'; payload: Map<string, Entitlement> }
   | { type: 'SET_REMOTE_CONFIGS'; payload: RemoteConfigList }
   | { type: 'ADD_NOCODES_EVENT'; payload: string }
@@ -49,7 +47,6 @@ const initialState: AppState = {
   noCodesInitialized: false,
   userInfo: null,
   products: null,
-  offerings: null,
   entitlements: null,
   remoteConfigs: null,
   noCodesEvents: [],
@@ -114,10 +111,7 @@ class Store {
       
       case 'SET_PRODUCTS':
         return { ...state, products: action.payload };
-      
-      case 'SET_OFFERINGS':
-        return { ...state, offerings: action.payload };
-      
+
       case 'SET_ENTITLEMENTS':
         return { ...state, entitlements: action.payload };
       

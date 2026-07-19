@@ -51,10 +51,6 @@ export function renderMainScreen(): string {
           <span class="menu-item-icon">🎫</span>
           <span class="menu-item-title">Entitlements</span>
         </div>
-        <div class="menu-item" data-navigate="offerings">
-          <span class="menu-item-icon">📋</span>
-          <span class="menu-item-title">Offerings</span>
-        </div>
         <div class="menu-item" data-navigate="remoteConfigs">
           <span class="menu-item-icon">⚙️</span>
           <span class="menu-item-title">Remote Configs</span>
