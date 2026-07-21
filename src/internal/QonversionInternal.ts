@@ -22,7 +22,7 @@ import {PurchaseOptionsBuilder} from '../dto/PurchaseOptionsBuilder';
 import {SKProductDiscount} from '../dto/storeProducts/SKProductDiscount';
 import {PromotionalOffer} from '../dto/PromotionalOffer';
 
-export const sdkVersion = "1.6.0";
+export const sdkVersion = "1.7.0";
 export const sdkSource = "capacitor";
 
 const entitlementsUpdatedEvent = 'entitlementsUpdatedEvent';
@@ -134,6 +134,9 @@ export default class QonversionInternal implements QonversionApi {
     return mappedProducts;
   }
 
+  /**
+   * @deprecated Offerings are deprecated. Manage paywall products with Remote Configs instead: https://documentation.qonversion.io/docs/migrate-offerings-to-remote-configs
+   */
   async offerings(): Promise<Offerings | null> {
     let offerings = await QonversionNative.offerings();
     const mappedOfferings = Mapper.convertOfferings(offerings);

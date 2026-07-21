@@ -10,7 +10,6 @@ import { showToast, setLoading } from './utils';
 import { renderMainScreen } from './screens/MainScreen';
 import { renderProductsScreen } from './screens/ProductsScreen';
 import { renderEntitlementsScreen } from './screens/EntitlementsScreen';
-import { renderOfferingsScreen } from './screens/OfferingsScreen';
 import { renderRemoteConfigsScreen } from './screens/RemoteConfigsScreen';
 import { renderUserScreen } from './screens/UserScreen';
 import { renderNoCodesScreen } from './screens/NoCodesScreen';
@@ -23,7 +22,6 @@ const screenRenderers: Record<string, () => string> = {
   main: renderMainScreen,
   products: renderProductsScreen,
   entitlements: renderEntitlementsScreen,
-  offerings: renderOfferingsScreen,
   remoteConfigs: renderRemoteConfigsScreen,
   user: renderUserScreen,
   noCodes: renderNoCodesScreen,
@@ -36,7 +34,6 @@ const screenTitles: Record<string, string> = {
   main: 'Qonversion SDK Demo',
   products: 'Products',
   entitlements: 'Entitlements',
-  offerings: 'Offerings',
   remoteConfigs: 'Remote Configs',
   user: 'User',
   noCodes: 'No-Codes',
@@ -49,13 +46,6 @@ function renderMoreScreen(): string {
     <div class="section">
       <h2 class="section-title">Additional Features</h2>
       <div class="list">
-        <div class="list-item" data-navigate="offerings">
-          <div class="list-item-content">
-            <div class="list-item-title">📋 Offerings</div>
-            <div class="list-item-subtitle">View available offerings and products</div>
-          </div>
-          <span class="list-item-arrow">›</span>
-        </div>
         <div class="list-item" data-navigate="remoteConfigs">
           <div class="list-item-content">
             <div class="list-item-title">⚙️ Remote Configs</div>
@@ -196,7 +186,7 @@ function updateNavigation(): void {
   navItems.forEach(item => {
     const screen = item.getAttribute('data-screen');
     item.classList.toggle('active', screen === currentScreen || 
-      (screen === 'more' && ['offerings', 'remoteConfigs', 'noCodes', 'other'].includes(currentScreen)));
+      (screen === 'more' && ['remoteConfigs', 'noCodes', 'other'].includes(currentScreen)));
   });
 
   // Update header
@@ -240,9 +230,6 @@ function setupScreenEventListeners(screen: string): void {
       break;
     case 'entitlements':
       import('./screens/EntitlementsScreen').then(m => m.setupEntitlementsScreenEvents?.());
-      break;
-    case 'offerings':
-      import('./screens/OfferingsScreen').then(m => m.setupOfferingsScreenEvents?.());
       break;
     case 'remoteConfigs':
       import('./screens/RemoteConfigsScreen').then(m => m.setupRemoteConfigsScreenEvents?.());
