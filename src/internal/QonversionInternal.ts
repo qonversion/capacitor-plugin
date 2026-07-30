@@ -64,10 +64,6 @@ export default class QonversionInternal implements QonversionApi {
     QonversionNative.syncHistoricalData();
   }
 
-  invalidateRemoteConfigsCache() {
-    QonversionNative.invalidateRemoteConfigsCache();
-  }
-
   syncStoreKit2Purchases() {
     if (isIos()) {
       QonversionNative.syncStoreKit2Purchases();
@@ -303,6 +299,10 @@ export default class QonversionInternal implements QonversionApi {
     const mappedRemoteConfigList: RemoteConfigList = Mapper.convertRemoteConfigList(remoteConfigList);
 
     return mappedRemoteConfigList;
+  }
+
+  invalidateRemoteConfigsCache() {
+    QonversionNative.invalidateRemoteConfigsCache();
   }
 
   async attachUserToExperiment(experimentId: string, groupId: string): Promise<void> {
