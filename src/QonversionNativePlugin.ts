@@ -23,8 +23,6 @@ export interface QonversionNativePlugin {
 
   syncHistoricalData(): void;
 
-  invalidateRemoteConfigsCache(): void;
-
   syncStoreKit2Purchases(): void;
 
   checkEntitlements(): Promise<Record<string, QEntitlement> | null | undefined>;
@@ -63,6 +61,8 @@ export interface QonversionNativePlugin {
   remoteConfig(params: {contextKey: string | undefined}): Promise<QRemoteConfig>;
 
   remoteConfigList(params?: {contextKeys: string[], includeEmptyContextKey: boolean}): Promise<QRemoteConfigList>;
+
+  invalidateRemoteConfigsCache(): void;
 
   attachUserToExperiment(params: {experimentId: string, groupId: string}): Promise<void>;
 

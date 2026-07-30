@@ -116,6 +116,10 @@ export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
         throw this.unimplemented("not implemented yet");
     }
 
+    invalidateRemoteConfigsCache(): void {
+        throw this.unimplemented("not implemented yet");
+    }
+
     restore(): Promise<Record<string, QEntitlement> | null | undefined> {
         throw this.unimplemented("not implemented yet");
     }
@@ -133,10 +137,6 @@ export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
     }
 
     syncHistoricalData(): void {
-        throw this.unimplemented("not implemented yet");
-    }
-
-    invalidateRemoteConfigsCache(): void {
         throw this.unimplemented("not implemented yet");
     }
 
