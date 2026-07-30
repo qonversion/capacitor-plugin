@@ -62,6 +62,8 @@ export interface QonversionNativePlugin {
 
   remoteConfigList(params?: {contextKeys: string[], includeEmptyContextKey: boolean}): Promise<QRemoteConfigList>;
 
+  invalidateRemoteConfigsCache(): void;
+
   attachUserToExperiment(params: {experimentId: string, groupId: string}): Promise<void>;
 
   detachUserFromExperiment(params: {experimentId: string}): Promise<void>;
