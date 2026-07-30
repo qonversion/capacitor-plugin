@@ -17,6 +17,7 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
     CAPPluginMethod(name: "checkEntitlements", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "remoteConfig", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "remoteConfigList", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "invalidateRemoteConfigsCache", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "userInfo", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "userProperties", returnType: CAPPluginReturnPromise),
     CAPPluginMethod(name: "forceSendProperties", returnType: CAPPluginReturnPromise),
@@ -241,6 +242,11 @@ public class QonversionPlugin: CAPPlugin, CAPBridgedPlugin {
 
   @objc func collectAdvertisingId(_ call: CAPPluginCall) {
     qonversionSandwich?.collectAdvertisingId()
+    call.resolve()
+  }
+
+  @objc func invalidateRemoteConfigsCache(_ call: CAPPluginCall) {
+    qonversionSandwich?.invalidateRemoteConfigsCache()
     call.resolve()
   }
 

@@ -143,6 +143,12 @@ class QonversionPlugin : Plugin() {
     }
 
     @PluginMethod
+    fun invalidateRemoteConfigsCache(call: PluginCall) {
+        qonversionSandwich.invalidateRemoteConfigsCache()
+        call.resolve()
+    }
+
+    @PluginMethod
     fun syncHistoricalData(call: PluginCall) {
         qonversionSandwich.syncHistoricalData()
         call.resolve()

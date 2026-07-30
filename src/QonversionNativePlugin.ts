@@ -23,6 +23,8 @@ export interface QonversionNativePlugin {
 
   syncHistoricalData(): void;
 
+  invalidateRemoteConfigsCache(): void;
+
   syncStoreKit2Purchases(): void;
 
   checkEntitlements(): Promise<Record<string, QEntitlement> | null | undefined>;

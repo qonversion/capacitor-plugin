@@ -136,6 +136,10 @@ export class QonversionWeb extends WebPlugin implements QonversionNativePlugin {
         throw this.unimplemented("not implemented yet");
     }
 
+    invalidateRemoteConfigsCache(): void {
+        throw this.unimplemented("not implemented yet");
+    }
+
     syncPurchases(): void {
         throw this.unimplemented("not implemented yet");
     }

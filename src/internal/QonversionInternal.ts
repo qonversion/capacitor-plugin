@@ -64,6 +64,10 @@ export default class QonversionInternal implements QonversionApi {
     QonversionNative.syncHistoricalData();
   }
 
+  invalidateRemoteConfigsCache() {
+    QonversionNative.invalidateRemoteConfigsCache();
+  }
+
   syncStoreKit2Purchases() {
     if (isIos()) {
       QonversionNative.syncStoreKit2Purchases();
