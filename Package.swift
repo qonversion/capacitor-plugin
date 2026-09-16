@@ -1,12 +1,14 @@
 // swift-tools-version: 5.9
 import PackageDescription
 
+// The package and product names must be `QonversionCapacitorPlugin`: the Capacitor CLI derives them from the npm
+// package name (`@qonversion/capacitor-plugin`) when it generates the app's CapApp-SPM package.
 let package = Package(
-    name: "QonversionCapacitor",
+    name: "QonversionCapacitorPlugin",
     platforms: [.iOS(.v14)],
     products: [
         .library(
-            name: "QonversionCapacitor",
+            name: "QonversionCapacitorPlugin",
             targets: ["QonversionPlugin"])
     ],
     dependencies: [

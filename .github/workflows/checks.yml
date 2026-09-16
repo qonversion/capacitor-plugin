@@ -36,6 +36,44 @@ jobs:
       # Builds the plugin as the Swift package Capacitor 8 apps consume (SPM is the default package manager there).
       - name: Build the Swift package
         run: |
-          xcodebuild -scheme QonversionCapacitor \
+          xcodebuild -scheme QonversionCapacitorPlugin \
+            -destination 'generic/platform=iOS Simulator' \
+            build CODE_SIGNING_ALLOWED=NO
+
+  # Real consumer check: a fresh Capacitor 8 app (SPM is its default package manager) installs the
+  # plugin from an npm tarball, runs `cap sync` and builds the App target — the path that was broken
+  # while Package.swift declared no dependency on QonversionSandwich.
+  spm_consumer:
+    name: SPM consumer (Capacitor 8 app)
+    runs-on: macos-latest
+
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build and pack the plugin
+        run: |
+          yarn install --frozen-lockfile
+          npm run build
+          npm pack --pack-destination "$RUNNER_TEMP"
+      - name: Create a Capacitor 8 app with the plugin (SPM)
+        working-directory: ${{ runner.temp }}
+        run: |
+          mkdir app && cd app
+          npm init -y >/dev/null
+          npm install --silent @capacitor/core@8 @capacitor/ios@8 @capacitor/cli@8 "$RUNNER_TEMP"/qonversion-capacitor-plugin-*.tgz
+          mkdir www && echo '<html><body>spm</body></html>' > www/index.html
+          echo '{ "appId": "io.qonversion.spmsmoke", "appName": "spmsmoke", "webDir": "www" }' > capacitor.config.json
+          npx cap add ios
+          npx cap sync ios
+          grep -n 'QonversionCapacitorPlugin' ios/App/CapApp-SPM/Package.swift
+      - name: Build the app
+        working-directory: ${{ runner.temp }}/app
+        run: |
+          xcodebuild -project ios/App/App.xcodeproj -scheme App \
             -destination 'generic/platform=iOS Simulator' \
             build CODE_SIGNING_ALLOWED=NO
