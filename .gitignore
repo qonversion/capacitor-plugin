@@ -31,6 +31,8 @@ Thumbs.db
 
 # Xcode
 build/
+Package.resolved
+.swiftpm/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
