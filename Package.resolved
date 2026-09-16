@@ -5,8 +5,26 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ionic-team/capacitor-swift-pm.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "272e5dcd26260c6f3798b024c9cb3ffa52850ec7"
+        "revision" : "0b6882e9a3288342aacf36348e5a94e4f1dd7b13",
+        "version" : "8.5.2"
+      }
+    },
+    {
+      "identity" : "qonversion-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/qonversion/qonversion-ios-sdk.git",
+      "state" : {
+        "revision" : "aff14d963d0be217d4f53943ff47ebf522754043",
+        "version" : "6.15.0"
+      }
+    },
+    {
+      "identity" : "sandwich-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/qonversion/sandwich-sdk.git",
+      "state" : {
+        "revision" : "bff36cc0aca56dabe40d670593c59b813b5c8a36",
+        "version" : "7.13.0"
       }
     }
   ],
