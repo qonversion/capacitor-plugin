@@ -25,8 +25,6 @@ end
 
 # The sandwich pin lives in two manifests (podspec for CocoaPods, Package.swift for SPM); they must always match.
 def upgrade_sandwich_ios(new_version)
-  UI.user_error!("Pass version:x.y.z") unless new_version.to_s.match?(/\A\d+\.\d+\.\d+\z/)
-
   common_part = "s.dependency \"QonversionSandwich\", \""
   update_file_strict("../QonversionCapacitorPlugin.podspec", /#{common_part}.*"/, "#{common_part}#{new_version}\"")
   update_file_strict("../Package.swift", /sandwich-sdk.git", exact: ".*"\)/, "sandwich-sdk.git\", exact: \"#{new_version}\")")
@@ -111,6 +109,8 @@ end
 
 lane :upgrade_sandwich do |options|
   new_version = options[:version]
+  # Validate before touching any manifest so a bad input cannot leave a half-bumped tree.
+  UI.user_error!("Pass version:x.y.z") unless new_version.to_s.match?(/\A\d+\.\d+\.\d+\z/)
 
   upgrade_sandwich_android(new_version)
   upgrade_sandwich_ios(new_version)

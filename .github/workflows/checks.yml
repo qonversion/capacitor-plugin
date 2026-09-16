@@ -34,11 +34,11 @@ jobs:
           echo "podspec: $pod_pin, Package.swift: $spm_pin"
           [ -n "$pod_pin" ] && [ "$pod_pin" = "$spm_pin" ] || { echo "::error::QonversionSandwich pin mismatch between the podspec and Package.swift"; exit 1; }
       # Builds the plugin as the Swift package Capacitor 8 apps consume (SPM is the default package manager there).
-      - name: Build the Swift package
+      - name: Build the Swift package (with its tests)
         run: |
           xcodebuild -scheme QonversionCapacitorPlugin \
             -destination 'generic/platform=iOS Simulator' \
-            build CODE_SIGNING_ALLOWED=NO
+            build-for-testing CODE_SIGNING_ALLOWED=NO
 
   # Real consumer check: a fresh Capacitor 8 app (SPM is its default package manager) installs the
   # plugin from an npm tarball, runs `cap sync` and builds the App target — the path that was broken
@@ -57,7 +57,7 @@ jobs:
           node-version: 22
       - name: Build and pack the plugin
         run: |
-          yarn install --frozen-lockfile
+          yarn install
           npm run build
           npm pack --pack-destination "$RUNNER_TEMP"
       - name: Create a Capacitor 8 app with the plugin (SPM)
@@ -75,5 +75,42 @@ jobs:
         working-directory: ${{ runner.temp }}/app
         run: |
           xcodebuild -project ios/App/App.xcodeproj -scheme App \
+            -destination 'generic/platform=iOS Simulator' \
+            build CODE_SIGNING_ALLOWED=NO
+
+  # The CocoaPods path (Capacitor 7 apps, and Capacitor 8 with `--packagemanager CocoaPods`) must keep working:
+  # the plugin podspec pins QonversionSandwich, which has to be resolvable from the CocoaPods CDN.
+  pods_consumer:
+    name: CocoaPods consumer (Capacitor 8 app)
+    runs-on: macos-latest
+
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build and pack the plugin
+        run: |
+          yarn install
+          npm run build
+          npm pack --pack-destination "$RUNNER_TEMP"
+      - name: Create a Capacitor 8 app with the plugin (CocoaPods)
+        working-directory: ${{ runner.temp }}
+        run: |
+          mkdir app-pods && cd app-pods
+          npm init -y >/dev/null
+          npm install --silent @capacitor/core@8 @capacitor/ios@8 @capacitor/cli@8 "$RUNNER_TEMP"/qonversion-capacitor-plugin-*.tgz
+          mkdir www && echo '<html><body>pods</body></html>' > www/index.html
+          echo '{ "appId": "io.qonversion.podssmoke", "appName": "podssmoke", "webDir": "www" }' > capacitor.config.json
+          npx cap add ios --packagemanager CocoaPods
+          npx cap sync ios
+          grep -n 'QonversionSandwich' ios/App/Podfile.lock
+      - name: Build the app
+        working-directory: ${{ runner.temp }}/app-pods
+        run: |
+          xcodebuild -workspace ios/App/App.xcworkspace -scheme App \
             -destination 'generic/platform=iOS Simulator' \
             build CODE_SIGNING_ALLOWED=NO

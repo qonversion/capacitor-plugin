@@ -1,15 +1,20 @@
 import XCTest
 @testable import QonversionPlugin
 
-class QonversionTests: XCTestCase {
-    func testEcho() {
-        // This is an example of a functional test case for a plugin.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+class QonversionPluginTests: XCTestCase {
+    func testPluginIsBridgedUnderItsJSName() {
+        let plugin = QonversionPlugin()
 
-        let implementation = Qonversion()
-        let value = "Hello, World!"
-        let result = implementation.echo(value)
+        XCTAssertEqual(plugin.identifier, "QonversionPlugin")
+        XCTAssertEqual(plugin.jsName, "Qonversion")
+        XCTAssertFalse(plugin.pluginMethods.isEmpty)
+    }
 
-        XCTAssertEqual(value, result)
+    func testNoCodesPluginIsBridgedUnderItsJSName() {
+        let plugin = NoCodesPlugin()
+
+        XCTAssertEqual(plugin.identifier, "NoCodesPlugin")
+        XCTAssertEqual(plugin.jsName, "NoCodes")
+        XCTAssertFalse(plugin.pluginMethods.isEmpty)
     }
 }
