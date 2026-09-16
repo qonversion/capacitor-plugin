@@ -23,13 +23,22 @@ def upgrade_sandwich_android(new_version)
   update_file(path, regex, result_value)
 end
 
+# The sandwich pin lives in two manifests (podspec for CocoaPods, Package.swift for SPM); they must always match.
 def upgrade_sandwich_ios(new_version)
-  path = "../QonversionCapacitorPlugin.podspec"
-  common_part = "s.dependency \"QonversionSandwich\", \""
-  regex = /#{common_part}.*"/
-  result_value = "#{common_part}#{new_version}\""
+  UI.user_error!("Pass version:x.y.z") unless new_version.to_s.match?(/\A\d+\.\d+\.\d+\z/)
 
-  update_file(path, regex, result_value)
+  common_part = "s.dependency \"QonversionSandwich\", \""
+  update_file_strict("../QonversionCapacitorPlugin.podspec", /#{common_part}.*"/, "#{common_part}#{new_version}\"")
+  update_file_strict("../Package.swift", /sandwich-sdk.git", exact: ".*"\)/, "sandwich-sdk.git\", exact: \"#{new_version}\")")
+end
+
+# Like update_file, but fails loudly unless the pattern matches exactly once —
+# a silent no-op would let the podspec and Package.swift pins drift apart.
+def update_file_strict(path, regex, result_value)
+  file = File.read(path)
+  matches = file.scan(regex).length
+  UI.user_error!("#{path}: expected exactly one match for #{regex.inspect}, found #{matches}") unless matches == 1
+  File.write(path, file.sub(regex, result_value))
 end
 
 def update_file(path, regex, result_value)
