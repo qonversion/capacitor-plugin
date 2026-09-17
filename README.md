@@ -16,8 +16,8 @@ Qonversion - In-app subscription monetization: implement subscriptions and grow 
      </a>
 </p>
 
-[![npm](https://img.shields.io/npm/v/qonversion-capacitor-qonversion)](https://www.npmjs.com/package/@qonversion/capacitor-plugin)
-[![MIT License](http://img.shields.io/cocoapods/l/Qonversion.svg?style=flat)](https://qonversion.io)
+[![npm](https://img.shields.io/npm/v/@qonversion/capacitor-plugin)](https://www.npmjs.com/package/@qonversion/capacitor-plugin)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](#license)
 
 
 ## In-App Subscription Implementation & Management
@@ -96,6 +96,12 @@ Send user-level subscription data to your favorite platforms.
 * **Customer support.** You can always reach out to our customer support and get the help required.
 
 Convinced? Let's go!
+
+## Installation
+
+Follow the [installation guide](https://documentation.qonversion.io/docs/capacitor). The plugin ships both a `Package.swift` and a podspec, so `npx cap sync` resolves the native iOS dependency with Swift Package Manager (the default for Capacitor 8 projects) or CocoaPods — see [iOS native dependencies](https://documentation.qonversion.io/docs/capacitor#ios-native-dependencies).
+
+> CocoaPods trunk becomes read-only on December 2, 2026 — see the [CocoaPods → Swift Package Manager migration guide](https://documentation.qonversion.io/docs/dec-2026-migration-guide-cocoapods-to-spm).
 
 ## Documentation
 
