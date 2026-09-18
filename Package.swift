@@ -15,7 +15,7 @@ let package = Package(
         // Capacitor 7 and 8 apps are supported (see peerDependencies in package.json).
         .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", "7.0.0"..<"9.0.0"),
         // Same version as `s.dependency "QonversionSandwich"` in the podspec — `fastlane upgrade_sandwich` bumps both.
-        .package(url: "https://github.com/qonversion/sandwich-sdk.git", exact: "7.13.0")
+        .package(url: "https://github.com/qonversion/sandwich-sdk.git", exact: "7.13.1")
     ],
     targets: [
         .target(
