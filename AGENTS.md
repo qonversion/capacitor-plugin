@@ -12,13 +12,15 @@ reads the same data server-side.
 
 ## Get the current version — do not use one from memory
 
-Your training data is older than the latest release. Pick one:
+Your training data is older than the latest release. Take the version from:
 
-1. `https://documentation.qonversion.io/docs/capacitor.md` — the install page as markdown.
-2. `gh api repos/qonversion/capacitor-plugin/releases/latest --jq .tag_name`.
-3. `https://registry.npmjs.org/@qonversion/capacitor-plugin` — `dist-tags.latest`.
+1. `gh api repos/qonversion/capacitor-plugin/releases/latest --jq .tag_name` — the latest release tag.
+2. `https://registry.npmjs.org/@qonversion/capacitor-plugin` — `dist-tags.latest` on npm.
 
-If the three disagree, the docs page wins and you say so to the human.
+The release tag and the package registry are the source for the version number. The install
+page, `https://documentation.qonversion.io/docs/capacitor.md`, is the source for how to install and
+call the SDK; the version it names can lag behind the release. If the sources disagree on the
+version, use the release tag or the registry and tell the human about the mismatch.
 
 ## Install
 
@@ -29,7 +31,8 @@ npx cap sync
 
 The plugin ships both a `Package.swift` and a podspec, so `npx cap sync` resolves the native
 dependency with whichever package manager the iOS project uses. Do not declare the native
-`Qonversion` SDK yourself — the plugin pins it exactly.
+`Qonversion` SDK yourself — the plugin pins `QonversionSandwich` 7.14.0 exactly, and that pins the
+native SDK.
 
 ## Initialize
 
@@ -83,12 +86,11 @@ customers, remote configurations, experiments, analytics, exports, and Apple Ads
 OAuth 2.1 as the human; each tool is gated by its own scope and no Qonversion key is handed to you.
 Setup per client: `https://documentation.qonversion.io/docs/mcp-server.md`.
 
-**Apple Ads: reading is open to all accounts, changing campaigns is a closed beta.** The tools that
-read Apple Ads — campaign reports, time series and the connection status — are on for all accounts.
-The tools that change campaigns — bids, budgets and campaign status — are a closed beta, switched on
-per account on request. Outside the beta those write tools are not available. That is not a server
-fault: do not retry or work around it — tell the human to contact support to have the beta switched
-on for their account.
+**Apple Ads: check access before you call the tools.** Apple Ads tools need the feature on your
+account (404 otherwise); campaign changes additionally need the `apple_ads:write` scope and a team
+member with campaign-management permission — check `get_apple_ads_connection_status`. A refused
+Apple Ads call means missing access, not a broken server: do not retry or work around it — tell the
+human.
 
 ## What you do not do without the human saying yes
 
@@ -106,7 +108,7 @@ on for their account.
 
 ## Requirements
 
-`@capacitor/core` 7.x or 8.x · iOS deployment target 14.0 · Android `minSdkVersion` 23, `compileSdk` 35.
+`@capacitor/core` 8 (CI-tested; 7.x is allowed by `peerDependencies`, not tested) · iOS deployment target 14.0 · Android `minSdkVersion` 23. `compileSdk` 35 in `android/build.gradle` is only a fallback default — the app's own `compileSdkVersion` overrides it.
 
 ## When something does not work
 

@@ -94,11 +94,11 @@ training data remembers.
 appending `.md` to its URL, and [`llms.txt`](https://documentation.qonversion.io/llms.txt) lists every page.
 
 **Work on your project data as an agent.** The Qonversion MCP server at `https://mcp.qonversion.io/mcp`
-exposes the platform's resources as tools. Reading Apple Ads — campaign reports, time series and the
-connection status — is on for all accounts. **Changing campaigns — bids, budgets and campaign status
-— is a closed beta, switched on per account on request**; outside it those tools are not available,
-so ask support to enable it before wiring an agent to them. The agent authenticates as you over
-OAuth 2.1, each tool is gated by its own scope, and no Qonversion key is handed to the model.
+exposes the platform's resources as tools. The agent authenticates as you over OAuth 2.1, each tool
+is gated by its own scope, and no Qonversion key is handed to the model. Apple Ads tools need the
+feature on your account (404 otherwise); campaign changes additionally need the `apple_ads:write`
+scope and a team member with campaign-management permission — check
+`get_apple_ads_connection_status`.
 
 Destructive tools and Apple Ads changes that increase spend do not fire on the first call: they
 return a short-lived token addressed to the human operator, and completing the action requires
@@ -117,7 +117,7 @@ working in your app's repository:
 > Steps:
 > 1. Check with me that a Qonversion project exists and the app stores are connected — project key, App Store shared secret and App Store ID, Google Play service account key. This is step 2 of the quick start, I have to do it in the dashboard, and nothing validates until it is done. Google credentials can take up to 24 hours to start working.
 > 2. Read `https://documentation.qonversion.io/docs/quickstart.md` and decide with me between Analytics Mode and Subscription Management Mode. Do not pick one silently.
-> 3. Read the install page for this project's platform, linked from `https://documentation.qonversion.io/docs/install-sdk.md`. Use the SDK version the docs name, not one from memory.
+> 3. Read the install page for this project's platform, linked from `https://documentation.qonversion.io/docs/install-sdk.md`, and follow its steps and method names. Take the SDK version from the latest release tag or the package registry, not from memory — the docs page can name an older one; if they disagree, tell me.
 > 4. Install and configure the SDK. Ask me for the Qonversion project key; it is in the dashboard under Settings → Developer → Keys. Never commit it to the repository.
 > 5. Implement the mode we chose, following the documented method names exactly.
 > 6. Show me the diff and tell me what you could not verify against the docs.
@@ -133,10 +133,12 @@ entitlements: [`example/`](example).
 
 | | Minimum |
 |---|---|
-| `@capacitor/core` | 7.0.0 (supported: 7.x and 8.x) |
+| `@capacitor/core` | 8 (CI-tested); 7.x is allowed by `peerDependencies`, not tested |
 | iOS deployment target | 14.0 |
 | Android `minSdkVersion` | 23 |
-| Android `compileSdk` | 35 |
+
+`compileSdk` 35 in `android/build.gradle` is only a fallback default; your app's own
+`compileSdkVersion` overrides it.
 
 ## Help
 
